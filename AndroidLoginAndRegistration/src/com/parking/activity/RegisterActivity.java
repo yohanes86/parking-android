@@ -1,5 +1,7 @@
 package com.parking.activity;
 
+import com.parking.data.InqRegistrationRequest;
+
 import info.androidhive.loginandregistration.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -50,6 +52,13 @@ public class RegisterActivity extends Activity {
 				String licenseNo = inputLicenseNo.getText().toString();
 
 				if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()&& !phoneNo.isEmpty()&& !licenseNo.isEmpty()) {
+					InqRegistrationRequest inqRegRequest = new InqRegistrationRequest();
+					inqRegRequest.setName(name);
+					inqRegRequest.setLicenseNo(licenseNo);
+					inqRegRequest.setEmail(email);
+					inqRegRequest.setPassword(password);
+					inqRegRequest.setPhoneNo(phoneNo);
+					
 					
 				} else {
 					Toast.makeText(getApplicationContext(),
