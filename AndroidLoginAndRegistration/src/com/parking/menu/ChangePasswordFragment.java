@@ -24,10 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.parking.R;
-import com.parking.activity.ForgetPasswordActivity;
-import com.parking.activity.ForgetPasswordActivity.ReqForgotPasswordTask;
 import com.parking.data.InqChangePasswordRequest;
-import com.parking.data.InqForgotPasswordResponse;
 import com.parking.data.LoginData;
 import com.parking.data.MessageVO;
 import com.parking.utils.CipherUtil;
@@ -153,7 +150,8 @@ public class ChangePasswordFragment extends Fragment {
                if (success) {
 	               	if(!respString.isEmpty()){
 	               		try {
-	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respString, MessageVO.class);		               	
+	               			String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
+	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
 		               		if(messageVO.getRc()==0){
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.messageLong(messageVO.getOtherMessage());

@@ -11,6 +11,7 @@
     <string name="btn_login">LOGIN</string>
     <string name="btn_register">REGISTER</string>
     <string name="btn_change_password">CHANGE PASSWORD</string>
+    <string name="btn_logout">LOGOUT</string>
     <string name="btn_forgot_password">FORGOT PASSWORD</string>
     <string name="btn_link_to_register">Not a member? Sign up now.</string>
     <string name="btn_link_to_forget">Forgot Password? Click Here.</string>
@@ -22,6 +23,7 @@
     
     <!-- TITLE -->
     <string name="menu_change_password">Change Password</string>
+    <string name="menu_logout">Logout</string>
     
     <!-- LOADING -->
     <string name="process_forgot_password">Forgot password in process, please wait</string>

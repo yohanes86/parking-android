@@ -146,7 +146,8 @@ public class ForgetPasswordActivity extends Activity {
                if (success) {
 	               	if(!respString.isEmpty()){
 	               		try {
-	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respString, MessageVO.class);
+	               			String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
+	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);
 		               		InqForgotPasswordResponse inqForgotPasswordResponse = new InqForgotPasswordResponse();
 		               		inqForgotPasswordResponse.setMessageVO(messageVO);
 		               		if(inqForgotPasswordResponse.getMessageVO().getRc()==0){
