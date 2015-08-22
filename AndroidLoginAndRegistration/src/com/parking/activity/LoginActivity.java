@@ -31,6 +31,7 @@ import com.parking.menu.MenuActivity;
 import com.parking.utils.CipherUtil;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
+import com.parking.utils.PreferencesUtils;
 import com.parking.utils.SharedPreferencesUtils;
 
 
@@ -190,7 +191,7 @@ public class LoginActivity extends Activity {
 		               		if(messageVO.getRc()==0){
 		               			SharedPreferencesUtils.saveLoginData(messageVO.getOtherMessage(), ctx);
 		               			LoginData loginData = SharedPreferencesUtils.getLoginData(ctx);		               					           
-				             	Intent i = new Intent(ctx, MenuActivity.class);
+		               			Intent i = new Intent(ctx, MenuActivity.class);
 								startActivity(i);
 								finish();
 		               		}
