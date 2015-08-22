@@ -17,7 +17,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     private ResideMenu resideMenu;
     private MenuActivity mContext;
     private ResideMenuItem itemHome;
-    private ResideMenuItem itemProfile;
+    private ResideMenuItem itemChangePassword;
     private ResideMenuItem itemCalendar;
     private ResideMenuItem itemSettings;
 
@@ -47,17 +47,17 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
 
         // create menu items;
         itemHome     = new ResideMenuItem(this, R.drawable.icon_home,     "Home");
-        itemProfile  = new ResideMenuItem(this, R.drawable.icon_profile,  "Profile");
+        itemChangePassword  = new ResideMenuItem(this, R.drawable.icon_profile,  "Change Password");
         itemCalendar = new ResideMenuItem(this, R.drawable.icon_calendar, "Calendar");
         itemSettings = new ResideMenuItem(this, R.drawable.icon_settings, "Settings");
 
         itemHome.setOnClickListener(this);
-        itemProfile.setOnClickListener(this);
+        itemChangePassword.setOnClickListener(this);
         itemCalendar.setOnClickListener(this);
         itemSettings.setOnClickListener(this);
 
         resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(itemProfile, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(itemChangePassword, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemCalendar, ResideMenu.DIRECTION_RIGHT);
         resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_RIGHT);
 
@@ -88,8 +88,8 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
 
         if (view == itemHome){
             changeFragment(new HomeFragment());
-        }else if (view == itemProfile){
-            changeFragment(new ProfileFragment());
+        }else if (view == itemChangePassword){
+            changeFragment(new ChangePasswordFragment());
         }else if (view == itemCalendar){
             changeFragment(new CalendarFragment());
         }else if (view == itemSettings){

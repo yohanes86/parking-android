@@ -14,11 +14,11 @@ import com.parking.R;
  * Time: ä¸‹å?ˆ1:31
  * Mail: specialcyci@gmail.com
  */
-public class ProfileFragment extends Fragment {
+public class ChangePasswordFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.profile, container, false);
+        return inflater.inflate(R.layout.activity_change_password, container, false);
     }
 
 }
