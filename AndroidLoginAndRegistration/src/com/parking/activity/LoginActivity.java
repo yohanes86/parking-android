@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,10 +24,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.parking.R;
-import com.parking.data.InqForgotPasswordResponse;
 import com.parking.data.InqLoginRequest;
-import com.parking.data.InqLoginResponse;
 import com.parking.data.MessageVO;
+import com.parking.menu.MenuActivity;
 import com.parking.utils.CipherUtil;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
@@ -42,6 +42,8 @@ public class LoginActivity extends Activity {
 	private EditText inputPassword;
 	private Context ctx;
 	private ReqLoginTask reqLoginTask = null;
+	SharedPreferences sharedpreferences;
+	public static final String MyPREFERENCES = "MyPrefs" ;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -183,9 +185,11 @@ public class LoginActivity extends Activity {
 	               		try {
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respString, MessageVO.class);
 		               		if(messageVO.getRc()==0){
+		               			
+		               		
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.messageLong(messageVO.getOtherMessage());
-				             	Intent i = new Intent(ctx, LoginActivity.class);
+				             	Intent i = new Intent(ctx, MenuActivity.class);
 								startActivity(i);
 								finish();
 		               		}

@@ -22,7 +22,7 @@
     
     <!-- LOADING -->
     <string name="process_forgot_password">Forgot password in process, please wait</string>
-    
+    <string name="process_login">Login in process, please wait</string>
     
     <!-- MESSAGE -->
     <string name="message_unexpected_error_server">Server sedang mengalami gangguan, silahkan coba beberapa jam kemudian.</string>
@@ -31,5 +31,6 @@
     	  <string name="message_forget_password_failed">Password anda gagal di reset, silahkan coba kembali beberapa saat kemudian.</string>
     -->
     <string name="message_email_required">Email harus diisi!</string>
+    <string name="email_and_pass_required">Email dan password harus diisi!</string>
 
 </resources>
