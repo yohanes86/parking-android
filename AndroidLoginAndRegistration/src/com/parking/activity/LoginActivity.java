@@ -1,10 +1,5 @@
 package com.parking.activity;
 
-import info.androidhive.loginandregistration.R;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -13,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.parking.R;
 
 
 public class LoginActivity extends Activity {
@@ -50,7 +47,7 @@ public class LoginActivity extends Activity {
 								"Email tidak valid!", Toast.LENGTH_LONG).show();
 					}
 					// login user
-					SendHttpRequestLoginTask.execute("hh");
+//					SendHttpRequestLoginTask.execute("hh");
 					
 				} else {
 					// Prompt user to enter credentials

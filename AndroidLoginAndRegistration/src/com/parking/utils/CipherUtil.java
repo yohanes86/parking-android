@@ -15,9 +15,9 @@ import org.bouncycastle.crypto.digests.SHA256Digest;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.encoders.Hex;
 
-import com.parking.activity.ForgetPasswordActivity;
-
 import android.util.Log;
+
+import com.parking.activity.ForgetPasswordActivity;
 
 public class CipherUtil {
 //	private static final Logger LOGGER = LoggerFactory.getLogger(CipherUtil.class);
