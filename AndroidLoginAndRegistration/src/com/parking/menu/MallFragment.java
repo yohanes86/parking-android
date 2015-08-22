@@ -20,14 +20,14 @@ import com.parking.R;
  * Time: ä¸‹å?ˆ3:26
  * Mail: specialcyci@gmail.com
  */
-public class CalendarFragment extends Fragment {
+public class MallFragment extends Fragment {
 
     private View parentView;
     private ListView listView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        parentView = inflater.inflate(R.layout.calendar, container, false);
+        parentView = inflater.inflate(R.layout.activity_mall, container, false);
         listView   = (ListView) parentView.findViewById(R.id.listView);
         initView();
         return parentView;

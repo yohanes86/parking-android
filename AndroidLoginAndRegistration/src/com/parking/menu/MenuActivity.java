@@ -19,7 +19,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     private ResideMenuItem itemHome;
     private ResideMenuItem itemChangePassword;
     private ResideMenuItem itemLogout;
-    private ResideMenuItem itemCalendar;
+    private ResideMenuItem itemMall;
     private ResideMenuItem itemSettings;
 
     /**
@@ -50,19 +50,19 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         itemHome     = new ResideMenuItem(this, R.drawable.icon_home,     "Home");
         itemChangePassword  = new ResideMenuItem(this, R.drawable.icon_profile,  "Password");
         itemLogout  = new ResideMenuItem(this, R.drawable.icon_profile,  "Logout");
-        itemCalendar = new ResideMenuItem(this, R.drawable.icon_calendar, "Calendar");
+        itemMall = new ResideMenuItem(this, R.drawable.icon_calendar, "Malls");
         itemSettings = new ResideMenuItem(this, R.drawable.icon_settings, "Settings");
 
         itemHome.setOnClickListener(this);
         itemChangePassword.setOnClickListener(this);
         itemLogout.setOnClickListener(this);        
-        itemCalendar.setOnClickListener(this);
+        itemMall.setOnClickListener(this);
         itemSettings.setOnClickListener(this);
 
         resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemChangePassword, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemLogout, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(itemCalendar, ResideMenu.DIRECTION_RIGHT);
+        resideMenu.addMenuItem(itemMall, ResideMenu.DIRECTION_RIGHT);
         resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_RIGHT);
 
         // You can disable a direction by setting ->
@@ -94,8 +94,8 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
             changeFragment(new HomeFragment());
         }else if (view == itemChangePassword){
             changeFragment(new ChangePasswordFragment());
-        }else if (view == itemCalendar){
-            changeFragment(new CalendarFragment());
+        }else if (view == itemMall){
+            changeFragment(new MallFragment());
         }else if (view == itemSettings){
             changeFragment(new SettingsFragment());
         }else if (view == itemLogout){
