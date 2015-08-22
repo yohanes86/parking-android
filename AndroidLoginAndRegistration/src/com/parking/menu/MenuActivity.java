@@ -18,6 +18,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     private MenuActivity mContext;
     private ResideMenuItem itemHome;
     private ResideMenuItem itemChangePassword;
+    private ResideMenuItem itemLogout;
     private ResideMenuItem itemCalendar;
     private ResideMenuItem itemSettings;
 
@@ -48,16 +49,19 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         // create menu items;
         itemHome     = new ResideMenuItem(this, R.drawable.icon_home,     "Home");
         itemChangePassword  = new ResideMenuItem(this, R.drawable.icon_profile,  "Password");
+        itemLogout  = new ResideMenuItem(this, R.drawable.icon_profile,  "Logout");
         itemCalendar = new ResideMenuItem(this, R.drawable.icon_calendar, "Calendar");
         itemSettings = new ResideMenuItem(this, R.drawable.icon_settings, "Settings");
 
         itemHome.setOnClickListener(this);
         itemChangePassword.setOnClickListener(this);
+        itemLogout.setOnClickListener(this);        
         itemCalendar.setOnClickListener(this);
         itemSettings.setOnClickListener(this);
 
         resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemChangePassword, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(itemLogout, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemCalendar, ResideMenu.DIRECTION_RIGHT);
         resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_RIGHT);
 
@@ -94,6 +98,8 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
             changeFragment(new CalendarFragment());
         }else if (view == itemSettings){
             changeFragment(new SettingsFragment());
+        }else if (view == itemLogout){
+            changeFragment(new LogoutFragment());
         }
 
         resideMenu.closeMenu();
