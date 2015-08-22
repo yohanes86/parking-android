@@ -28,10 +28,12 @@ import com.parking.activity.ForgetPasswordActivity;
 import com.parking.activity.ForgetPasswordActivity.ReqForgotPasswordTask;
 import com.parking.data.InqChangePasswordRequest;
 import com.parking.data.InqForgotPasswordResponse;
+import com.parking.data.LoginData;
 import com.parking.data.MessageVO;
 import com.parking.utils.CipherUtil;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
+import com.parking.utils.SharedPreferencesUtils;
 
 /**
  * User: special
@@ -59,9 +61,10 @@ public class ChangePasswordFragment extends Fragment {
              public void onClick(View arg0) {
             	 String passLama = oldPassword.getText().toString();
             	 String passBaru = newPassword.getText().toString();
+            	 LoginData loginData = SharedPreferencesUtils.getLoginData(ctx);            	 
             	// ambil dari session untuk email, session key
-            	 email = "agusdk2011@gmail.com";
-            	 sessionkey = "085693938630GX2FDXLBKWN35CMNGKI48YXEAQ1RPR";		 
+            	 email = loginData.getEmail();
+            	 sessionkey = loginData.getSessionKey();		 
  				if (!passLama.isEmpty() && !passBaru.isEmpty()&& !email.isEmpty()&& !sessionkey.isEmpty()) {	
  					reqChangePasswordTask = new ReqChangePasswordTask();
  					reqChangePasswordTask.execute("");       
