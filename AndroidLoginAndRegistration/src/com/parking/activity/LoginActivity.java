@@ -189,10 +189,7 @@ public class LoginActivity extends Activity {
 		               		if(messageVO.getRc()==0){
 		               			
 		               			SharedPreferencesUtils.saveLoginData(messageVO.getOtherMessage(), ctx);
-		               			LoginData loginData = SharedPreferencesUtils.getLoginData(ctx);
-		               			
-		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getOtherMessage());
+		               			LoginData loginData = SharedPreferencesUtils.getLoginData(ctx);		               					           
 				             	Intent i = new Intent(ctx, MenuActivity.class);
 								startActivity(i);
 								finish();
