@@ -1,11 +1,5 @@
 package com.parking.activity;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
 import com.parking.R;
 
 public class MainActivity extends Activity {

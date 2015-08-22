@@ -1,27 +1,7 @@
 package com.parking.activity;
 
-import java.io.IOException;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.util.EntityUtils;
-
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-
 import com.parking.R;
+import com.parking.activity.ForgetPasswordActivity.ReqForgotPasswordTask;
 import com.parking.data.InqForgotPasswordRequest;
 import com.parking.data.InqForgotPasswordResponse;
 import com.parking.data.MessageVO;

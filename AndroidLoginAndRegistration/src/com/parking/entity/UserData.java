@@ -1,6 +1,5 @@
 package com.parking.entity;
 
-import java.util.Date;
 
 
 public class UserData implements java.io.Serializable {
