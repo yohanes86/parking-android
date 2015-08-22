@@ -25,6 +25,7 @@ import com.parking.R;
 import com.parking.data.InqForgotPasswordRequest;
 import com.parking.data.InqForgotPasswordResponse;
 import com.parking.data.MessageVO;
+import com.parking.menu.MenuActivity;
 import com.parking.utils.CipherUtil;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
@@ -151,7 +152,7 @@ public class ForgetPasswordActivity extends Activity {
 		               		if(inqForgotPasswordResponse.getMessageVO().getRc()==0){
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.messageLong(messageVO.getOtherMessage());
-				             	Intent i = new Intent(ctx, LoginActivity.class);
+				             	Intent i = new Intent(ctx, MenuActivity.class);
 								startActivity(i);
 								finish();
 		               		}else{

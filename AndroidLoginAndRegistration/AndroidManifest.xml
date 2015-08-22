@@ -10,7 +10,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <application      
+    <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -40,6 +40,11 @@
             android:name="com.parking.activity.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop" />
+        <activity
+            android:name="com.parking.menu.MenuActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
     </application>
 
 </manifest>
