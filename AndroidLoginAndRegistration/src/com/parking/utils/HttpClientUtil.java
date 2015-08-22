@@ -16,6 +16,8 @@ import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
+import org.codehaus.jackson.map.DeserializationConfig;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import android.content.Context;
 import android.net.SSLCertificateSocketFactory;
@@ -23,6 +25,20 @@ import android.net.SSLSessionCache;
 import android.util.Log;
 
 public class HttpClientUtil {
+	/**
+	 * 
+	 */
+	public static final String CONTENT_TYPE = "Content-Type";
+	public static final String JSON = "application/json";
+	/**
+	 * URL base to engine
+	 */
+	public static final String URL_BASE = "http://192.168.1.101:8080/parking-trx";
+	/**
+	 * URL TRX
+	 */
+	public static final String URL_FORGOT_PASSWORD = "/trx/forgetPassword";
+	
 	
 	// list trx code engine
 	//LOGIN
@@ -31,6 +47,8 @@ public class HttpClientUtil {
 	
 	//FORGET PASS
 	public static final String HTTP_TRX_CODE_FORGET_PASS		= "FORGET_PASS";
+	
+	
 	
 	// CHANGE PASS
 	public static final String HTTP_TRX_CODE_CHANGE_PASS		= "CHG_PASS";
@@ -53,9 +71,6 @@ public class HttpClientUtil {
 	public static final int CONNECTION_TIMEOUT = 30000; // milisecond
 	public static final int SO_TIMEOUT = 60000; // milisecond
 	
-	public static final String URL_SERVER_ENGINE = "http://192.168.43.2:6003/";
-//	public static final String URL_SERVER_ENGINE = "http://10.7.12.242:6003/";
-	
 	private static DefaultHttpClient client;
 	private static KeyStore trustStore;
 	private static MySSLSocketFactory sf;
@@ -64,6 +79,13 @@ public class HttpClientUtil {
 	private static ClientConnectionManager ccm;
 	private static SSLSocketFactory sslSocketFactory;
 	private static SSLSessionCache sessionCache;
+	
+	public static ObjectMapper getObjectMapper(Context ctx) {
+		ObjectMapper mapper = new ObjectMapper();
+		// faster this way, not default 
+		mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		return mapper;
+	}
 	
 	public synchronized static HttpClient getNewHttpClientCache(Context ctx) {
 		if(IS_HTTP_MODE){

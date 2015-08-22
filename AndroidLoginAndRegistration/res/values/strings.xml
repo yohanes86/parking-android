@@ -18,5 +18,18 @@
     <string name="welcome">Welcome</string>
     <string name="btn_logout">LOGOUT</string>
     <string name="name">Fullname</string>
+    
+    
+    <!-- LOADING -->
+    <string name="process_forgot_password">Forgot password in process, please wait</string>
+    
+    
+    <!-- MESSAGE -->
+    <string name="message_unexpected_error_server">Server sedang mengalami gangguan, silahkan coba beberapa jam kemudian.</string>
+    <string name="message_unexpected_error_message_server">Server sedang mengalami gangguan, Unmatched Format Data Transfer</string>
+    <!--  <string name="message_forget_password_success">Password anda berhasil di reset, silahkan cek di email anda untuk mendapatkan password baru.</string> 
+    	  <string name="message_forget_password_failed">Password anda gagal di reset, silahkan coba kembali beberapa saat kemudian.</string>
+    -->
+    <string name="message_email_required">Email harus diisi!</string>
 
 </resources>
