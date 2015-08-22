@@ -25,11 +25,13 @@ import android.widget.Toast;
 
 import com.parking.R;
 import com.parking.data.InqLoginRequest;
+import com.parking.data.LoginData;
 import com.parking.data.MessageVO;
 import com.parking.menu.MenuActivity;
 import com.parking.utils.CipherUtil;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
+import com.parking.utils.SharedPreferencesUtils;
 
 
 public class LoginActivity extends Activity {
@@ -186,7 +188,9 @@ public class LoginActivity extends Activity {
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respString, MessageVO.class);
 		               		if(messageVO.getRc()==0){
 		               			
-		               		
+		               			SharedPreferencesUtils.saveLoginData(messageVO.getOtherMessage(), ctx);
+		               			LoginData loginData = SharedPreferencesUtils.getLoginData(ctx);
+		               			
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.messageLong(messageVO.getOtherMessage());
 				             	Intent i = new Intent(ctx, MenuActivity.class);
