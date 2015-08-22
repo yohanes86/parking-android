@@ -1,10 +1,21 @@
 package com.parking.utils;
 
+import java.security.MessageDigest;
+import java.security.Security;
+import java.util.Arrays;
+import java.util.BitSet;
+
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+
 import org.bouncycastle.crypto.digests.RIPEMD256Digest;
 import org.bouncycastle.crypto.digests.SHA256Digest;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.util.Arrays;
 import org.bouncycastle.util.encoders.Hex;
+
+import android.util.Log;
 
 import com.parking.activity.ForgetPasswordActivity;
 

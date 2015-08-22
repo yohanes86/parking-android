@@ -1,5 +1,9 @@
 package com.parking.utils;
 
+import android.content.Context;
+import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
 
 public class MessageUtils {
 	private static final String TAG = "MessageUtils";
