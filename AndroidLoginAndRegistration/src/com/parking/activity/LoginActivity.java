@@ -185,9 +185,9 @@ public class LoginActivity extends Activity {
              if (success) {
 	               	if(!respString.isEmpty()){
 	               		try {
-	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respString, MessageVO.class);
+	               			String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
+	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);
 		               		if(messageVO.getRc()==0){
-		               			
 		               			SharedPreferencesUtils.saveLoginData(messageVO.getOtherMessage(), ctx);
 		               			LoginData loginData = SharedPreferencesUtils.getLoginData(ctx);		               					           
 				             	Intent i = new Intent(ctx, MenuActivity.class);

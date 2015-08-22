@@ -3,9 +3,7 @@ package com.parking.utils;
 import java.io.IOException;
 
 import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.DeserializationConfig.Feature;
 import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
 import android.content.Context;
@@ -23,8 +21,6 @@ public class SharedPreferencesUtils {
     		SharedPreferences.Editor editor = prefs.edit();
     		editor.putString(com.parking.data.Constants.SHARED_PREF_LOGIN, loginData);
     		editor.commit();
-    	
-    	
     }
 	
 	public static LoginData getLoginData(Context ctx) {
