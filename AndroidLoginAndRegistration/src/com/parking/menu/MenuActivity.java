@@ -43,11 +43,11 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         resideMenu.attachToActivity(this);
         resideMenu.setMenuListener(menuListener);
         //valid scale factor is between 0.0f and 1.0f. leftmenu'width is 150dip. 
-        resideMenu.setScaleValue(0.6f);
+        resideMenu.setScaleValue(0.7f);
 
         // create menu items;
         itemHome     = new ResideMenuItem(this, R.drawable.icon_home,     "Home");
-        itemChangePassword  = new ResideMenuItem(this, R.drawable.icon_profile,  "Change Password");
+        itemChangePassword  = new ResideMenuItem(this, R.drawable.icon_profile,  "Password");
         itemCalendar = new ResideMenuItem(this, R.drawable.icon_calendar, "Calendar");
         itemSettings = new ResideMenuItem(this, R.drawable.icon_settings, "Settings");
 
@@ -102,12 +102,12 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     private ResideMenu.OnMenuListener menuListener = new ResideMenu.OnMenuListener() {
         @Override
         public void openMenu() {
-            Toast.makeText(mContext, "Menu is opened!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext, "Menu is opened!", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void closeMenu() {
-            Toast.makeText(mContext, "Menu is closed!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext, "Menu is closed!", Toast.LENGTH_SHORT).show();
         }
     };
 
