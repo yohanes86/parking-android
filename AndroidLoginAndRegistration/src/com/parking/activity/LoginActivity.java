@@ -82,8 +82,6 @@ public class LoginActivity extends Activity {
 					// Prompt user to enter credentials
 					MessageUtils messageUtils = new MessageUtils(ctx);
 	             	messageUtils.messageLong(LoginActivity.this.getResources().getString(R.string.email_and_pass_required));
-//					Toast.makeText(getApplicationContext(),
-//							"Please enter the credentials!", Toast.LENGTH_LONG).show();
 				}
 			}
 
