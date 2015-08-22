@@ -1,14 +1,18 @@
 package com.parking.activity;
 
+import info.androidhive.loginandregistration.R;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.parking.R;
 
 
 public class LoginActivity extends Activity {
@@ -37,16 +41,21 @@ public class LoginActivity extends Activity {
 			public void onClick(View view) {
 				String email = inputEmail.getText().toString();
 				String password = inputPassword.getText().toString();
-
+				
 				// Check for empty data in the form
 				if (email.trim().length() > 0 && password.trim().length() > 0) {
+					// validation email
+					if (!isValidEmail(email)) {
+						Toast.makeText(getApplicationContext(),
+								"Email tidak valid!", Toast.LENGTH_LONG).show();
+					}
 					// login user
+					SendHttpRequestLoginTask.execute("hh");
 					
 				} else {
 					// Prompt user to enter credentials
 					Toast.makeText(getApplicationContext(),
-							"Please enter the credentials!", Toast.LENGTH_LONG)
-							.show();
+							"Please enter the credentials!", Toast.LENGTH_LONG).show();
 				}
 			}
 
@@ -74,6 +83,26 @@ public class LoginActivity extends Activity {
 			}
 		});
 
+	}
+	
+	
+	private class SendHttpRequestLoginTask  extends AsyncTask<String, Void, Void> {
+
+		@Override
+		protected Void doInBackground(String... arg0) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+	}
+	
+	// validating email id
+	private boolean isValidEmail(String email) {
+		if (email == null) {
+	        return false;
+	    } else {
+	    	return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+	    }
 	}
 
 }
