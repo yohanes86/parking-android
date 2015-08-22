@@ -8,6 +8,6 @@
 	<classpathentry exported="true" kind="lib" path="libs/bcprov-jdk15-140.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry exported="true" kind="lib" path="D:/Project/internal-project/parking-android/AndroidLoginAndRegistration/libs/jackson-all-1.9.11.jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/Personal/Project/parking-android/AndroidLoginAndRegistration/libs/jackson-all-1.9.11.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
