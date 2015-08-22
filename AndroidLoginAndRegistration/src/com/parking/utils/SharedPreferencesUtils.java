@@ -16,18 +16,21 @@ public class SharedPreferencesUtils {
 	private static final String TAG = "Share Preferences Utils";
 	private static SharedPreferences prefs;
 	
+	private static SharedPreferences getPreferences(Context context) {
+	    return context.getSharedPreferences(com.parking.data.Constants.PARKING_PREFERENCE, 
+	    		Context.MODE_MULTI_PROCESS); //4
+	}
+	
 	public static void saveLoginData(String loginData,Context ctx){    	
-    		prefs = ctx.getSharedPreferences(com.parking.data.Constants.SHARED_PREF_LOGIN, 4); // 4 = multi process    		
-    		SharedPreferences.Editor editor = prefs.edit();
-    		editor.putString(com.parking.data.Constants.SHARED_PREF_LOGIN, loginData);
-    		editor.commit();
+		SharedPreferences.Editor editor = getPreferences(ctx).edit();
+		editor.putString(com.parking.data.Constants.LOGIN_DATA_PREF, loginData);
+		editor.commit();
     }
 	
 	public static LoginData getLoginData(Context ctx) {
 		LoginData loginData = null;
-		try {		
-		prefs = ctx.getSharedPreferences(com.parking.data.Constants.SHARED_PREF_LOGIN, 4); // 4 = multi process
-		String ld = prefs.getString(com.parking.data.Constants.SHARED_PREF_LOGIN, "");
+		try {		   	
+		String ld = getPreferences(ctx).getString(com.parking.data.Constants.LOGIN_DATA_PREF, "");
 		loginData = HttpClientUtil.getObjectMapper(ctx).readValue(ld, new TypeReference<LoginData>(){});
 		} catch (JsonGenerationException e) {
 			Log.e(TAG, "JsonGenerationException  getLoginData: " + e);	
