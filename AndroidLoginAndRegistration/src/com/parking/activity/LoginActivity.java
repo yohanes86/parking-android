@@ -31,7 +31,6 @@ import com.parking.menu.MenuActivity;
 import com.parking.utils.CipherUtil;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
-import com.parking.utils.PreferencesUtils;
 import com.parking.utils.SharedPreferencesUtils;
 
 
