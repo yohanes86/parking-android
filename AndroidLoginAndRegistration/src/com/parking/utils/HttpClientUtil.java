@@ -33,11 +33,12 @@ public class HttpClientUtil {
 	/**
 	 * URL base to engine
 	 */
-	public static final String URL_BASE = "http://192.168.1.101:8080/parking-trx";
+	public static final String URL_BASE = "http://192.168.0.13:8080/parking-trx";
 	/**
 	 * URL TRX
 	 */
 	public static final String URL_FORGOT_PASSWORD = "/trx/forgetPassword";
+	public static final String URL_LOGIN = "/trx/loginUser";
 	
 	
 	// list trx code engine
