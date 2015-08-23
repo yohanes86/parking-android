@@ -1,5 +1,6 @@
 package com.parking.menu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -9,13 +10,15 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.parking.R;
+import com.parking.activity.LoginActivity;
+import com.parking.swipelistview.sample.activities.SwipeListViewExampleActivity;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
 
 public class MenuActivity extends FragmentActivity implements View.OnClickListener{
 
     private ResideMenu resideMenu;
-    private MenuActivity mContext;
+    private MenuActivity ctx;
     private ResideMenuItem itemHome;
     private ResideMenuItem itemChangePassword;
     private ResideMenuItem itemLogout;
@@ -29,7 +32,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        mContext = this;
+        ctx = this;
         setUpMenu();
         if( savedInstanceState == null )
             changeFragment(new HomeFragment());
@@ -96,6 +99,9 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
             changeFragment(new ChangePasswordFragment());
         }else if (view == itemMall){
             changeFragment(new MallFragment());
+//        	Intent intent = new Intent(ctx, SwipeListViewExampleActivity.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            startActivity(intent);
         }else if (view == itemSettings){
             changeFragment(new SettingsFragment());
         }else if (view == itemLogout){
