@@ -2,7 +2,6 @@ package com.parking.utils;
 
 import java.security.MessageDigest;
 import java.security.Security;
-import java.util.Arrays;
 import java.util.BitSet;
 
 import javax.crypto.Cipher;
@@ -178,12 +177,12 @@ public class CipherUtil {
 		return encryptDESede(input, hashPasswordx);
 	}
 	
-	public static String encryptCsf(String password) {
+	public static String encryptPass(String password) {
 		byte[] key = toHexByte(KEY_CACHE_VO);
 		byte[] input = password.getBytes();
 		return toHexString(encryptDESede(input, key) );
 	}
-	public static String decryptCsf(String password) {
+	public static String decryptPass(String password) {
 		byte[] key = toHexByte(KEY_CACHE_VO);
 		byte[] input = toHexByte(password);
 		return new String(decryptDESede(input, key));

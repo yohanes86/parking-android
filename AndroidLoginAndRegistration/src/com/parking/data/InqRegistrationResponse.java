@@ -1,19 +1,34 @@
 package com.parking.data;
 
-import com.parking.entity.UserData;
 
 
-public class InqRegistrationResponse extends BaseResponse {
+public class InqRegistrationResponse {
 
 	private static final long serialVersionUID = 1L;
 	
-	private UserData userData;
+	private String messageRc;
+	private String otherMessage;
+	private int rc;
 	
-	public UserData getUserData() {
-		return userData;
+	public String getMessageRc() {
+		return messageRc;
 	}
-	public void setUserData(UserData userData) {
-		this.userData = userData;
+	public void setMessageRc(String messageRc) {
+		this.messageRc = messageRc;
 	}
+	public String getOtherMessage() {
+		return otherMessage;
+	}
+	public void setOtherMessage(String otherMessage) {
+		this.otherMessage = otherMessage;
+	}
+	public int getRc() {
+		return rc;
+	}
+	public void setRc(int rc) {
+		this.rc = rc;
+	}
+	
+
 	
 }

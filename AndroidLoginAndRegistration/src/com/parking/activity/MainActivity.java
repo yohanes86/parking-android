@@ -1,5 +1,9 @@
 package com.parking.activity;
 
+<<<<<<< HEAD
+import info.androidhive.loginandregistration.R;
+=======
+>>>>>>> a62c51952b50e07562865fec5090eb4440f0c925
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
