@@ -65,7 +65,7 @@ public class LogoutFragment extends Fragment {
        		dialog = new ProgressDialog(ctx);
     			dialog.setIndeterminate(true);
     			dialog.setCancelable(true);
-    			dialog.setMessage(ctx.getResources().getString(R.string.process_change_password));
+    			dialog.setMessage(ctx.getResources().getString(R.string.process_logout));
     			dialog.show();
     		}
     		@Override
