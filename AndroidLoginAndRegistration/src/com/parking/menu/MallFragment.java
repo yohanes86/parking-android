@@ -389,6 +389,8 @@ public class MallFragment extends Fragment {
 		                            progressDialog.dismiss();
 		                            progressDialog = null;
 		                        }
+		                        UsageTipsDialog usageTipsDialog = new UsageTipsDialog();
+		                        usageTipsDialog.show(getActivity().getSupportFragmentManager(), "dialog");
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.messageLong(messageVO.getMessageRc());
