@@ -7,14 +7,9 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.util.EntityUtils;
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -23,25 +18,16 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import com.parking.R;
 import com.parking.data.InqRegistrationRequest;
-import com.parking.data.InqRegistrationResponse;
-import com.parking.data.LoginData;
 import com.parking.data.MessageVO;
-import com.parking.menu.MenuActivity;
-import com.parking.service.ConnectionService;
-import com.parking.service.SessionService;
-import com.parking.set.SetValue;
 import com.parking.utils.CipherUtil;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
-import com.parking.utils.SharedPreferencesUtils;
-import com.parking.utils.StringUtils;
 
 public class RegisterActivity extends Activity {
 	private static final String TAG = RegisterActivity.class.getSimpleName();
@@ -54,6 +40,7 @@ public class RegisterActivity extends Activity {
 	private EditText inputPhoneNo;
 	private ProgressDialog pDialog;
 	private Context ctx;
+	private ReqRegistrationTask reqRegistrationTask = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -87,24 +74,15 @@ public class RegisterActivity extends Activity {
 				
 
 				if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()&& !phoneNo.isEmpty()&& !licenseNo.isEmpty()) {
-					InqRegistrationRequest inqRegRequest = new InqRegistrationRequest();
-					inqRegRequest.setName(name);
-					inqRegRequest.setLicenseNo(licenseNo);
-					inqRegRequest.setEmail(email);
-					inqRegRequest.setPassword(password);
-					inqRegRequest.setPhoneNo(phoneNo);
 					
-					String s = HttpClientUtil.getObjectMapper(ctx).writeValueAsString(inqRegRequest);
-					s = CipherUtil.encryptTripleDES(s, CipherUtil.PASSWORD);
-					
-					String paramRegistration = composeHttpPostParamReg(inqRegRequest);
-					
-					grabURL(SetValue.USER_REG, paramRegistration);
+					// register user
+					reqRegistrationTask = new ReqRegistrationTask();
+					reqRegistrationTask.execute("");
 					
 					
 				} else {
-					Toast.makeText(getApplicationContext(),
-							"Please fill your details!", Toast.LENGTH_LONG).show();
+					MessageUtils messageUtils = new MessageUtils(ctx);
+	             	messageUtils.messageLong(RegisterActivity.this.getResources().getString(R.string.message_detail_required));
 				}
 			}
 		});
@@ -121,185 +99,115 @@ public class RegisterActivity extends Activity {
 
 	}
 	
-	private void grabURL (String addedUrl,String param){
-		String urlServer = HttpClientUtil.URL_BASE;
-//		toastMsg(urlServer);
-		
-		Log.v(TAG, urlServer+ addedUrl);
-		
-		new grabURL().execute(urlServer + addedUrl,param);
-		
-	}
-	
-	public class grabURL extends AsyncTask<String, Void, Boolean> {
-
+	public class ReqRegistrationTask  extends AsyncTask<String, Void, Boolean> {
 		private ProgressDialog dialog = new ProgressDialog(RegisterActivity.this);
-//		private final HttpClient client = new DefaultHttpClient();
-		private final HttpClient client = HttpClientUtil.getNewHttpClient();
-		private String content;
-		private String error = null;
-		private String speedtestResult = null;
-		String respString = null;
-
-		protected void onPreExecute() {
-			dialog.setMessage(getString(R.string.label_retrieveData));
-			dialog.show();
-		}
-		
+       	private final HttpClient client = HttpClientUtil.getNewHttpClient();
+       	String respString = null;
+       	protected void onPreExecute() {
+       		dialog = new ProgressDialog(RegisterActivity.this);
+    			dialog.setIndeterminate(true);
+    			dialog.setCancelable(true);
+    			dialog.setMessage(RegisterActivity.this.getResources().getString(R.string.process_register));
+    			dialog.show();
+    		}
 		@Override
-		protected Boolean doInBackground(String... params) {
-			// TODO Auto-generated method stub
+		protected Boolean doInBackground(String... arg0) {
 			boolean result = false;
-			try{
-		
-				HttpPost httppost = new HttpPost(params[0]);
-				StringEntity entity = new StringEntity(params[1]);
-				httppost.setHeader(HttpClientUtil.CONTENT_TYPE, HttpClientUtil.JSON);
-				httppost.setEntity(entity);
-				
-				
-				/*ResponseHandler<String> responseHandler = new BasicResponseHandler();
-				content = client.execute(httppost, responseHandler);
-				result = true;*/
-				HttpResponse response = client.execute(httppost);
+           	try {
+           		InqRegistrationRequest inqRegRequest = new InqRegistrationRequest();           		
+				inqRegRequest.setName(inputFullName.getText().toString());
+				inqRegRequest.setLicenseNo(inputLicenseNo.getText().toString());
+				inqRegRequest.setEmail(inputEmail.getText().toString());
+				inqRegRequest.setPassword(inputPassword.getText().toString());
+				inqRegRequest.setPhoneNo(inputPhoneNo.getText().toString());
+           		String s = HttpClientUtil.getObjectMapper(ctx).writeValueAsString(inqRegRequest);
+				s = CipherUtil.encryptTripleDES(s, CipherUtil.PASSWORD);
+           		Log.d(TAG,"Request: " + s);
+                StringEntity entity = new StringEntity(s);    			
+    			HttpPost post = new HttpPost(HttpClientUtil.URL_BASE+HttpClientUtil.URL_USER_REG);
+    			post.setHeader(HttpClientUtil.CONTENT_TYPE, HttpClientUtil.JSON);
+    			post.setEntity(entity);
+    			// Execute HTTP request
+    			Log.d(TAG,"Executing request: " + post.getURI());
+                HttpResponse response = client.execute(post);
                 HttpEntity respEntity = response.getEntity();
                 respString = EntityUtils.toString(respEntity);
     			result = true;
-
-			}catch (ClientProtocolException e){
-				/*dialog.dismiss();*/
-				if  (dialog.isShowing()) {
-					try
-	                {
-						dialog.dismiss();
-	                }catch(Exception e1) {
-	                // nothing
-	                }
-	            }
-				speedtestResult = ConnectionService.errorConnectionMessage();
-				Log.v(TAG, "speedtestResult: " + speedtestResult);
-			
-				error = speedtestResult + " - " + SetValue.ENGINE_MSG_DOWN;
-				
-				Log.v(TAG, "CLIENT ERROR: " + error);
-				cancel(true);
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			/*dialog.dismiss();*/
-			if  (dialog.isShowing()) {
-				try
-                {
-					dialog.dismiss();
-                }catch(Exception e1) {
-                // nothing
-                }
-            }
-			speedtestResult = ConnectionService.errorConnectionMessage();
-			Log.v(TAG, "speedtestResult: " + speedtestResult);
-
-			error = speedtestResult + " - " + SetValue.ENGINE_MSG_DOWN;
-
-			Log.v(TAG, "IO ERROR: " + error);
-			cancel(true);
-		} catch (Exception e) {
-			/*dialog.dismiss();*/
-			if  (dialog.isShowing()) {
-				try
-                {
-					dialog.dismiss();
-                }catch(Exception e1) {
-                // nothing
-                }
-            }
-			speedtestResult = ConnectionService.errorConnectionMessage();
-			Log.v(TAG, "speedtestResult: " + speedtestResult);
-
-			error = speedtestResult + e.getMessage();
-
-			Log.v(TAG, "EX ERROR: " + error);
-			cancel(true);
-		}
-
-		return result;
-			
-		}protected void onPostExecute(Boolean success) {
-			/*dialog.dismiss();*/
-			if  (dialog.isShowing()) {
-				try
-                {
-					dialog.dismiss();
-                }catch(Exception e1) {
-                // nothing
-                }
-            }
-			if(success){
-			if (!StringUtils.isEmpty(error)) {
-				Log.v(TAG, "ERROR: " + error);
-			} else {
-					try{
-						String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
-               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);
-	               		if(messageVO.getRc()==SetValue.RC_SUCCESS){
-	               			registrationSuccess();
-	               		}else{
-	               			MessageUtils messageUtils = new MessageUtils(ctx);
-			             	messageUtils.messageLong(messageVO.getMessageRc());
-	               		}
-						
-					
-					} catch (JsonGenerationException e) {	
-		        		Log.e(TAG, "JsonGenerationException : "+e);
-		    			e.printStackTrace();			    		
-		    		} catch (JsonMappingException e) {			
-		    			Log.e(TAG, "JsonMappingException : "+e);
-		    			e.printStackTrace();		    			
-		    		} catch (IOException e) {			
-		    			Log.e(TAG, "IOException : "+e);
-		    			e.printStackTrace();		    			
-		    		} 
-				}
-			}
-		}
+    			} catch (ClientProtocolException e) {
+    				Log.e(TAG, "ClientProtocolException : "+e);
+    				if (dialog.isShowing()) {
+    					try
+    	                {
+    	            		dialog.dismiss();
+    	                }catch(Exception e1) {
+    	                	// nothing
+    	                }
+    	            }
+    			} catch (IOException e) {
+    				Log.e(TAG, "IOException : "+e);
+    				if (dialog.isShowing()) {
+    					try
+    	                {
+    	            		dialog.dismiss();
+    	                }catch(Exception e1) {
+    	                	// nothing
+    	                }
+    	            }		
+    			} catch (Exception e) {
+    				Log.e(TAG, "Exception : "+e);
+    				if (dialog.isShowing()) {
+    					try
+    	                {
+    	            		dialog.dismiss();
+    	                }catch(Exception e1) {
+    	                	// nothing
+    	                }
+    	            }				
+    			}
+           	return result;
+           }
 		
-		@Override
-		protected void onCancelled() {
+		 @Override
+         protected void onPostExecute(final Boolean success) {
+			 reqRegistrationTask = null;          
+             if (success) {
+	               	if(!respString.isEmpty()){
+	               		try {
+	               			String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
+	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);
+		               		if(messageVO.getRc()==0){
+		               			MessageUtils messageUtils = new MessageUtils(ctx);
+				             	messageUtils.messageLong(messageVO.getOtherMessage());
+				             	Intent i = new Intent(ctx, LoginActivity.class);
+								startActivity(i);
+								finish();
+		               		}
+		               		else{
+		               			MessageUtils messageUtils = new MessageUtils(ctx);
+				             	messageUtils.messageLong(messageVO.getMessageRc());
+		               		}
 
-			toastMsg(error);
-		}
-	}
-	
-	//Compose Param
-	
-	private String composeHttpPostParamReg(InqRegistrationRequest inqReg) {
-		ObjectMapper mapper = new ObjectMapper();
-		String result = "";
-		try {
-			result = mapper.writeValueAsString(inqReg);
-		} catch (JsonGenerationException e) {
-			Log.e(TAG, "composeHttpPostParamLogin JsonGenerationException : " +e.toString());
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			Log.e(TAG, "composeHttpPostParamLogin JsonMappingException : " +e.toString());
-			e.printStackTrace();
-		} catch (IOException e) {
-			Log.e(TAG, "composeHttpPostParamLogin IOException : " +e.toString());
-			e.printStackTrace();
-		}
-		return result;
-	}
-	
-	private void registrationSuccess() {
-		startActivity(new Intent(this, LoginActivity.class));
-		this.finish();
-	}
-	
-	//TOAST MESSAGE
-	private void toastMsg(String msg){
-		Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
-		toast.setGravity(Gravity.TOP | Gravity.CENTER, 0, 0);
-		toast.show();
+						} catch (Exception e) {
+							MessageUtils messageUtils = new MessageUtils(ctx);
+			             	messageUtils.messageLong(RegisterActivity.this.getResources().getString(R.string.message_unexpected_error_message_server));
+						}	            
+	               	}else{
+	               	   MessageUtils messageUtils = new MessageUtils(ctx);
+	             	   messageUtils.messageLong(RegisterActivity.this.getResources().getString(R.string.message_unexpected_error_server));
+	               	}
+             }else{
+          	   MessageUtils messageUtils = new MessageUtils(ctx);
+          	   messageUtils.messageLong(RegisterActivity.this.getResources().getString(R.string.message_unexpected_error_server));
+             }
+             if (dialog.isShowing()) {
+             	try
+                 {
+             		dialog.dismiss();
+                 }catch(Exception e1) {
+                 	// nothing
+                 }
+             }
+         }
 	}
 	
 

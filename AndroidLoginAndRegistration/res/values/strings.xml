@@ -45,6 +45,10 @@
     <string name="hint_hp">No HP</string>
     <string name="hint_password">Password</string>
     <string name="hint_name">Fullname</string>
+    <string name="hint_cc">Credit Card No</string>
+    <string name="hint_expire_month">Expire Month</string>
+    <string name="hint_expire_year">Expire Year</string>
+    <string name="hint_cvv">No Cvv</string>
     
     <string name="welcome">Welcome</string>
     <string name="name">Fullname</string>
@@ -82,6 +86,7 @@
     <string name="process_login">Login in process, please wait</string>
     <string name="process_change_password">Change password in process, please wait</string>
     <string name="process_logout">Logout in process, please wait</string>
+    <string name="process_register">Register in process, please wait</string>
     <string name="process_get_list_mall">Get list mall, please wait</string>
     
     <!-- MESSAGE -->
@@ -93,4 +98,6 @@
     <string name="message_email_required">Email harus diisi!</string>
     <string name="email_and_pass_required">Email dan password harus diisi!</string>
     <string name="message_password_required">Password lama dan password baru harus diisi!</string>
+    <string name="message_detail_required">Please fill your details!</string>
+    
 </resources>

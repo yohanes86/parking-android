@@ -36,14 +36,16 @@ import android.widget.Toast;
 
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.parking.R;
+import com.parking.activity.InputCreditCardActivity;
+import com.parking.activity.LoginActivity;
 
 public class MallAdapter extends BaseAdapter {
 
     private List<MallItem> data;
-    private Context context;
+    private Context ctx;
 
     public MallAdapter(Context context, List<MallItem> data) {
-        this.context = context;
+        this.ctx = context;
         this.data = data;
     }
 
@@ -76,7 +78,7 @@ public class MallAdapter extends BaseAdapter {
         final MallItem item = getItem(position);
         ViewHolder holder;
         if (convertView == null) {
-            LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater li = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = li.inflate(R.layout.mall_row, parent, false);
             holder = new ViewHolder();
             holder.ivImage = (ImageView) convertView.findViewById(R.id.example_row_iv_image);
@@ -100,12 +102,15 @@ public class MallAdapter extends BaseAdapter {
         holder.bAction1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = context.getPackageManager().getLaunchIntentForPackage(item.getInformation());
-                if (intent != null) {
-                    context.startActivity(intent);
-                } else {
-                    Toast.makeText(context, R.string.cantOpen, Toast.LENGTH_SHORT).show();
-                }
+//                Intent intent = context.getPackageManager().getLaunchIntentForPackage(item.getInformation());
+//                if (intent != null) {
+//                    context.startActivity(intent);
+//                } else {
+//                    Toast.makeText(context, R.string.cantOpen, Toast.LENGTH_SHORT).show();
+//                }
+            	Intent i = new Intent(ctx, InputCreditCardActivity.class);
+            	ctx.startActivity(i);
+            	i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);            	
             }
         });
 
@@ -113,10 +118,10 @@ public class MallAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if (isPlayStoreInstalled()) {
-                    context.startActivity(new Intent(Intent.ACTION_VIEW,
+                    ctx.startActivity(new Intent(Intent.ACTION_VIEW,
                             Uri.parse("market://details?id=" + item.getInformation())));
                 } else {
-                    context.startActivity(new Intent(Intent.ACTION_VIEW,
+                    ctx.startActivity(new Intent(Intent.ACTION_VIEW,
                             Uri.parse("http://play.google.com/store/apps/details?id=" + item.getInformation())));
                 }
             }
@@ -151,7 +156,7 @@ public class MallAdapter extends BaseAdapter {
 
     private boolean isPlayStoreInstalled() {
         Intent market = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=dummy"));
-        PackageManager manager = context.getPackageManager();
+        PackageManager manager = ctx.getPackageManager();
         List<ResolveInfo> list = manager.queryIntentActivities(market, 0);
 
         return list.size() > 0;

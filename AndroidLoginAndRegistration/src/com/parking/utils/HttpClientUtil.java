@@ -43,6 +43,7 @@ public class HttpClientUtil {
 	public static final String URL_CHANGE_PASSWORD = "/trx/changePassword";
 	public static final String URL_LOGOUT = "/trx/logoutUser";
 	public static final String URL_GET_ALL_MALL = "/trx/listMall";
+	public static final String URL_USER_REG= "/trx/userRegistration"; // Registration
 	
 	// list trx code engine
 	//LOGIN

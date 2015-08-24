@@ -15,39 +15,14 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp" >
 
-        <EditText
-            android:id="@+id/name"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@color/white"
-            android:hint="@string/hint_name"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:inputType="textCapWords"
-            android:textColor="@color/input_register"
-            android:textColorHint="@color/input_register_hint" />
 
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/noCC"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:background="@color/white"
-            android:hint="@string/hint_email"
-            android:inputType="textEmailAddress"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColor="@color/input_register"
-            android:textColorHint="@color/input_register_hint" />
-        
-        <EditText
-            android:id="@+id/licenseNo"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@color/white"
-            android:hint="@string/hint_license_no"
+            android:hint="@string/hint_cc"
             android:inputType="textCapWords"
             android:padding="10dp"
             android:singleLine="true"
@@ -55,30 +30,44 @@
             android:textColorHint="@color/input_register_hint" />
         
         <EditText
-            android:id="@+id/phoneNo"
+            android:id="@+id/card_expire_month"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:background="@color/white"
-            android:hint="@string/hint_hp"
+            android:hint="@string/hint_expire_month"
             android:inputType="number"
             android:padding="10dp"
             android:singleLine="true"
             android:textColor="@color/input_register"
             android:textColorHint="@color/input_register_hint" />
-
+        
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/card_expire_year"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:background="@color/white"
-            android:hint="@string/hint_password"
-            android:inputType="textPassword"
+            android:hint="@string/hint_expire_year"
+            android:inputType="number"
             android:padding="10dp"
             android:singleLine="true"
             android:textColor="@color/input_register"
             android:textColorHint="@color/input_register_hint" />
+        
+        <EditText
+            android:id="@+id/card_cvv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:hint="@string/hint_cvv"
+            android:inputType="number"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="@color/input_register"
+            android:textColorHint="@color/input_register_hint" />
+        
 
         <!-- Login Button -->
 
@@ -91,18 +80,7 @@
             android:text="@string/btn_register"
             android:textColor="@color/white" />
 
-        <!-- Link to Login Screen -->
-
-        <Button
-            android:id="@+id/btnLinkToLoginScreen"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dip"
-            android:background="@null"
-            android:text="@string/btn_link_to_login"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="15dp" />
+        
     </LinearLayout>
 
 </LinearLayout>
