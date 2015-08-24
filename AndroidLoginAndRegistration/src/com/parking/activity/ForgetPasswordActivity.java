@@ -153,7 +153,7 @@ public class ForgetPasswordActivity extends Activity {
 		               		if(inqForgotPasswordResponse.getMessageVO().getRc()==0){
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.messageLong(messageVO.getOtherMessage());
-				             	Intent i = new Intent(ctx, MenuActivity.class);
+				             	Intent i = new Intent(ctx, LoginActivity.class);
 								startActivity(i);
 								finish();
 		               		}else{
