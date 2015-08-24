@@ -85,6 +85,7 @@
     <string name="process_forgot_password">Forgot password in process, please wait</string>
     <string name="process_login">Login in process, please wait</string>
     <string name="process_change_password">Change password in process, please wait</string>
+    <string name="process_verification_to_server">Verification Payment in process, please wait</string>
     <string name="process_logout">Logout in process, please wait</string>
     <string name="process_register">Register in process, please wait</string>
     <string name="process_get_list_mall">Get list mall, please wait</string>

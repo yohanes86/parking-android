@@ -1,44 +1,83 @@
 package com.parking.activity;
 
 
+import id.co.veritrans.android.api.VTDirect;
+import id.co.veritrans.android.api.VTInterface.ITokenCallback;
+import id.co.veritrans.android.api.VTModel.VTCardDetails;
+import id.co.veritrans.android.api.VTModel.VTToken;
+import id.co.veritrans.android.api.VTUtil.VTConfig;
+
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.util.EntityUtils;
+
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Intent;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.parking.R;
-import com.parking.data.InqRegistrationRequest;
+import com.parking.data.Address;
+import com.parking.data.CustomerDetail;
+import com.parking.data.InqCreditCardRequest;
+import com.parking.data.LoginData;
+import com.parking.data.MessageVO;
+import com.parking.data.Product;
+import com.parking.data.TransactionDetails;
+import com.parking.data.VeriTransVO;
 import com.parking.utils.CipherUtil;
+import com.parking.utils.HttpClientUtil;
+import com.parking.utils.MessageUtils;
+import com.parking.utils.SharedPreferencesUtils;
+import com.parking.view.CustomWebView;
 
 
 public class InputCreditCardActivity extends Activity {
 	private static final String TAG = InputCreditCardActivity.class.getSimpleName();
-	private Button btnRegister;
-	private Button btnLinkToLogin;
-	private EditText inputFullName;
-	private EditText inputEmail;
-	private EditText inputPassword;
-	private EditText inputLicenseNo;
-	private EditText inputPhoneNo;
+	private Button btnPay;
+	private EditText noCC;
+	private EditText cardExpireMonth;
+	private EditText cardExpireYear;
+	private EditText cardCvv;
 	private ProgressDialog pDialog;
-
+	private Context ctx;
+	
+	AlertDialog dialog3ds;
+    ProgressDialog sendServerProgress;
+    int totalPrice;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_credit_card);
-
-		inputFullName = (EditText) findViewById(R.id.name);
-		inputEmail = (EditText) findViewById(R.id.email);
-		inputLicenseNo = (EditText) findViewById(R.id.licenseNo);
-		inputPhoneNo = (EditText) findViewById(R.id.phoneNo);
-		inputPassword = (EditText) findViewById(R.id.password);
-		btnRegister = (Button) findViewById(R.id.btnRegister);
-		btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
+		ctx = InputCreditCardActivity.this;
+		noCC = (EditText) findViewById(R.id.noCC);
+		cardExpireMonth = (EditText) findViewById(R.id.card_expire_month);
+		cardCvv = (EditText) findViewById(R.id.card_cvv);
+		cardExpireYear = (EditText) findViewById(R.id.card_expire_year);
+		btnPay = (Button) findViewById(R.id.btnPay);
 
 		// Progress dialog
 		pDialog = new ProgressDialog(this);
@@ -46,55 +85,318 @@ public class InputCreditCardActivity extends Activity {
 
 		
 
-		// Register Button Click event
-		btnRegister.setOnClickListener(new View.OnClickListener() {
+		
+		btnPay.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				String name = inputFullName.getText().toString();
-				String email = inputEmail.getText().toString();
-				String password = inputPassword.getText().toString();
-				String phoneNo = inputPhoneNo.getText().toString();
-				String licenseNo = inputLicenseNo.getText().toString();
-				
-				String encPass = CipherUtil.encryptPass(password);
+				String noCCInput = noCC.getText().toString();
+				String cardExpireMonthInput = cardExpireMonth.getText().toString();
+				String cardExpireYearInput = cardExpireYear.getText().toString();				
+				String cardCvvInput = cardCvv.getText().toString();
+								
 
-				if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()&& !phoneNo.isEmpty()&& !licenseNo.isEmpty()) {
-					InqRegistrationRequest inqRegRequest = new InqRegistrationRequest();
-					inqRegRequest.setName(name);
-					inqRegRequest.setLicenseNo(licenseNo);
-					inqRegRequest.setEmail(email);
-					inqRegRequest.setPassword(encPass);
-					inqRegRequest.setPhoneNo(phoneNo);
-					
-					
-					
+				if (!noCCInput.isEmpty() && !cardExpireMonthInput.isEmpty() && !cardExpireYearInput.isEmpty()&& !cardCvvInput.isEmpty()) {
+					InqCreditCardRequest inqCreditCardRequest = new InqCreditCardRequest();
+					inqCreditCardRequest.setNoCC(noCCInput);
+					inqCreditCardRequest.setCardExpireMonth(Integer.parseInt(cardExpireMonthInput));
+					inqCreditCardRequest.setCardExpireYear(Integer.parseInt(cardExpireYearInput));
+					inqCreditCardRequest.setCardCvv(cardCvvInput);					
+					inqCreditCardRequest.setGross_amount("5000000");					
+					//set environment
+	                VTConfig.VT_IsProduction = false;
+	                //set client key
+	                VTConfig.CLIENT_KEY = HttpClientUtil.CLIENT_KEY; //agus	                
+
+	                VTDirect vtDirect = new VTDirect();
+	                //set using 3dsecure or not	             
+	                VTCardDetails cardDetails = null;
+	                
+	                cardDetails = CardFactory(true,inqCreditCardRequest);
+	               
+	                vtDirect.setCard_details(cardDetails);
+
+	                //set loading dialog
+	                final ProgressDialog loadingDialog = ProgressDialog.show(ctx,"","Loading, Please Wait...",true);
+	                vtDirect.getToken(new ITokenCallback() {
+	                    @Override
+	                    public void onSuccess(VTToken token) {
+	                        loadingDialog.cancel();
+	                        if(token.getRedirect_url() != null){
+	                            //using 3d secure
+	                            //show it to user using webview
+	                            Log.d("VtLog",token.getToken_id());
+
+	                            CustomWebView webView = new CustomWebView(ctx);
+	                            webView.getSettings().setJavaScriptEnabled(true);
+	                            webView.setOnTouchListener(new View.OnTouchListener() {
+	                                @Override
+	                                public boolean onTouch(View v, MotionEvent event) {
+	                                    switch (event.getAction()) {
+	                                        case MotionEvent.ACTION_DOWN:
+	                                        case MotionEvent.ACTION_UP:
+	                                            if (!v.hasFocus()) {
+	                                                v.requestFocus();
+	                                            }
+	                                            break;
+	                                    }
+	                                    return false;
+	                                }
+	                            });
+	                            webView.setWebChromeClient(new WebChromeClient());
+	                            webView.setWebViewClient(new VtWebViewClient(token.getToken_id(),totalPrice+""));
+	                            webView.loadUrl(token.getRedirect_url());
+
+	                            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ctx);
+	                            dialog3ds = alertBuilder.create();
+
+
+	                            dialog3ds.setTitle("3D Secure Veritrans");
+	                            dialog3ds.setView(webView);
+	                            webView.requestFocus(View.FOCUS_DOWN);
+	                            alertBuilder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+	                                @Override
+	                                public void onClick(DialogInterface dialog, int id) {
+	                                    dialog.dismiss();
+	                                }
+	                            });
+
+	                            dialog3ds.show();
+
+	                        }
+//	                        //print token
+//	                        TextView tokenText = (TextView) getView().findViewById(R.id.txt_token);
+//	                        tokenText.setText(token.getToken_id());
+
+	                    }
+
+	                    @Override
+	                    public void onError(Exception e) {
+	                        loadingDialog.cancel();
+	                        Toast.makeText(ctx,e.getMessage(),Toast.LENGTH_SHORT);
+	                    }
+	                });
 					
 				} else {
-					Toast.makeText(getApplicationContext(),
-							"Please fill your details!", Toast.LENGTH_LONG).show();
+					MessageUtils messageUtils = new MessageUtils(ctx);
+	             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_detail_required));
 				}
 			}
 		});
 
-		// Link to Login Screen
-		btnLinkToLogin.setOnClickListener(new View.OnClickListener() {
-
-			public void onClick(View view) {
-				Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-				startActivity(i);
-				finish();
-			}
-		});
-
 	}
 	
+	private class SendTokenAsync extends AsyncTask<String, Void, Boolean>{
+		private ProgressDialog dialog = new ProgressDialog(ctx);
+		private final HttpClient client = HttpClientUtil.getNewHttpClient();
+       	String respString = null;
+       	protected void onPreExecute() {
+   		dialog = new ProgressDialog(ctx);
+			dialog.setIndeterminate(true);
+			dialog.setCancelable(true);
+			dialog.setMessage(ctx.getResources().getString(R.string.process_verification_to_server));
+			dialog.show();
+		}
+		
+		@Override
+		protected Boolean doInBackground(String... params) {
+           	boolean result = false;
+           	try {
+           		LoginData loginData = SharedPreferencesUtils.getLoginData(ctx);            	 
+           		// ambil dari session untuk email, session key	         	
+           		VeriTransVO veriTransVO = new VeriTransVO();
+    			veriTransVO.setEmail(loginData.getEmail());
+    			veriTransVO.setSessionKey(loginData.getSessionKey());
+    			veriTransVO.setTotalPriceIdr(new Long(params[1]));
+    			veriTransVO.setTokenId(URLEncoder.encode(params[0],"UTF-8"));
+    			veriTransVO.setPaymentMethod("Credit Card");
+    			CustomerDetail customerDetail = new CustomerDetail();
+    			customerDetail.setFirstName("YOHANES");
+    			customerDetail.setLastName("VINCENTIUS");
+    			customerDetail.setEmail("vincent_yohanes@yahoo.com");
+    			customerDetail.setPhone("081807771819");
+    			Address billAddress = new Address();
+    			billAddress.setFirstName("YOHANES BILLING");
+    			billAddress.setLastName("VINCENTIUS");
+    			billAddress.setAddress("Jalan Raya");
+    			billAddress.setCity("Jakarta");
+    			billAddress.setPhone("081807771819");
+    			billAddress.setPostalCode("11740");
+    			
+    			Address shipAddress = new Address();
+    			shipAddress.setFirstName("Yohanes SHIPPING");
+    			shipAddress.setLastName("Vincentius SHIPPING");
+    			shipAddress.setAddress("Jalan Raya aaa");
+    			shipAddress.setCity("Jakarta");
+    			shipAddress.setPhone("081807771819");
+    			shipAddress.setPostalCode("11740");
+    			customerDetail.setBillingAddress(billAddress);
+    			customerDetail.setShippingAddress(shipAddress);
+    			
+    			TransactionDetails transactionDetails = new  TransactionDetails();
+    			transactionDetails.setOrderId(UUID.randomUUID().toString());
+    			transactionDetails.setGrossAmount(new Long(5000000));
+    			
+    			Product product = new Product();
+    			product.setId(new Long(1));
+    			product.setLongName("Parking Online Mall Kota Kasablanca");
+    			product.setPriceIdr(new Long(5000000));
+    			product.setShortName("V-Mobile KOKAS");
+    			product.setThumbnailFilePath("");
+    			List<Product> listProducts = new ArrayList<Product>();
+    			listProducts.add(product);
+    			veriTransVO.setCustomerDetail(customerDetail);
+    			veriTransVO.setTransactionDetails(transactionDetails);
+    			veriTransVO.setListProducts(listProducts);
+				String s = HttpClientUtil.getObjectMapper(ctx).writeValueAsString(veriTransVO);
+				s = CipherUtil.encryptTripleDES(s, CipherUtil.PASSWORD);
+//           		Log.d(TAG,"Request: " + s);
+                StringEntity entity = new StringEntity(s);    			
+    			HttpPost post = new HttpPost(HttpClientUtil.URL_BASE+HttpClientUtil.URL_RECEIVE_TRX_VERITRANS);
+    			post.setHeader(HttpClientUtil.CONTENT_TYPE, HttpClientUtil.JSON);
+    			post.setEntity(entity);
+    			// Execute HTTP request
+    			Log.d(TAG,"Executing request: " + post.getURI());
+                HttpResponse response = client.execute(post);
+                HttpEntity respEntity = response.getEntity();
+                respString = EntityUtils.toString(respEntity);
+    			result = true;
+    			} catch (ClientProtocolException e) {
+    				Log.e(TAG, "ClientProtocolException : "+e);
+    				if (dialog.isShowing()) {
+    					try
+    	                {
+    	            		dialog.dismiss();
+    	                }catch(Exception e1) {
+    	                	// nothing
+    	                }
+    	            }
+    			} catch (IOException e) {
+    				Log.e(TAG, "IOException : "+e);
+    				if (dialog.isShowing()) {
+    					try
+    	                {
+    	            		dialog.dismiss();
+    	                }catch(Exception e1) {
+    	                	// nothing
+    	                }
+    	            }		
+    			} catch (Exception e) {
+    				Log.e(TAG, "Exception : "+e);
+    				if (dialog.isShowing()) {
+    					try
+    	                {
+    	            		dialog.dismiss();
+    	                }catch(Exception e1) {
+    	                	// nothing
+    	                }
+    	            }				
+    			}
+           	return result;
+           }
+        
+        @Override
+        protected void onPostExecute(final Boolean success) {     	        
+            if (success) {
+	               	if(!respString.isEmpty()){
+	               		try {
+	               			String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
+	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
+		               		if(messageVO.getRc()==0){
+		               			MessageUtils messageUtils = new MessageUtils(ctx);
+				             	messageUtils.messageLong(messageVO.getOtherMessage());				             	
+		               		}else{
+		               			MessageUtils messageUtils = new MessageUtils(ctx);
+				             	messageUtils.messageLong(messageVO.getMessageRc());
+		               		}
+						} catch (Exception e) {
+							MessageUtils messageUtils = new MessageUtils(ctx);
+			             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_message_server));
+						}	            
+	               	}else{
+	               	   MessageUtils messageUtils = new MessageUtils(ctx);
+	             	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+	               	}
+            }else{
+         	   MessageUtils messageUtils = new MessageUtils(ctx);
+         	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+            }
+            if (sendServerProgress.isShowing()) {
+            	try
+                {
+            		sendServerProgress.dismiss();
+                }catch(Exception e1) {
+                	// nothing
+                }
+            }
+            
+            if (dialog.isShowing()) {
+            	try
+                {
+            		dialog.dismiss();
+                }catch(Exception e1) {
+                	// nothing
+                }
+            }
+        }
+    }
 	
+	private class VtWebViewClient extends WebViewClient {
+
+        String token;
+        String price;
+
+        public VtWebViewClient(String token, String price){
+            this.token = token;
+            this.price = price;
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+
+            Log.d("VtLog", url);
+
+            if (url.startsWith(HttpClientUtil.getPaymentApiUrl() + "/callback/")) {
+                //send token to server
+                SendTokenAsync sendTokenAsync = new SendTokenAsync();
+                sendTokenAsync.execute(token,price);
+                //close web dialog
+                dialog3ds.dismiss();
+                //show loading dialog
+                sendServerProgress = ProgressDialog.show(ctx,"","Sending Data to Server. Please Wait...",true);
+
+            } else if (url.startsWith(HttpClientUtil.getPaymentApiUrl() + "/redirect/") || url.contains("3dsecure")) {
+                /* Do nothing */
+            } else {
+                if(dialog3ds != null){
+                    dialog3ds.dismiss();
+                }
+            }
+        }
+
+    }
 	
-	//TOAST MESSAGE
-	private void toastMsg(String msg){
-		Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
-		toast.setGravity(Gravity.TOP | Gravity.CENTER, 0, 0);
-		toast.show();
-	}
+	private VTCardDetails CardFactory(boolean secure,InqCreditCardRequest inqCreditCardRequest){
+        VTCardDetails cardDetails = new VTCardDetails();
+        cardDetails.setCard_number("4411111111111118");
+        cardDetails.setCard_cvv("123");
+        cardDetails.setCard_exp_month(12);
+        cardDetails.setCard_exp_year(2020);
+        cardDetails.setSecure(secure);
+        cardDetails.setGross_amount("5000000");
+//        cardDetails.setCard_number(inqCreditCardRequest.getNoCC());
+//        cardDetails.setCard_cvv(inqCreditCardRequest.getCardCvv());
+//        cardDetails.setCard_exp_month(inqCreditCardRequest.getCardExpireMonth());
+//        cardDetails.setCard_exp_year(inqCreditCardRequest.getCardExpireYear());
+//        cardDetails.setSecure(secure);
+//        cardDetails.setGross_amount(inqCreditCardRequest.getGross_amount());
+        return cardDetails;
+    }
 	
 
 }

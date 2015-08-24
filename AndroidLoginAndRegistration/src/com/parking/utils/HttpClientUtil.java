@@ -1,5 +1,7 @@
 package com.parking.utils;
 
+import id.co.veritrans.android.api.VTUtil.VTConfig;
+
 import java.security.KeyStore;
 
 import org.apache.http.HttpVersion;
@@ -30,6 +32,22 @@ public class HttpClientUtil {
 	 */
 	public static final String CONTENT_TYPE = "Content-Type";
 	public static final String JSON = "application/json";
+	
+	/**
+	 * veritrans
+	 */
+	public final static String CLIENT_KEY = "VT-client-Uz6HDzD8yYF0vhr-";
+	public final static String PAYMENT_API = "https://api.veritrans.co.id/v2/token";
+
+    public final static String PAYMENT_API_SANDBOX = "https://api.sandbox.veritrans.co.id/v2/token";
+
+    public static String getPaymentApiUrl(){
+        if(VTConfig.VT_IsProduction){
+            return PAYMENT_API;
+        }
+        return PAYMENT_API_SANDBOX;
+    }
+	
 	/**
 	 * URL base to engine
 	 */
@@ -44,6 +62,7 @@ public class HttpClientUtil {
 	public static final String URL_LOGOUT = "/trx/logoutUser";
 	public static final String URL_GET_ALL_MALL = "/trx/listMall";
 	public static final String URL_USER_REG= "/trx/userRegistration"; // Registration
+	public static final String URL_RECEIVE_TRX_VERITRANS= "/trx/receiveTrxFromVeriTrans"; // Registration
 	
 	// list trx code engine
 	//LOGIN

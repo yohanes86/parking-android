@@ -46,6 +46,11 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
+        <activity
+            android:name="com.parking.activity.InputCreditCardActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
         <activity android:name=".swipelistview.sample.activities.SettingsActivity" android:windowSoftInputMode="stateAlwaysHidden"/>
         
         <activity android:name=".swipelistview.sample.activities.SwipeListViewExampleActivity">
