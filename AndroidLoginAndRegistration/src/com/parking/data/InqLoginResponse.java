@@ -1,19 +1,21 @@
 package com.parking.data;
 
-import com.parking.entity.UserData;
 
 
 public class InqLoginResponse extends BaseResponse {
 
 	private static final long serialVersionUID = 1L;
 	
-	private UserData userData;
+	private LoginData loginData;
+
+	public LoginData getLoginData() {
+		return loginData;
+	}
+
+	public void setLoginData(LoginData loginData) {
+		this.loginData = loginData;
+	}
 	
-	public UserData getUserData() {
-		return userData;
-	}
-	public void setUserData(UserData userData) {
-		this.userData = userData;
-	}
+	
 	
 }

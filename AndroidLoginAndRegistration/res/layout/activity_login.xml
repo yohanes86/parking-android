@@ -53,12 +53,21 @@
             android:textColor="@color/btn_login" />
 
         <!-- Link to Login Screen -->
-
-        <Button
-            android:id="@+id/btnLinkToRegisterScreen"
+		<Button
+            android:id="@+id/btnLinkToForgetPasswordScreen"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dip"
+            android:background="@null"
+            android:text="@string/btn_link_to_forget"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="14dp" />
+		
+        <Button
+            android:id="@+id/btnLinkToRegisterScreen"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"            
             android:background="@null"
             android:text="@string/btn_link_to_register"
             android:textAllCaps="false"
