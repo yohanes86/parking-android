@@ -62,6 +62,7 @@
     
     <string name="btn_login">LOGIN</string>
     <string name="btn_register">REGISTER</string>
+    <string name="btn_pay">PAY</string>
     <string name="btn_change_password">CHANGE PASSWORD</string>
     <string name="btn_logout">LOGOUT</string>
     <string name="btn_forgot_password">FORGOT PASSWORD</string>    
@@ -85,7 +86,7 @@
     <string name="process_forgot_password">Forgot password in process, please wait</string>
     <string name="process_login">Login in process, please wait</string>
     <string name="process_change_password">Change password in process, please wait</string>
-    <string name="process_verification_to_server">Verification Payment in process, please wait</string>
+    <string name="process_verification_to_server">Verification payment please wait...</string>
     <string name="process_logout">Logout in process, please wait</string>
     <string name="process_register">Register in process, please wait</string>
     <string name="process_get_list_mall">Get list mall, please wait</string>

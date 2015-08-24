@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.parking.data.LoginData;
+import com.parking.data.SettingData;
 
 public class SharedPreferencesUtils {
 	private static final String TAG = "Share Preferences Utils";
@@ -25,6 +26,27 @@ public class SharedPreferencesUtils {
 		SharedPreferences.Editor editor = getPreferences(ctx).edit();
 		editor.putString(com.parking.data.Constants.LOGIN_DATA_PREF, loginData);
 		editor.commit();
+    }
+	
+	public static void saveSettingData(String settingDataJson,Context ctx,String email){    	
+		SharedPreferences.Editor editor = getPreferences(ctx).edit();
+		editor.putString(com.parking.data.Constants.SETTING_DATA_PREF+email, settingDataJson);
+		editor.commit();
+    }
+	
+	public static SettingData getSettingData(Context ctx,String email) {
+		SettingData settingData = null;
+		try {		   	
+		String ld = getPreferences(ctx).getString(com.parking.data.Constants.SETTING_DATA_PREF+email, "");
+		settingData = HttpClientUtil.getObjectMapper(ctx).readValue(ld, new TypeReference<SettingData>(){});
+		} catch (JsonGenerationException e) {
+			Log.e(TAG, "JsonGenerationException  getSettingData: " + e);	
+		} catch (JsonMappingException e) {
+			Log.e(TAG, "JsonMappingException getSettingData: " + e);			
+		} catch (IOException e) {
+			Log.e(TAG, "IOException getSettingData: " + e);
+		}
+		return settingData;   
     }
 	
 	public static LoginData getLoginData(Context ctx) {

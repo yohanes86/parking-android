@@ -2,7 +2,6 @@ package com.parking.menu;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -12,13 +11,13 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.type.TypeReference;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,9 +37,11 @@ import android.widget.ListView;
 import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.parking.R;
+import com.parking.data.Constants;
 import com.parking.data.InqGetMallRequest;
 import com.parking.data.LoginData;
 import com.parking.data.MessageVO;
+import com.parking.data.SettingData;
 import com.parking.entity.Mall;
 import com.parking.swipelistview.sample.adapters.MallAdapter;
 import com.parking.swipelistview.sample.adapters.MallItem;
@@ -248,51 +249,6 @@ public class MallFragment extends Fragment {
                 reload();
         }
     }
-
-    public class ListAppTask extends AsyncTask<Void, Void, List<MallItem>> {
-
-        protected List<MallItem> doInBackground(Void... args) {
-            PackageManager appInfo = ctx.getPackageManager();
-            List<ApplicationInfo> listInfo = appInfo.getInstalledApplications(0);
-            Collections.sort(listInfo, new ApplicationInfo.DisplayNameComparator(appInfo));
-
-            List<MallItem> data = new ArrayList<MallItem>();
-
-            for (int index = 0; index < listInfo.size(); index++) {
-                try {
-                    ApplicationInfo content = listInfo.get(index);
-                    if ((content.flags != ApplicationInfo.FLAG_SYSTEM) && content.enabled) {
-                        if (content.icon != 0) {
-                            MallItem item = new MallItem();
-                            item.setName(ctx.getPackageManager().getApplicationLabel(content).toString());
-                            item.setInformation(content.packageName);                            
-                            item.setIcon(ctx.getResources().getDrawable(R.drawable.default_image)); // default image
-                            item.setIcon(ctx.getPackageManager().getDrawable(content.packageName, content.icon, content));
-                            data.add(item);
-                        }
-                    }
-                } catch (Exception e) {
-
-                }
-            }
-
-            return data;
-        }
-
-        protected void onPostExecute(List<MallItem> result) {
-            data.clear();
-            data.addAll(result);
-            adapter.notifyDataSetChanged();
-            if (progressDialog != null) {
-                progressDialog.dismiss();
-                progressDialog = null;
-            }
-            if (PreferencesManager.getInstance(ctx).getShowAbout()) {
-                UsageTipsDialog logOutDialog = new UsageTipsDialog();
-                logOutDialog.show(getActivity().getSupportFragmentManager(), "dialog");
-            }
-        }
-    }
     
     public class ReqGetMallTask extends AsyncTask<String, Void, Boolean> {
        	private ProgressDialog dialog = new ProgressDialog(ctx);
@@ -389,8 +345,7 @@ public class MallFragment extends Fragment {
 		                            progressDialog.dismiss();
 		                            progressDialog = null;
 		                        }
-		                        UsageTipsDialog usageTipsDialog = new UsageTipsDialog();
-		                        usageTipsDialog.show(getActivity().getSupportFragmentManager(), "dialog");
+		                        setupTipsDialog();
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.messageLong(messageVO.getMessageRc());
@@ -418,41 +373,43 @@ public class MallFragment extends Fragment {
            }
 
        }
-
-//    private void initView(){
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-//                getActivity(),
-//                android.R.layout.simple_list_item_1,
-//                getCalendarData());
-//        listView.setAdapter(arrayAdapter);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Toast.makeText(getActivity(), "Clicked item!", Toast.LENGTH_LONG).show();
-//            }
-//        });
-//    }
-
-    private ArrayList<String> getCalendarData(){
-        ArrayList<String> calendarList = new ArrayList<String>();
-        calendarList.add("New Year's Day");
-        calendarList.add("St. Valentine's Day");
-        calendarList.add("Easter Day");
-        calendarList.add("April Fool's Day");
-        calendarList.add("Mother's Day");
-        calendarList.add("Memorial Day");
-        calendarList.add("National Flag Day");
-        calendarList.add("Father's Day");
-        calendarList.add("Independence Day");
-        calendarList.add("Labor Day");
-        calendarList.add("Columbus Day");
-        calendarList.add("Halloween");
-        calendarList.add("All Soul's Day");
-        calendarList.add("Veterans Day");
-        calendarList.add("Thanksgiving Day");
-        calendarList.add("Election Day");
-        calendarList.add("Forefather's Day");
-        calendarList.add("Christmas Day");
-        return calendarList;
+    
+    private void setupTipsDialog(){
+    	SettingData settingData = SharedPreferencesUtils.getSettingData(ctx, email);
+        if(settingData!=null){
+        	if(Constants.SHOW_TIPS > settingData.getShowTips()){
+        		if (PreferencesManager.getInstance(ctx).getShowAbout()) {
+                    UsageTipsDialog usageTipsDialog = new UsageTipsDialog();
+                    usageTipsDialog.show(getActivity().getSupportFragmentManager(), "dialog");
+                    settingData.setShowTips(settingData.getShowTips()+1);
+                    try {
+                    	SharedPreferencesUtils.saveSettingData(HttpClientUtil.getObjectMapper(ctx).writeValueAsString(settingData), ctx, email);
+                    } catch (JsonGenerationException e) {
+            			Log.e(TAG, "JsonGenerationException  saveSettingData: " + e);	
+            		} catch (JsonMappingException e) {
+            			Log.e(TAG, "JsonMappingException saveSettingData: " + e);			
+            		} catch (IOException e) {
+            			Log.e(TAG, "IOException saveSettingData: " + e);
+            		}                        
+                }
+        	}
+        }else{
+        	settingData = new SettingData();
+        	if (PreferencesManager.getInstance(ctx).getShowAbout()) {
+                UsageTipsDialog usageTipsDialog = new UsageTipsDialog();
+                usageTipsDialog.show(getActivity().getSupportFragmentManager(), "dialog");
+                settingData.setShowTips(settingData.getShowTips()+1);
+                try {
+                	SharedPreferencesUtils.saveSettingData(HttpClientUtil.getObjectMapper(ctx).writeValueAsString(settingData), ctx, email);
+                } catch (JsonGenerationException e) {
+        			Log.e(TAG, "JsonGenerationException  saveSettingData: " + e);	
+        		} catch (JsonMappingException e) {
+        			Log.e(TAG, "JsonMappingException saveSettingData: " + e);			
+        		} catch (IOException e) {
+        			Log.e(TAG, "IOException saveSettingData: " + e);
+        		}                        
+            }
+        }
     }
+
 }

@@ -26,6 +26,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +37,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parking.R;
@@ -61,9 +63,11 @@ public class InputCreditCardActivity extends Activity {
 	private EditText cardExpireMonth;
 	private EditText cardExpireYear;
 	private EditText cardCvv;
+	private TextView paymentFor;
+	private TextView total;
 	private ProgressDialog pDialog;
 	private Context ctx;
-	
+	private String mallName;
 	AlertDialog dialog3ds;
     ProgressDialog sendServerProgress;
     int totalPrice;
@@ -73,18 +77,22 @@ public class InputCreditCardActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_credit_card);
 		ctx = InputCreditCardActivity.this;
+		paymentFor = (TextView) findViewById(R.id.paymentFor);
+		total = (TextView) findViewById(R.id.total);
 		noCC = (EditText) findViewById(R.id.noCC);
 		cardExpireMonth = (EditText) findViewById(R.id.card_expire_month);
 		cardCvv = (EditText) findViewById(R.id.card_cvv);
 		cardExpireYear = (EditText) findViewById(R.id.card_expire_year);
 		btnPay = (Button) findViewById(R.id.btnPay);
-
+		Intent intent = getIntent();
+		mallName = intent.getStringExtra("mallName");
 		// Progress dialog
 		pDialog = new ProgressDialog(this);
 		pDialog.setCancelable(false);
 
-		
-
+		totalPrice = 15000;
+		paymentFor.setText("V-Mobile "+ mallName);
+		total.setText("GRAND TOTAL: "+ totalPrice);
 		
 		btnPay.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
@@ -100,7 +108,7 @@ public class InputCreditCardActivity extends Activity {
 					inqCreditCardRequest.setCardExpireMonth(Integer.parseInt(cardExpireMonthInput));
 					inqCreditCardRequest.setCardExpireYear(Integer.parseInt(cardExpireYearInput));
 					inqCreditCardRequest.setCardCvv(cardCvvInput);					
-					inqCreditCardRequest.setGross_amount("5000000");					
+					inqCreditCardRequest.setGross_amount(Integer.toString(totalPrice));					
 					//set environment
 	                VTConfig.VT_IsProduction = false;
 	                //set client key
@@ -115,7 +123,7 @@ public class InputCreditCardActivity extends Activity {
 	                vtDirect.setCard_details(cardDetails);
 
 	                //set loading dialog
-	                final ProgressDialog loadingDialog = ProgressDialog.show(ctx,"","Loading, Please Wait...",true);
+	                final ProgressDialog loadingDialog = ProgressDialog.show(ctx,"","Authenticating credit card...",true);
 	                vtDirect.getToken(new ITokenCallback() {
 	                    @Override
 	                    public void onSuccess(VTToken token) {
@@ -149,7 +157,7 @@ public class InputCreditCardActivity extends Activity {
 	                            dialog3ds = alertBuilder.create();
 
 
-	                            dialog3ds.setTitle("3D Secure Veritrans");
+	                            dialog3ds.setTitle("3D Secure");
 	                            dialog3ds.setView(webView);
 	                            webView.requestFocus(View.FOCUS_DOWN);
 	                            alertBuilder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
@@ -184,17 +192,9 @@ public class InputCreditCardActivity extends Activity {
 
 	}
 	
-	private class SendTokenAsync extends AsyncTask<String, Void, Boolean>{
-		private ProgressDialog dialog = new ProgressDialog(ctx);
+	private class SendTokenAsync extends AsyncTask<String, Void, Boolean>{		
 		private final HttpClient client = HttpClientUtil.getNewHttpClient();
-       	String respString = null;
-       	protected void onPreExecute() {
-   		dialog = new ProgressDialog(ctx);
-			dialog.setIndeterminate(true);
-			dialog.setCancelable(true);
-			dialog.setMessage(ctx.getResources().getString(R.string.process_verification_to_server));
-			dialog.show();
-		}
+       	String respString = null;       	   		
 		
 		@Override
 		protected Boolean doInBackground(String... params) {
@@ -209,37 +209,37 @@ public class InputCreditCardActivity extends Activity {
     			veriTransVO.setTokenId(URLEncoder.encode(params[0],"UTF-8"));
     			veriTransVO.setPaymentMethod("Credit Card");
     			CustomerDetail customerDetail = new CustomerDetail();
-    			customerDetail.setFirstName("YOHANES");
-    			customerDetail.setLastName("VINCENTIUS");
-    			customerDetail.setEmail("vincent_yohanes@yahoo.com");
-    			customerDetail.setPhone("081807771819");
+    			customerDetail.setFirstName(loginData.getName());
+    			customerDetail.setLastName(loginData.getName());
+    			customerDetail.setEmail(loginData.getEmail());
+    			customerDetail.setPhone(loginData.getPhoneNo());
     			Address billAddress = new Address();
-    			billAddress.setFirstName("YOHANES BILLING");
-    			billAddress.setLastName("VINCENTIUS");
-    			billAddress.setAddress("Jalan Raya");
-    			billAddress.setCity("Jakarta");
-    			billAddress.setPhone("081807771819");
-    			billAddress.setPostalCode("11740");
+    			billAddress.setFirstName(loginData.getName());
+    			billAddress.setLastName(loginData.getName());
+    			billAddress.setAddress("");
+    			billAddress.setCity("");
+    			billAddress.setPhone(loginData.getPhoneNo());
+    			billAddress.setPostalCode("15210");
     			
     			Address shipAddress = new Address();
-    			shipAddress.setFirstName("Yohanes SHIPPING");
-    			shipAddress.setLastName("Vincentius SHIPPING");
-    			shipAddress.setAddress("Jalan Raya aaa");
-    			shipAddress.setCity("Jakarta");
-    			shipAddress.setPhone("081807771819");
-    			shipAddress.setPostalCode("11740");
+    			shipAddress.setFirstName(loginData.getName());
+    			shipAddress.setLastName(loginData.getName());
+    			shipAddress.setAddress("");
+    			shipAddress.setCity("");
+    			shipAddress.setPhone(loginData.getPhoneNo());
+    			shipAddress.setPostalCode("15210");
     			customerDetail.setBillingAddress(billAddress);
     			customerDetail.setShippingAddress(shipAddress);
     			
     			TransactionDetails transactionDetails = new  TransactionDetails();
     			transactionDetails.setOrderId(UUID.randomUUID().toString());
-    			transactionDetails.setGrossAmount(new Long(5000000));
+    			transactionDetails.setGrossAmount(new Long(totalPrice));
     			
     			Product product = new Product();
     			product.setId(new Long(1));
-    			product.setLongName("Parking Online Mall Kota Kasablanca");
-    			product.setPriceIdr(new Long(5000000));
-    			product.setShortName("V-Mobile KOKAS");
+    			product.setLongName("Parking Online "+ mallName);
+    			product.setPriceIdr(new Long(totalPrice));
+    			product.setShortName("V-Mobile "+ mallName);
     			product.setThumbnailFilePath("");
     			List<Product> listProducts = new ArrayList<Product>();
     			listProducts.add(product);
@@ -261,34 +261,13 @@ public class InputCreditCardActivity extends Activity {
     			result = true;
     			} catch (ClientProtocolException e) {
     				Log.e(TAG, "ClientProtocolException : "+e);
-    				if (dialog.isShowing()) {
-    					try
-    	                {
-    	            		dialog.dismiss();
-    	                }catch(Exception e1) {
-    	                	// nothing
-    	                }
-    	            }
+    				
     			} catch (IOException e) {
     				Log.e(TAG, "IOException : "+e);
-    				if (dialog.isShowing()) {
-    					try
-    	                {
-    	            		dialog.dismiss();
-    	                }catch(Exception e1) {
-    	                	// nothing
-    	                }
-    	            }		
+    						
     			} catch (Exception e) {
     				Log.e(TAG, "Exception : "+e);
-    				if (dialog.isShowing()) {
-    					try
-    	                {
-    	            		dialog.dismiss();
-    	                }catch(Exception e1) {
-    	                	// nothing
-    	                }
-    	            }				
+    								
     			}
            	return result;
            }
@@ -302,7 +281,8 @@ public class InputCreditCardActivity extends Activity {
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
 		               		if(messageVO.getRc()==0){
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getOtherMessage());				             	
+				             	messageUtils.messageLong(messageVO.getOtherMessage());	
+				             	finish();
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.messageLong(messageVO.getMessageRc());
@@ -328,14 +308,7 @@ public class InputCreditCardActivity extends Activity {
                 }
             }
             
-            if (dialog.isShowing()) {
-            	try
-                {
-            		dialog.dismiss();
-                }catch(Exception e1) {
-                	// nothing
-                }
-            }
+            
         }
     }
 	
@@ -368,7 +341,7 @@ public class InputCreditCardActivity extends Activity {
                 //close web dialog
                 dialog3ds.dismiss();
                 //show loading dialog
-                sendServerProgress = ProgressDialog.show(ctx,"","Sending Data to Server. Please Wait...",true);
+                sendServerProgress = ProgressDialog.show(ctx,"",ctx.getResources().getString(R.string.process_verification_to_server),true);
 
             } else if (url.startsWith(HttpClientUtil.getPaymentApiUrl() + "/redirect/") || url.contains("3dsecure")) {
                 /* Do nothing */
@@ -383,18 +356,18 @@ public class InputCreditCardActivity extends Activity {
 	
 	private VTCardDetails CardFactory(boolean secure,InqCreditCardRequest inqCreditCardRequest){
         VTCardDetails cardDetails = new VTCardDetails();
-        cardDetails.setCard_number("4411111111111118");
-        cardDetails.setCard_cvv("123");
-        cardDetails.setCard_exp_month(12);
-        cardDetails.setCard_exp_year(2020);
-        cardDetails.setSecure(secure);
-        cardDetails.setGross_amount("5000000");
-//        cardDetails.setCard_number(inqCreditCardRequest.getNoCC());
-//        cardDetails.setCard_cvv(inqCreditCardRequest.getCardCvv());
-//        cardDetails.setCard_exp_month(inqCreditCardRequest.getCardExpireMonth());
-//        cardDetails.setCard_exp_year(inqCreditCardRequest.getCardExpireYear());
+//        cardDetails.setCard_number("4811111111111114");
+//        cardDetails.setCard_cvv("123");
+//        cardDetails.setCard_exp_month(12);
+//        cardDetails.setCard_exp_year(2020);
 //        cardDetails.setSecure(secure);
-//        cardDetails.setGross_amount(inqCreditCardRequest.getGross_amount());
+//        cardDetails.setGross_amount(Integer.toString(totalPrice));
+        cardDetails.setCard_number(inqCreditCardRequest.getNoCC());
+        cardDetails.setCard_cvv(inqCreditCardRequest.getCardCvv());
+        cardDetails.setCard_exp_month(inqCreditCardRequest.getCardExpireMonth());
+        cardDetails.setCard_exp_year(inqCreditCardRequest.getCardExpireYear());
+        cardDetails.setSecure(secure);
+        cardDetails.setGross_amount(inqCreditCardRequest.getGross_amount());
         return cardDetails;
     }
 	

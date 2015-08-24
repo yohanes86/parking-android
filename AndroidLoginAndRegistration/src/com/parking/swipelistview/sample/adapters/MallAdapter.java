@@ -108,9 +108,10 @@ public class MallAdapter extends BaseAdapter {
 //                } else {
 //                    Toast.makeText(context, R.string.cantOpen, Toast.LENGTH_SHORT).show();
 //                }
-            	Intent i = new Intent(ctx, InputCreditCardActivity.class);
+            	Intent i = new Intent(ctx, InputCreditCardActivity.class);            	
+            	i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
+            	i.putExtra("mallName", item.getName());
             	ctx.startActivity(i);
-            	i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);            	
             }
         });
 
