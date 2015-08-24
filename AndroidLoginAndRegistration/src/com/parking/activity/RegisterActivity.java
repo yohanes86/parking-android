@@ -1,7 +1,5 @@
 package com.parking.activity;
 
-<<<<<<< HEAD
-import info.androidhive.loginandregistration.R;
 
 import java.io.IOException;
 
@@ -15,8 +13,6 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-=======
->>>>>>> a62c51952b50e07562865fec5090eb4440f0c925
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -29,8 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-<<<<<<< HEAD
-import com.parking.data.InqLoginResponse;
+import com.parking.R;
 import com.parking.data.InqRegistrationRequest;
 import com.parking.data.InqRegistrationResponse;
 import com.parking.service.ConnectionService;
@@ -39,10 +34,7 @@ import com.parking.set.SetValue;
 import com.parking.utils.CipherUtil;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.StringUtils;
-=======
-import com.parking.R;
-import com.parking.data.InqRegistrationRequest;
->>>>>>> a62c51952b50e07562865fec5090eb4440f0c925
+
 
 public class RegisterActivity extends Activity {
 	private static final String TAG = RegisterActivity.class.getSimpleName();

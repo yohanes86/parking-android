@@ -2,6 +2,7 @@ package com.parking.utils;
 
 import java.security.MessageDigest;
 import java.security.Security;
+import java.util.Arrays;
 import java.util.BitSet;
 
 import javax.crypto.Cipher;
