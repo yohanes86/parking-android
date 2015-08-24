@@ -20,7 +20,7 @@ public class SetValue
 	
 	
 	// CONSTANTS
-	public static final String URL_SERVER_REAL ="https://192.168.0.25:8080/csf-trx/trx";
+	public static final String URL_SERVER_REAL ="http://ec2-52-2-58-152.compute-1.amazonaws.com:8080/trx";
 
 	
 
@@ -84,12 +84,12 @@ public class SetValue
 	public static final String PARAM_TRX_CODE = "TRX_CODE";
 	
 	public static final String USER_LOGIN= "/processingLogin"; // LOGIN
-	public static final String USER_REG= "/processingRegistration"; // Registration
+	public static final String USER_REG= "/trx/userRegistration"; // Registration
 	
 	
 	//RC
 	
-	public static final String RC_SUCCESS		= "00";
+	public static final int RC_SUCCESS		= 0;
 	public static final String RC_TIMEOUT 		= "99";
 	
 	

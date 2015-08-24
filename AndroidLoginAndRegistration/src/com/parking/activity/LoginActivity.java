@@ -23,7 +23,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.parking.R;
 import com.parking.data.InqLoginRequest;
 import com.parking.data.LoginData;
 import com.parking.data.MessageVO;

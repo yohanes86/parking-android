@@ -3,18 +3,22 @@ package com.parking.activity;
 
 import java.io.IOException;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.util.EntityUtils;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,16 +29,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.parking.R;
 import com.parking.data.InqRegistrationRequest;
 import com.parking.data.InqRegistrationResponse;
+import com.parking.data.LoginData;
+import com.parking.data.MessageVO;
+import com.parking.menu.MenuActivity;
 import com.parking.service.ConnectionService;
 import com.parking.service.SessionService;
 import com.parking.set.SetValue;
 import com.parking.utils.CipherUtil;
 import com.parking.utils.HttpClientUtil;
+import com.parking.utils.MessageUtils;
+import com.parking.utils.SharedPreferencesUtils;
 import com.parking.utils.StringUtils;
-
 
 public class RegisterActivity extends Activity {
 	private static final String TAG = RegisterActivity.class.getSimpleName();
@@ -46,6 +53,7 @@ public class RegisterActivity extends Activity {
 	private EditText inputLicenseNo;
 	private EditText inputPhoneNo;
 	private ProgressDialog pDialog;
+	private Context ctx;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -59,6 +67,8 @@ public class RegisterActivity extends Activity {
 		inputPassword = (EditText) findViewById(R.id.password);
 		btnRegister = (Button) findViewById(R.id.btnRegister);
 		btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
+		
+		ctx = this.getApplicationContext();
 
 		// Progress dialog
 		pDialog = new ProgressDialog(this);
@@ -75,15 +85,17 @@ public class RegisterActivity extends Activity {
 				String phoneNo = inputPhoneNo.getText().toString();
 				String licenseNo = inputLicenseNo.getText().toString();
 				
-				String encPass = CipherUtil.encryptPass(password);
 
 				if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()&& !phoneNo.isEmpty()&& !licenseNo.isEmpty()) {
 					InqRegistrationRequest inqRegRequest = new InqRegistrationRequest();
 					inqRegRequest.setName(name);
 					inqRegRequest.setLicenseNo(licenseNo);
 					inqRegRequest.setEmail(email);
-					inqRegRequest.setPassword(encPass);
+					inqRegRequest.setPassword(password);
 					inqRegRequest.setPhoneNo(phoneNo);
+					
+					String s = HttpClientUtil.getObjectMapper(ctx).writeValueAsString(inqRegRequest);
+					s = CipherUtil.encryptTripleDES(s, CipherUtil.PASSWORD);
 					
 					String paramRegistration = composeHttpPostParamReg(inqRegRequest);
 					
@@ -110,7 +122,7 @@ public class RegisterActivity extends Activity {
 	}
 	
 	private void grabURL (String addedUrl,String param){
-		String urlServer = SetValue.URL_SERVER_REAL;
+		String urlServer = HttpClientUtil.URL_BASE;
 //		toastMsg(urlServer);
 		
 		Log.v(TAG, urlServer+ addedUrl);
@@ -127,6 +139,7 @@ public class RegisterActivity extends Activity {
 		private String content;
 		private String error = null;
 		private String speedtestResult = null;
+		String respString = null;
 
 		protected void onPreExecute() {
 			dialog.setMessage(getString(R.string.label_retrieveData));
@@ -140,14 +153,18 @@ public class RegisterActivity extends Activity {
 			try{
 		
 				HttpPost httppost = new HttpPost(params[0]);
-
 				StringEntity entity = new StringEntity(params[1]);
+				httppost.setHeader(HttpClientUtil.CONTENT_TYPE, HttpClientUtil.JSON);
 				httppost.setEntity(entity);
 				
 				
-				ResponseHandler<String> responseHandler = new BasicResponseHandler();
+				/*ResponseHandler<String> responseHandler = new BasicResponseHandler();
 				content = client.execute(httppost, responseHandler);
-				result = true;
+				result = true;*/
+				HttpResponse response = client.execute(httppost);
+                HttpEntity respEntity = response.getEntity();
+                respString = EntityUtils.toString(respEntity);
+    			result = true;
 
 			}catch (ClientProtocolException e){
 				/*dialog.dismiss();*/
@@ -222,39 +239,16 @@ public class RegisterActivity extends Activity {
 				Log.v(TAG, "ERROR: " + error);
 			} else {
 					try{
-					ObjectMapper mapper = new ObjectMapper();
+						String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
+               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);
+	               		if(messageVO.getRc()==SetValue.RC_SUCCESS){
+	               			registrationSuccess();
+	               		}else{
+	               			MessageUtils messageUtils = new MessageUtils(ctx);
+			             	messageUtils.messageLong(messageVO.getMessageRc());
+	               		}
 						
-					InqRegistrationResponse inqRegResponse = new InqRegistrationResponse();
-					inqRegResponse = mapper.readValue(content, InqRegistrationResponse.class);
 					
-					toastMsg(inqRegResponse.getMessageRc());
-					
-					if(SetValue.RC_SUCCESS.equals(inqRegResponse.getRc())){
-//					
-						registrationSuccess();
-						
-						String accessModule = "";
-						/*try {
-							
-						} catch (JsonGenerationException e) {
-							Log.e(TAG, "JsonGenerationException: " + e);
-							e.printStackTrace();
-						} catch (JsonMappingException e) {
-							Log.e(TAG, "JsonMappingException: " + e);
-							e.printStackTrace();
-						} catch (IOException e) {
-							Log.e(TAG, "IOException: " + e);
-							e.printStackTrace();
-						}
-						*/
-//						 toastMsg(noHp);   
-						SessionService sessionService = SessionService.getInstance();
-						sessionService.setData(SetValue.SESSION_SERVICE_KEY, inqRegResponse.getOtherMessage());
-						
-					Log.i(TAG, "inqLoginResponse : "+inqRegResponse);
-					}else{
-						
-					}
 					} catch (JsonGenerationException e) {	
 		        		Log.e(TAG, "JsonGenerationException : "+e);
 		    			e.printStackTrace();			    		

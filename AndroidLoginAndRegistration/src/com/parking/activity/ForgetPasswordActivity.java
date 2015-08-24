@@ -21,7 +21,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.parking.R;
 import com.parking.data.InqForgotPasswordRequest;
 import com.parking.data.InqForgotPasswordResponse;
 import com.parking.data.MessageVO;
