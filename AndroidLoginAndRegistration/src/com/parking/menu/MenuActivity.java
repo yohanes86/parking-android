@@ -127,6 +127,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         resideMenu.clearIgnoredViewList();
         getSupportFragmentManager()
                 .beginTransaction()
+                .addToBackStack(null)
                 .replace(R.id.main_fragment, targetFragment, "fragment")
                 .setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
@@ -135,5 +136,14 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     // What good method is to access resideMenu？
     public ResideMenu getResideMenu(){
         return resideMenu;
+    }
+    
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() == 0) {
+//            this.finish();
+        } else {
+            getFragmentManager().popBackStack();
+        }
     }
 }
