@@ -333,9 +333,13 @@ public class MallFragment extends Fragment {
 		                            item.setInformation(mall.getMallAddress()+" - " + mall.getMallPhone());                            
 		                            item.setIcon(ctx.getResources().getDrawable(R.drawable.default_image)); // default image
 //		                            item.setIcon(ctx.getPackageManager().getDrawable(content.packageName, content.icon, content));
-		                            if(!mall.getMallImage().isEmpty()){
-		                            	item.setIcon(ImageUtil.getImage(ctx, mall.getMallImage()));
-		                            }		                            
+		                            try {
+		                            	if(!mall.getMallImage().isEmpty()){
+			                            	item.setIcon(ImageUtil.getImage(ctx, mall.getMallImage()));
+			                            }
+									} catch (Exception e) {
+										// TODO: handle exception
+									}		                            		                            
 		                            result.add(item);
 								}
 		               			data.clear();
