@@ -211,6 +211,7 @@ public class InputCreditCardActivity extends Activity {
            		LoginData loginData = SharedPreferencesUtils.getLoginData(ctx);            	 
            		// ambil dari session untuk email, session key	         	
            		VeriTransVO veriTransVO = new VeriTransVO();
+           		veriTransVO.setBookingId(bookingId);
     			veriTransVO.setEmail(loginData.getEmail());
     			veriTransVO.setSessionKey(loginData.getSessionKey());
     			veriTransVO.setTotalPriceIdr(new Long(params[1]));
