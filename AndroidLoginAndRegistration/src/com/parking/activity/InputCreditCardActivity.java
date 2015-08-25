@@ -65,9 +65,12 @@ public class InputCreditCardActivity extends Activity {
 	private EditText cardCvv;
 	private TextView paymentFor;
 	private TextView total;
+	private TextView txtSlotName;
+	
 	private ProgressDialog pDialog;
 	private Context ctx;
 	private String mallName;
+	private String slotName;
 	AlertDialog dialog3ds;
     ProgressDialog sendServerProgress;
     int totalPrice;
@@ -78,6 +81,7 @@ public class InputCreditCardActivity extends Activity {
 		setContentView(R.layout.activity_credit_card);
 		ctx = InputCreditCardActivity.this;
 		paymentFor = (TextView) findViewById(R.id.paymentFor);
+		txtSlotName = (TextView) findViewById(R.id.txtSlotName);
 		total = (TextView) findViewById(R.id.total);
 		noCC = (EditText) findViewById(R.id.noCC);
 		cardExpireMonth = (EditText) findViewById(R.id.card_expire_month);
@@ -86,13 +90,15 @@ public class InputCreditCardActivity extends Activity {
 		btnPay = (Button) findViewById(R.id.btnPay);
 		Intent intent = getIntent();
 		mallName = intent.getStringExtra("mallName");
+		slotName = intent.getStringExtra("slotName");
+		totalPrice = intent.getIntExtra("hargaParkir", 10000);
 		// Progress dialog
 		pDialog = new ProgressDialog(this);
 		pDialog.setCancelable(false);
-
-		totalPrice = 15000;
+		
 		paymentFor.setText("V-Mobile "+ mallName);
 		total.setText("GRAND TOTAL: "+ totalPrice);
+		txtSlotName.setText("Area name : " + slotName);
 		
 		btnPay.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {

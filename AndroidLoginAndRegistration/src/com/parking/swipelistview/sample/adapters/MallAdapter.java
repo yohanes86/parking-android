@@ -57,6 +57,7 @@ import com.parking.menu.ChangePasswordFragment.ReqChangePasswordTask;
 import com.parking.utils.CipherUtil;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
+import com.parking.utils.RedirectUtils;
 import com.parking.utils.SharedPreferencesUtils;
 
 public class MallAdapter extends BaseAdapter {
@@ -132,7 +133,10 @@ public class MallAdapter extends BaseAdapter {
 //            	Intent i = new Intent(ctx, InputCreditCardActivity.class);            	
 //            	i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
 //            	i.putExtra("mallName", item.getName());
-//            	ctx.startActivity(i);            	
+//            	ctx.startActivity(i);      
+            	
+            	reqSlotByMallTask = new ReqSlotByMallTask();
+            	reqSlotByMallTask.execute(item.getName());
             }
         });
 
@@ -184,11 +188,12 @@ public class MallAdapter extends BaseAdapter {
         return list.size() > 0;
     }
     
-    private void goToPayScreen(String mallName, long hargaParkir) {
+    private void goToPayScreen(String mallName, long hargaParkir,String slotName) {
     	Intent i = new Intent(ctx, InputCreditCardActivity.class);            	
     	i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
     	i.putExtra("mallName", mallName);
     	i.putExtra("hargaParkir", hargaParkir);
+    	i.putExtra("slotName", slotName);
     	ctx.startActivity(i);
     }
     
@@ -200,7 +205,7 @@ public class MallAdapter extends BaseAdapter {
        		dialog = new ProgressDialog(ctx);
     			dialog.setIndeterminate(true);
     			dialog.setCancelable(true);
-    			dialog.setMessage(ctx.getResources().getString(R.string.process_change_password));
+    			dialog.setMessage(ctx.getResources().getString(R.string.process_find_slots));
     			dialog.show();
     		}
     		@Override
@@ -209,7 +214,8 @@ public class MallAdapter extends BaseAdapter {
            	try {
            		LoginData loginData = SharedPreferencesUtils.getLoginData(ctx); 
            		SlotsParkingVO slotsParkingVO = new SlotsParkingVO();        
-           		slotsParkingVO.setEmail(loginData.getEmail());           		
+           		slotsParkingVO.setEmail(loginData.getEmail());  
+           		slotsParkingVO.setMallName(params[0]);
            		slotsParkingVO.setSessionKey(loginData.getSessionKey());
 				String s = HttpClientUtil.getObjectMapper(ctx).writeValueAsString(slotsParkingVO);
 				s = CipherUtil.encryptTripleDES(s, CipherUtil.PASSWORD);
@@ -267,13 +273,13 @@ public class MallAdapter extends BaseAdapter {
 	               			String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
 		               		if(messageVO.getRc()==0){
-		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getOtherMessage());
+//		               			MessageUtils messageUtils = new MessageUtils(ctx);
+//				             	messageUtils.messageLong(messageVO.getOtherMessage());
 				             	SlotsParkingVO slotsParkingVO = HttpClientUtil.getObjectMapper(ctx).readValue(messageVO.getOtherMessage(), SlotsParkingVO.class);
-				             	goToPayScreen(slotsParkingVO.getMallName(), slotsParkingVO.getSlotsPrice());
+				             	goToPayScreen(slotsParkingVO.getMallName(), slotsParkingVO.getSlotsPrice(),slotsParkingVO.getSlotsName());
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	messageUtils.messageLong(messageVO.getMessageRc());				             	
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);

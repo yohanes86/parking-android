@@ -16,9 +16,12 @@ public class SlotsParkingVO extends LoginData implements Serializable {
 	/*
 	 * SLOTS MALL
 	 */
+	private int idSlot;
 	private String slotsName;
 	private Long slotsPrice;
 	private int slotsStatus;
+	
+	private String orderId;
 
 	public String getMallCode() {
 		return mallCode;
@@ -82,6 +85,22 @@ public class SlotsParkingVO extends LoginData implements Serializable {
 
 	public void setSlotsStatus(int slotsStatus) {
 		this.slotsStatus = slotsStatus;
+	}
+
+	public int getIdSlot() {
+		return idSlot;
+	}
+
+	public void setIdSlot(int idSlot) {
+		this.idSlot = idSlot;
+	}
+
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 
 }
