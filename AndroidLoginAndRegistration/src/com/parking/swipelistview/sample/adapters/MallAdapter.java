@@ -48,16 +48,12 @@ import android.widget.TextView;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.parking.R;
 import com.parking.activity.InputCreditCardActivity;
-import com.parking.data.InqChangePasswordRequest;
 import com.parking.data.LoginData;
 import com.parking.data.MessageVO;
 import com.parking.data.SlotsParkingVO;
-import com.parking.menu.ChangePasswordFragment;
-import com.parking.menu.ChangePasswordFragment.ReqChangePasswordTask;
 import com.parking.utils.CipherUtil;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
-import com.parking.utils.RedirectUtils;
 import com.parking.utils.SharedPreferencesUtils;
 
 public class MallAdapter extends BaseAdapter {
@@ -188,12 +184,13 @@ public class MallAdapter extends BaseAdapter {
         return list.size() > 0;
     }
     
-    private void goToPayScreen(String mallName, long hargaParkir,String slotName) {
+    private void goToPayScreen(String mallName, long hargaParkir,String slotName,String bookingId) {
     	Intent i = new Intent(ctx, InputCreditCardActivity.class);            	
     	i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
     	i.putExtra("mallName", mallName);
     	i.putExtra("hargaParkir", hargaParkir);
     	i.putExtra("slotName", slotName);
+    	i.putExtra("bookingId", bookingId);
     	ctx.startActivity(i);
     }
     
@@ -276,7 +273,7 @@ public class MallAdapter extends BaseAdapter {
 //		               			MessageUtils messageUtils = new MessageUtils(ctx);
 //				             	messageUtils.messageLong(messageVO.getOtherMessage());
 				             	SlotsParkingVO slotsParkingVO = HttpClientUtil.getObjectMapper(ctx).readValue(messageVO.getOtherMessage(), SlotsParkingVO.class);
-				             	goToPayScreen(slotsParkingVO.getMallName(), slotsParkingVO.getSlotsPrice(),slotsParkingVO.getSlotsName());
+				             	goToPayScreen(slotsParkingVO.getMallName(), slotsParkingVO.getSlotsPrice(),slotsParkingVO.getSlotsName(),slotsParkingVO.getBookingId());
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.messageLong(messageVO.getMessageRc());				             	

@@ -12,7 +12,7 @@ public class SlotsParkingVO extends LoginData implements Serializable {
 	private String mallAddress;
 	private String mallPhone;
 	private int status;
-
+	
 	/*
 	 * SLOTS MALL
 	 */
@@ -20,6 +20,7 @@ public class SlotsParkingVO extends LoginData implements Serializable {
 	private String slotsName;
 	private Long slotsPrice;
 	private int slotsStatus;
+	private String bookingId;
 	
 	private String orderId;
 
@@ -101,6 +102,14 @@ public class SlotsParkingVO extends LoginData implements Serializable {
 
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
+	}
+
+	public String getBookingId() {
+		return bookingId;
+	}
+
+	public void setBookingId(String bookingId) {
+		this.bookingId = bookingId;
 	}
 
 }

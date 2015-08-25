@@ -71,6 +71,7 @@ public class InputCreditCardActivity extends Activity {
 	private Context ctx;
 	private String mallName;
 	private String slotName;
+	private String bookingId;
 	AlertDialog dialog3ds;
     ProgressDialog sendServerProgress;
     int totalPrice;
@@ -99,6 +100,7 @@ public class InputCreditCardActivity extends Activity {
 		paymentFor.setText("V-Mobile "+ mallName);
 		total.setText("GRAND TOTAL: "+ totalPrice);
 		txtSlotName.setText("Area name : " + slotName);
+		bookingId = intent.getStringExtra("bookingId");
 		
 		btnPay.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {

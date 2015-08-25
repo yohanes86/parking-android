@@ -7,6 +7,7 @@ public class VeriTransVO extends LoginData implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String tokenId;
+	private String bookingId;
 	private Long TotalPriceIdr;
 	
 	private CustomerDetail customerDetail;
@@ -62,5 +63,13 @@ public class VeriTransVO extends LoginData implements Serializable {
 
 	public void setTotalPriceIdr(Long totalPriceIdr) {
 		TotalPriceIdr = totalPriceIdr;
+	}
+
+	public String getBookingId() {
+		return bookingId;
+	}
+
+	public void setBookingId(String bookingId) {
+		this.bookingId = bookingId;
 	}
 }
