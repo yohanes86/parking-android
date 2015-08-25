@@ -62,7 +62,9 @@ public class HttpClientUtil {
 	public static final String URL_LOGOUT = "/trx/logoutUser";
 	public static final String URL_GET_ALL_MALL = "/trx/listMall";
 	public static final String URL_USER_REG= "/trx/userRegistration"; // Registration
-	public static final String URL_RECEIVE_TRX_VERITRANS= "/trx/receiveTrxFromVeriTrans"; // Registration
+	public static final String URL_RECEIVE_TRX_VERITRANS= "/trx/receiveTrxFromVeriTrans"; // payment Confirm
+	public static final String URL_FIND_SLOT_BY_MALL= "/trx/findSLotsByMall";
+	
 	
 	// list trx code engine
 	//LOGIN

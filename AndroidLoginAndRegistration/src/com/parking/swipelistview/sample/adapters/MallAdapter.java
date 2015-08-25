@@ -18,13 +18,25 @@
 
 package com.parking.swipelistview.sample.adapters;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.util.EntityUtils;
+
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,17 +44,26 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.parking.R;
 import com.parking.activity.InputCreditCardActivity;
-import com.parking.activity.LoginActivity;
+import com.parking.data.InqChangePasswordRequest;
+import com.parking.data.LoginData;
+import com.parking.data.MessageVO;
+import com.parking.data.SlotsParkingVO;
+import com.parking.menu.ChangePasswordFragment;
+import com.parking.menu.ChangePasswordFragment.ReqChangePasswordTask;
+import com.parking.utils.CipherUtil;
+import com.parking.utils.HttpClientUtil;
+import com.parking.utils.MessageUtils;
+import com.parking.utils.SharedPreferencesUtils;
 
 public class MallAdapter extends BaseAdapter {
-
+	private static final String TAG = MallAdapter.class.getSimpleName();
     private List<MallItem> data;
     private Context ctx;
+    private ReqSlotByMallTask reqSlotByMallTask = null;
 
     public MallAdapter(Context context, List<MallItem> data) {
         this.ctx = context;
@@ -108,10 +129,10 @@ public class MallAdapter extends BaseAdapter {
 //                } else {
 //                    Toast.makeText(context, R.string.cantOpen, Toast.LENGTH_SHORT).show();
 //                }
-            	Intent i = new Intent(ctx, InputCreditCardActivity.class);            	
-            	i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
-            	i.putExtra("mallName", item.getName());
-            	ctx.startActivity(i);
+//            	Intent i = new Intent(ctx, InputCreditCardActivity.class);            	
+//            	i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
+//            	i.putExtra("mallName", item.getName());
+//            	ctx.startActivity(i);            	
             }
         });
 
@@ -162,5 +183,120 @@ public class MallAdapter extends BaseAdapter {
 
         return list.size() > 0;
     }
+    
+    private void goToPayScreen(String mallName, long hargaParkir) {
+    	Intent i = new Intent(ctx, InputCreditCardActivity.class);            	
+    	i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
+    	i.putExtra("mallName", mallName);
+    	i.putExtra("hargaParkir", hargaParkir);
+    	ctx.startActivity(i);
+    }
+    
+    public class ReqSlotByMallTask extends AsyncTask<String, Void, Boolean> {
+       	private ProgressDialog dialog = new ProgressDialog(ctx);
+       	private final HttpClient client = HttpClientUtil.getNewHttpClient();
+       	String respString = null;
+       	protected void onPreExecute() {
+       		dialog = new ProgressDialog(ctx);
+    			dialog.setIndeterminate(true);
+    			dialog.setCancelable(true);
+    			dialog.setMessage(ctx.getResources().getString(R.string.process_change_password));
+    			dialog.show();
+    		}
+    		@Override
+           protected Boolean doInBackground(String... params) {
+           	boolean result = false;
+           	try {
+           		LoginData loginData = SharedPreferencesUtils.getLoginData(ctx); 
+           		SlotsParkingVO slotsParkingVO = new SlotsParkingVO();        
+           		slotsParkingVO.setEmail(loginData.getEmail());           		
+           		slotsParkingVO.setSessionKey(loginData.getSessionKey());
+				String s = HttpClientUtil.getObjectMapper(ctx).writeValueAsString(slotsParkingVO);
+				s = CipherUtil.encryptTripleDES(s, CipherUtil.PASSWORD);
+           		Log.d(TAG,"Request: " + s);
+                StringEntity entity = new StringEntity(s);    			
+    			HttpPost post = new HttpPost(HttpClientUtil.URL_BASE+HttpClientUtil.URL_FIND_SLOT_BY_MALL);
+    			post.setHeader(HttpClientUtil.CONTENT_TYPE, HttpClientUtil.JSON);
+    			post.setEntity(entity);
+    			// Execute HTTP request
+    			Log.d(TAG,"Executing request: " + post.getURI());
+                HttpResponse response = client.execute(post);
+                HttpEntity respEntity = response.getEntity();
+                respString = EntityUtils.toString(respEntity);
+    			result = true;
+    			} catch (ClientProtocolException e) {
+    				Log.e(TAG, "ClientProtocolException : "+e);
+    				if (dialog.isShowing()) {
+    					try
+    	                {
+    	            		dialog.dismiss();
+    	                }catch(Exception e1) {
+    	                	// nothing
+    	                }
+    	            }
+    			} catch (IOException e) {
+    				Log.e(TAG, "IOException : "+e);
+    				if (dialog.isShowing()) {
+    					try
+    	                {
+    	            		dialog.dismiss();
+    	                }catch(Exception e1) {
+    	                	// nothing
+    	                }
+    	            }		
+    			} catch (Exception e) {
+    				Log.e(TAG, "Exception : "+e);
+    				if (dialog.isShowing()) {
+    					try
+    	                {
+    	            		dialog.dismiss();
+    	                }catch(Exception e1) {
+    	                	// nothing
+    	                }
+    	            }				
+    			}
+           	return result;
+           }
+
+           @Override
+           protected void onPostExecute(final Boolean success) {
+        	   reqSlotByMallTask = null;          
+               if (success) {
+	               	if(!respString.isEmpty()){
+	               		try {
+	               			String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
+	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
+		               		if(messageVO.getRc()==0){
+		               			MessageUtils messageUtils = new MessageUtils(ctx);
+				             	messageUtils.messageLong(messageVO.getOtherMessage());
+				             	SlotsParkingVO slotsParkingVO = HttpClientUtil.getObjectMapper(ctx).readValue(messageVO.getOtherMessage(), SlotsParkingVO.class);
+				             	goToPayScreen(slotsParkingVO.getMallName(), slotsParkingVO.getSlotsPrice());
+		               		}else{
+		               			MessageUtils messageUtils = new MessageUtils(ctx);
+				             	messageUtils.messageLong(messageVO.getMessageRc());
+		               		}
+						} catch (Exception e) {
+							MessageUtils messageUtils = new MessageUtils(ctx);
+			             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_message_server));
+						}	            
+	               	}else{
+	               	   MessageUtils messageUtils = new MessageUtils(ctx);
+	             	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+	               	}
+               }else{
+            	   MessageUtils messageUtils = new MessageUtils(ctx);
+            	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+               }
+               if (dialog.isShowing()) {
+               	try
+                   {
+               		dialog.dismiss();
+                   }catch(Exception e1) {
+                   	// nothing
+                   }
+               }
+           }
+
+       }
 
 }
