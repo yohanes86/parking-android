@@ -18,7 +18,15 @@ public class BookingVO extends LoginData implements Serializable {
 	private int bookingStatus;
 	private String bookingStatusValue;
 	private String bookingDateValue;
-
+	/**
+	 * 0 = booking pertama
+	   1 = jika booking tapi tidak dibayar selama 15 menit sehingga 
+	   scheduler akan otomatis release
+	   2 = booking + pay
+	   3 = user check in di mall
+	   4 = jika setelah di booking dan dibayar user tidak datang selama 2 jam 
+	   scheduler akan otomatis release
+	 */
 	
 
 	public String getBookingId() {
