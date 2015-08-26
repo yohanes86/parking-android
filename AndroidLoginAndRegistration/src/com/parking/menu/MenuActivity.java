@@ -11,7 +11,10 @@ import android.widget.Toast;
 
 import com.parking.R;
 import com.parking.activity.LoginActivity;
+import com.parking.data.Constants;
+import com.parking.data.LoginData;
 import com.parking.swipelistview.sample.activities.SwipeListViewExampleActivity;
+import com.parking.utils.SharedPreferencesUtils;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
 
@@ -34,6 +37,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.main);
         ctx = this;
         setUpMenu();
+        
         if( savedInstanceState == null )
             changeFragment(new HomeFragment());
     }
@@ -66,7 +70,18 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         resideMenu.addMenuItem(itemChangePassword, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemLogout, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemMall, ResideMenu.DIRECTION_RIGHT);
-        resideMenu.addMenuItem(itemCheckIn, ResideMenu.DIRECTION_RIGHT);
+        
+        LoginData loginData = SharedPreferencesUtils.getLoginData(ctx);            	 
+    	// ambil dari session untuk email, session key
+        if(loginData.getGroupUser().equalsIgnoreCase(Constants.USER)){
+        	
+        }else if(loginData.getGroupUser().equalsIgnoreCase(Constants.STAFF)){
+        	 resideMenu.addMenuItem(itemCheckIn, ResideMenu.DIRECTION_RIGHT);
+        }else if(loginData.getGroupUser().equalsIgnoreCase(Constants.ADMIN)){
+        	 resideMenu.addMenuItem(itemCheckIn, ResideMenu.DIRECTION_RIGHT);
+        }
+        
+       
 
         // You can disable a direction by setting ->
         // resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
