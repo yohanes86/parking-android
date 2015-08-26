@@ -35,9 +35,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dip"
-            android:padding="5dp"
             android:background="@color/btn_login_bg"
-            android:text="@string/btn_check_in"
+            android:padding="5dp"
+            android:text="@string/btn_check_booking_code"
             android:textColor="@color/btn_login" />
     </LinearLayout>
 
@@ -236,6 +236,16 @@
                 android:text=""
                 android:textColor="@color/input_login"
                 android:textColorHint="@color/input_login_hint" />
+
+            <Button
+                android:id="@+id/btnCheckInOk"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:background="@color/btn_login_bg"
+                android:padding="5dp"
+                android:text="@string/btn_check_in"
+                android:textColor="@color/btn_login" />
         </LinearLayout>
     </ScrollView>
 

@@ -75,6 +75,7 @@
     
     <string name="btn_login">LOGIN</string>
     <string name="btn_check_in">CHECK IN</string>
+    <string name="btn_check_booking_code">CHECK BOOKING CODE</string>
     <string name="btn_register">REGISTER</string>
     <string name="btn_pay">PAY</string>
     <string name="btn_change_password">CHANGE PASSWORD</string>
@@ -100,7 +101,8 @@
     <string name="process_forgot_password">Forgot password in process, please wait</string>
     <string name="process_login">Login in process, please wait</string>
     <string name="process_change_password">Change password in process, please wait</string>
-    <string name="process_check_in">Check in process, please wait</string>
+    <string name="process_check_in">Check Kode Booking, please wait</string>
+    <string name="process_confirm">Confirm process, please wait</string>
     <string name="process_check_booking_id_allowed_pay">Check booking id in process, please wait</string>
     <string name="process_find_slots">Checking slots in process, please wait</string>
     <string name="process_verification_to_server">Verification payment please wait...</string>

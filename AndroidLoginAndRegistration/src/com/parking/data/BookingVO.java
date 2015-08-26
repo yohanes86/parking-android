@@ -16,6 +16,8 @@ public class BookingVO extends LoginData implements Serializable {
 	private String bookingCode;
 	private Date bookingDate;
 	private int bookingStatus;
+	private String bookingStatusValue;
+	private String bookingDateValue;
 
 	
 
@@ -97,6 +99,22 @@ public class BookingVO extends LoginData implements Serializable {
 
 	public void setBookingStatus(int bookingStatus) {
 		this.bookingStatus = bookingStatus;
+	}
+
+	public String getBookingStatusValue() {
+		return bookingStatusValue;
+	}
+
+	public void setBookingStatusValue(String bookingStatusValue) {
+		this.bookingStatusValue = bookingStatusValue;
+	}
+
+	public String getBookingDateValue() {
+		return bookingDateValue;
+	}
+
+	public void setBookingDateValue(String bookingDateValue) {
+		this.bookingDateValue = bookingDateValue;
 	}
 
 }
