@@ -28,6 +28,8 @@
     <string name="ok">Ok</string>
     
     <string name="info_payment">Informasi Pembayaran</string>
+    <string name="info_expired_payment">Informasi Expired Pembayaran</string>
+    <string name="info_expired_payment_message">Harap segera lakukan pembayaran, pesanan ini hanya berlaku untuk 15 menit</string>
 
     <string name="visit47">Visit 47deg</string>
     <string name="goToGitHub">Go to GitHub</string>

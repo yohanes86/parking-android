@@ -53,7 +53,7 @@ public class HttpClientUtil {
 	 */
 	
 //	public static final String URL_BASE = "http://ec2-52-3-21-158.compute-1.amazonaws.com:8080/parking-trx";
-    public static final String URL_BASE = "http://192.168.1.102:8080/parking-trx";
+    public static final String URL_BASE = "http://192.168.0.215:8080/parking-trx";
 	/**
 	 * URL TRX
 	 */

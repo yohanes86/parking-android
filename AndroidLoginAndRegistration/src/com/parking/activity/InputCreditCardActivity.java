@@ -49,6 +49,7 @@ import com.parking.data.MessageVO;
 import com.parking.data.Product;
 import com.parking.data.TransactionDetails;
 import com.parking.data.VeriTransVO;
+import com.parking.swipelistview.sample.dialogs.ExpiredPaymentInfoDialog;
 import com.parking.swipelistview.sample.dialogs.PaymentInfoDialog;
 import com.parking.swipelistview.sample.utils.PreferencesManager;
 import com.parking.utils.CipherUtil;
@@ -103,7 +104,7 @@ public class InputCreditCardActivity extends Activity {
 		total.setText("GRAND TOTAL: "+ totalPrice);
 		txtSlotName.setText("Area name : " + slotName);
 		bookingId = intent.getStringExtra("bookingId");
-		
+		showExpiredPaymentInfo(ctx.getResources().getString(R.string.info_expired_payment_message));
 		btnPay.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				String noCCInput = noCC.getText().toString();
@@ -327,6 +328,13 @@ public class InputCreditCardActivity extends Activity {
 		if (PreferencesManager.getInstance(ctx).getShowAbout()) {
             PaymentInfoDialog paymentInfoDialog = new PaymentInfoDialog(message,ctx);
             paymentInfoDialog.show(getFragmentManager(), "dialog");                               
+        }
+	}
+	
+	private void showExpiredPaymentInfo(String message){
+		if (PreferencesManager.getInstance(ctx).getShowAbout()) {
+            ExpiredPaymentInfoDialog expiredPaymentInfoDialog = new ExpiredPaymentInfoDialog(message,ctx);
+            expiredPaymentInfoDialog.show(getFragmentManager(), "dialog");                               
         }
 	}
 	
