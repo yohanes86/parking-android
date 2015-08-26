@@ -52,6 +52,7 @@ import com.parking.utils.CipherUtil;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.ImageUtil;
 import com.parking.utils.MessageUtils;
+import com.parking.utils.RedirectUtils;
 import com.parking.utils.SharedPreferencesUtils;
 
 /**
@@ -86,7 +87,7 @@ public class MallFragment extends Fragment {
         sessionkey = loginData.getSessionKey();
         data = new ArrayList<MallItem>();
 
-        adapter = new MallAdapter(ctx, data);
+        adapter = new MallAdapter(ctx,getActivity(), data);
 
         swipeListView = (SwipeListView) parentView.findViewById(R.id.example_lv_list);
 
@@ -353,6 +354,10 @@ public class MallFragment extends Fragment {
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
+				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, getActivity());
+				             		redirectUtils.redirectToLogin();
+				             	}
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);

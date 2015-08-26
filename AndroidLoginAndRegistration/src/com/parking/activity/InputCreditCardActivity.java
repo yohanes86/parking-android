@@ -43,6 +43,7 @@ import android.widget.Toast;
 import com.parking.R;
 import com.parking.data.Address;
 import com.parking.data.BookingVO;
+import com.parking.data.Constants;
 import com.parking.data.CustomerDetail;
 import com.parking.data.InqCreditCardRequest;
 import com.parking.data.LoginData;
@@ -56,6 +57,7 @@ import com.parking.swipelistview.sample.utils.PreferencesManager;
 import com.parking.utils.CipherUtil;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
+import com.parking.utils.RedirectUtils;
 import com.parking.utils.SharedPreferencesUtils;
 import com.parking.view.CustomWebView;
 
@@ -305,6 +307,10 @@ public class InputCreditCardActivity extends Activity {
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
+				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, InputCreditCardActivity.this);
+				             		redirectUtils.redirectToLogin();
+				             	}
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
@@ -486,6 +492,10 @@ public class InputCreditCardActivity extends Activity {
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
+				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, InputCreditCardActivity.this);
+				             		redirectUtils.redirectToLogin();
+				             	}
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);

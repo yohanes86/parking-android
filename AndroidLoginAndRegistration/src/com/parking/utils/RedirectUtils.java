@@ -25,7 +25,7 @@ public class RedirectUtils extends Fragment{
 		act.finish();
         Intent intent = new Intent(ctx, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        ctx.startActivity(intent);
 	}
 	
 }

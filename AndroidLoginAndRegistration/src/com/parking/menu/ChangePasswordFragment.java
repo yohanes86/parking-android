@@ -24,12 +24,14 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.parking.R;
+import com.parking.data.Constants;
 import com.parking.data.InqChangePasswordRequest;
 import com.parking.data.LoginData;
 import com.parking.data.MessageVO;
 import com.parking.utils.CipherUtil;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
+import com.parking.utils.RedirectUtils;
 import com.parking.utils.SharedPreferencesUtils;
 
 /**
@@ -159,6 +161,10 @@ public class ChangePasswordFragment extends Fragment {
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
+				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, getActivity());
+				             		redirectUtils.redirectToLogin();
+				             	}
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);

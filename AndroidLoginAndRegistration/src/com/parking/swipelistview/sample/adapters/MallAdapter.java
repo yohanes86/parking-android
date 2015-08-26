@@ -29,6 +29,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -48,23 +49,32 @@ import android.widget.TextView;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.parking.R;
 import com.parking.activity.InputCreditCardActivity;
+import com.parking.data.Constants;
 import com.parking.data.LoginData;
 import com.parking.data.MessageVO;
 import com.parking.data.SlotsParkingVO;
 import com.parking.utils.CipherUtil;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
+import com.parking.utils.RedirectUtils;
 import com.parking.utils.SharedPreferencesUtils;
 
 public class MallAdapter extends BaseAdapter {
 	private static final String TAG = MallAdapter.class.getSimpleName();
     private List<MallItem> data;
     private Context ctx;
+    private Activity act;
     private ReqSlotByMallTask reqSlotByMallTask = null;
 
-    public MallAdapter(Context context, List<MallItem> data) {
+    public MallAdapter(Context context,Activity activity, List<MallItem> data) {
         this.ctx = context;
         this.data = data;
+        this.act = activity;
+    }
+    
+    public MallAdapter(Context context,List<MallItem> data) {
+        this.ctx = context;
+        this.data = data;        
     }
 
     @Override
@@ -276,7 +286,11 @@ public class MallAdapter extends BaseAdapter {
 				             	goToPayScreen(slotsParkingVO.getMallName(), slotsParkingVO.getSlotsPrice(),slotsParkingVO.getSlotsName(),slotsParkingVO.getBookingId());
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());				             	
+				             	messageUtils.messageLong(messageVO.getMessageRc());		
+				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
+				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, act);
+				             		redirectUtils.redirectToLogin();
+				             	}
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
