@@ -45,6 +45,15 @@
     <string name="app_name">Premium Parking Solution</string>
     <string name="app_name_forget">Premium Parking Solution - Forget Password</string>
     <string name="hint_email">Email</string>
+    <string name="hint_booking_code">Booking Code</string>
+    <string name="hint_booking_name">Name</string>
+    <string name="hint_booking_phone_no">Phone No</string>
+    <string name="hint_booking_email">Email</string>
+    <string name="hint_booking_mall">Mall Name</string>
+    <string name="hint_booking_id">Booking Id</string>
+    <string name="hint_booking_date">Booking Date</string>
+    <string name="hint_booking_status">Booking Status</string>
+    
     <string name="hint_license_no">No Polisi</string>
     <string name="hint_hp">No HP</string>
     <string name="hint_password">Password</string>
@@ -65,6 +74,7 @@
     <!-- BUTTON -->
     
     <string name="btn_login">LOGIN</string>
+    <string name="btn_check_in">CHECK IN</string>
     <string name="btn_register">REGISTER</string>
     <string name="btn_pay">PAY</string>
     <string name="btn_change_password">CHANGE PASSWORD</string>
@@ -90,6 +100,7 @@
     <string name="process_forgot_password">Forgot password in process, please wait</string>
     <string name="process_login">Login in process, please wait</string>
     <string name="process_change_password">Change password in process, please wait</string>
+    <string name="process_check_in">Check in process, please wait</string>
     <string name="process_check_booking_id_allowed_pay">Check booking id in process, please wait</string>
     <string name="process_find_slots">Checking slots in process, please wait</string>
     <string name="process_verification_to_server">Verification payment please wait...</string>
@@ -106,6 +117,7 @@
     <string name="message_email_required">Email harus diisi!</string>
     <string name="email_and_pass_required">Email dan password harus diisi!</string>
     <string name="message_password_required">Password lama dan password baru harus diisi!</string>
+    <string name="message_booking_code_required">Booking code harus diisi!</string>
     <string name="message_detail_required">Please fill your details!</string>
     
 </resources>

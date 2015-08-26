@@ -23,7 +23,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     private ResideMenuItem itemChangePassword;
     private ResideMenuItem itemLogout;
     private ResideMenuItem itemMall;
-    private ResideMenuItem itemSettings;
+    private ResideMenuItem itemCheckIn;
 
     /**
      * Called when the activity is first created.
@@ -54,19 +54,19 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         itemChangePassword  = new ResideMenuItem(this, R.drawable.icon_profile,  "Password");
         itemLogout  = new ResideMenuItem(this, R.drawable.icon_profile,  "Logout");
         itemMall = new ResideMenuItem(this, R.drawable.icon_calendar, "Malls");
-        itemSettings = new ResideMenuItem(this, R.drawable.icon_settings, "Settings");
+        itemCheckIn = new ResideMenuItem(this, R.drawable.icon_settings, "CheckIn");
 
         itemHome.setOnClickListener(this);
         itemChangePassword.setOnClickListener(this);
         itemLogout.setOnClickListener(this);        
         itemMall.setOnClickListener(this);
-        itemSettings.setOnClickListener(this);
+        itemCheckIn.setOnClickListener(this);
 
         resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemChangePassword, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemLogout, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemMall, ResideMenu.DIRECTION_RIGHT);
-        resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_RIGHT);
+        resideMenu.addMenuItem(itemCheckIn, ResideMenu.DIRECTION_RIGHT);
 
         // You can disable a direction by setting ->
         // resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
@@ -102,8 +102,8 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
 //        	Intent intent = new Intent(ctx, SwipeListViewExampleActivity.class);
 //            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //            startActivity(intent);
-        }else if (view == itemSettings){
-            changeFragment(new SettingsFragment());
+        }else if (view == itemCheckIn){
+            changeFragment(new CheckInFragment());
         }else if (view == itemLogout){
             changeFragment(new LogoutFragment());
         }
