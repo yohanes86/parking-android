@@ -36,6 +36,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,12 +65,20 @@ public class MallAdapter extends BaseAdapter {
     private List<MallItem> data;
     private Context ctx;
     private Activity act;
+    private LoginData login;
     private ReqSlotByMallTask reqSlotByMallTask = null;
 
     public MallAdapter(Context context,Activity activity, List<MallItem> data) {
         this.ctx = context;
         this.data = data;
         this.act = activity;
+    }
+    
+    public MallAdapter(Context context,Activity activity, List<MallItem> data,LoginData loginData) {
+        this.ctx = context;
+        this.data = data;
+        this.act = activity;
+        this.login = loginData;
     }
     
     public MallAdapter(Context context,List<MallItem> data) {
@@ -114,6 +123,17 @@ public class MallAdapter extends BaseAdapter {
             holder.tvInformation = (TextView) convertView.findViewById(R.id.example_row_tv_description);
             holder.bAction1 = (Button) convertView.findViewById(R.id.example_row_b_action_1);
             holder.bAction2 = (Button) convertView.findViewById(R.id.example_row_b_action_2);
+            
+            if(login.getGroupUser().equalsIgnoreCase(Constants.USER)){
+            	holder.bAction2.setVisibility(View.GONE);
+            }else if(login.getGroupUser().equalsIgnoreCase(Constants.STAFF)){
+            	holder.bAction2.setVisibility(View.VISIBLE);
+            	holder.bAction1.setVisibility(View.GONE);
+            }else if(login.getGroupUser().equalsIgnoreCase(Constants.ADMIN)){
+            	holder.bAction2.setVisibility(View.VISIBLE);
+            	holder.bAction1.setVisibility(View.VISIBLE);
+            }
+            
 //            holder.bAction3 = (Button) convertView.findViewById(R.id.example_row_b_action_3);
             convertView.setTag(holder);
         } else {

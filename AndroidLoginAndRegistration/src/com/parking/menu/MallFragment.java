@@ -87,7 +87,7 @@ public class MallFragment extends Fragment {
         sessionkey = loginData.getSessionKey();
         data = new ArrayList<MallItem>();
 
-        adapter = new MallAdapter(ctx,getActivity(), data);
+        adapter = new MallAdapter(ctx,getActivity(), data,loginData);
 
         swipeListView = (SwipeListView) parentView.findViewById(R.id.example_lv_list);
 
@@ -219,6 +219,7 @@ public class MallFragment extends Fragment {
         float px = dp * (metrics.densityDpi / 160f);
         return (int) px;
     }
+        
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
