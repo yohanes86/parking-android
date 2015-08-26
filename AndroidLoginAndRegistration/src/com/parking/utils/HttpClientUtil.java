@@ -65,6 +65,8 @@ public class HttpClientUtil {
 	public static final String URL_USER_REG= "/trx/userRegistration"; // Registration
 	public static final String URL_RECEIVE_TRX_VERITRANS= "/trx/receiveTrxFromVeriTrans"; // payment Confirm
 	public static final String URL_FIND_SLOT_BY_MALL= "/trx/findSLotsByMall";
+	public static final String URL_CHECK_ORDER_ALLOW_PAY= "/trx/checkOrderAllowPay";
+	
 	
 	
 	// list trx code engine

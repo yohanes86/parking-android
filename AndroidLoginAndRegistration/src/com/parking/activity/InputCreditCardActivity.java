@@ -42,6 +42,7 @@ import android.widget.Toast;
 
 import com.parking.R;
 import com.parking.data.Address;
+import com.parking.data.BookingVO;
 import com.parking.data.CustomerDetail;
 import com.parking.data.InqCreditCardRequest;
 import com.parking.data.LoginData;
@@ -78,6 +79,7 @@ public class InputCreditCardActivity extends Activity {
 	AlertDialog dialog3ds;
     ProgressDialog sendServerProgress;
     int totalPrice;
+    private CheckOrderAllowPayTask checkOrderAllowPayTask = null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -107,100 +109,105 @@ public class InputCreditCardActivity extends Activity {
 		showExpiredPaymentInfo(ctx.getResources().getString(R.string.info_expired_payment_message));
 		btnPay.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				String noCCInput = noCC.getText().toString();
-				String cardExpireMonthInput = cardExpireMonth.getText().toString();
-				String cardExpireYearInput = cardExpireYear.getText().toString();				
-				String cardCvvInput = cardCvv.getText().toString();
-								
-
-				if (!noCCInput.isEmpty() && !cardExpireMonthInput.isEmpty() && !cardExpireYearInput.isEmpty()&& !cardCvvInput.isEmpty()) {
-					InqCreditCardRequest inqCreditCardRequest = new InqCreditCardRequest();
-					inqCreditCardRequest.setNoCC(noCCInput);
-					inqCreditCardRequest.setCardExpireMonth(Integer.parseInt(cardExpireMonthInput));
-					inqCreditCardRequest.setCardExpireYear(Integer.parseInt(cardExpireYearInput));
-					inqCreditCardRequest.setCardCvv(cardCvvInput);					
-					inqCreditCardRequest.setGross_amount(Integer.toString(totalPrice));					
-					//set environment
-	                VTConfig.VT_IsProduction = false;
-	                //set client key
-	                VTConfig.CLIENT_KEY = HttpClientUtil.CLIENT_KEY; //agus	                
-
-	                VTDirect vtDirect = new VTDirect();
-	                //set using 3dsecure or not	             
-	                VTCardDetails cardDetails = null;
-	                
-	                cardDetails = CardFactory(true,inqCreditCardRequest);
-	               
-	                vtDirect.setCard_details(cardDetails);
-
-	                //set loading dialog
-	                final ProgressDialog loadingDialog = ProgressDialog.show(ctx,"","Authenticating credit card...",true);
-	                vtDirect.getToken(new ITokenCallback() {
-	                    @Override
-	                    public void onSuccess(VTToken token) {
-	                        loadingDialog.cancel();
-	                        if(token.getRedirect_url() != null){
-	                            //using 3d secure
-	                            //show it to user using webview
-	                            Log.d("VtLog",token.getToken_id());
-
-	                            CustomWebView webView = new CustomWebView(ctx);
-	                            webView.getSettings().setJavaScriptEnabled(true);
-	                            webView.setOnTouchListener(new View.OnTouchListener() {
-	                                @Override
-	                                public boolean onTouch(View v, MotionEvent event) {
-	                                    switch (event.getAction()) {
-	                                        case MotionEvent.ACTION_DOWN:
-	                                        case MotionEvent.ACTION_UP:
-	                                            if (!v.hasFocus()) {
-	                                                v.requestFocus();
-	                                            }
-	                                            break;
-	                                    }
-	                                    return false;
-	                                }
-	                            });
-	                            webView.setWebChromeClient(new WebChromeClient());
-	                            webView.setWebViewClient(new VtWebViewClient(token.getToken_id(),totalPrice+""));
-	                            webView.loadUrl(token.getRedirect_url());
-
-	                            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ctx);
-	                            dialog3ds = alertBuilder.create();
-
-
-	                            dialog3ds.setTitle("3D Secure");
-	                            dialog3ds.setView(webView);
-	                            webView.requestFocus(View.FOCUS_DOWN);
-	                            alertBuilder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-	                                @Override
-	                                public void onClick(DialogInterface dialog, int id) {
-	                                    dialog.dismiss();
-	                                }
-	                            });
-
-	                            dialog3ds.show();
-
-	                        }
-//	                        //print token
-//	                        TextView tokenText = (TextView) getView().findViewById(R.id.txt_token);
-//	                        tokenText.setText(token.getToken_id());
-
-	                    }
-
-	                    @Override
-	                    public void onError(Exception e) {
-	                        loadingDialog.cancel();
-	                        Toast.makeText(ctx,e.getMessage(),Toast.LENGTH_SHORT);
-	                    }
-	                });
-					
-				} else {
-					MessageUtils messageUtils = new MessageUtils(ctx);
-	             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_detail_required));
-				}
+				checkOrderAllowPayTask = new CheckOrderAllowPayTask();
+				checkOrderAllowPayTask.execute("");
 			}
 		});
 
+	}
+	
+	private void pay(){
+		String noCCInput = noCC.getText().toString();
+		String cardExpireMonthInput = cardExpireMonth.getText().toString();
+		String cardExpireYearInput = cardExpireYear.getText().toString();				
+		String cardCvvInput = cardCvv.getText().toString();
+						
+
+		if (!noCCInput.isEmpty() && !cardExpireMonthInput.isEmpty() && !cardExpireYearInput.isEmpty()&& !cardCvvInput.isEmpty()) {
+			InqCreditCardRequest inqCreditCardRequest = new InqCreditCardRequest();
+			inqCreditCardRequest.setNoCC(noCCInput);
+			inqCreditCardRequest.setCardExpireMonth(Integer.parseInt(cardExpireMonthInput));
+			inqCreditCardRequest.setCardExpireYear(Integer.parseInt(cardExpireYearInput));
+			inqCreditCardRequest.setCardCvv(cardCvvInput);					
+			inqCreditCardRequest.setGross_amount(Integer.toString(totalPrice));					
+			//set environment
+            VTConfig.VT_IsProduction = false;
+            //set client key
+            VTConfig.CLIENT_KEY = HttpClientUtil.CLIENT_KEY; //agus	                
+
+            VTDirect vtDirect = new VTDirect();
+            //set using 3dsecure or not	             
+            VTCardDetails cardDetails = null;
+            
+            cardDetails = CardFactory(true,inqCreditCardRequest);
+           
+            vtDirect.setCard_details(cardDetails);
+
+            //set loading dialog
+            final ProgressDialog loadingDialog = ProgressDialog.show(ctx,"","Authenticating credit card...",true);
+            vtDirect.getToken(new ITokenCallback() {
+                @Override
+                public void onSuccess(VTToken token) {
+                    loadingDialog.cancel();
+                    if(token.getRedirect_url() != null){
+                        //using 3d secure
+                        //show it to user using webview
+                        Log.d("VtLog",token.getToken_id());
+
+                        CustomWebView webView = new CustomWebView(ctx);
+                        webView.getSettings().setJavaScriptEnabled(true);
+                        webView.setOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+                                switch (event.getAction()) {
+                                    case MotionEvent.ACTION_DOWN:
+                                    case MotionEvent.ACTION_UP:
+                                        if (!v.hasFocus()) {
+                                            v.requestFocus();
+                                        }
+                                        break;
+                                }
+                                return false;
+                            }
+                        });
+                        webView.setWebChromeClient(new WebChromeClient());
+                        webView.setWebViewClient(new VtWebViewClient(token.getToken_id(),totalPrice+""));
+                        webView.loadUrl(token.getRedirect_url());
+
+                        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ctx);
+                        dialog3ds = alertBuilder.create();
+
+
+                        dialog3ds.setTitle("3D Secure");
+                        dialog3ds.setView(webView);
+                        webView.requestFocus(View.FOCUS_DOWN);
+                        alertBuilder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        dialog3ds.show();
+
+                    }
+//                    //print token
+//                    TextView tokenText = (TextView) getView().findViewById(R.id.txt_token);
+//                    tokenText.setText(token.getToken_id());
+
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    loadingDialog.cancel();
+                    Toast.makeText(ctx,e.getMessage(),Toast.LENGTH_SHORT);
+                }
+            });
+			
+		} else {
+			MessageUtils messageUtils = new MessageUtils(ctx);
+         	messageUtils.messageLong(ctx.getResources().getString(R.string.message_detail_required));
+		}
 	}
 	
 	private class SendTokenAsync extends AsyncTask<String, Void, Boolean>{		
@@ -396,6 +403,113 @@ public class InputCreditCardActivity extends Activity {
         cardDetails.setGross_amount(inqCreditCardRequest.getGross_amount());
         return cardDetails;
     }
+	
+	public class CheckOrderAllowPayTask extends AsyncTask<String, Void, Boolean> {
+       	private ProgressDialog dialog = new ProgressDialog(ctx);
+       	private final HttpClient client = HttpClientUtil.getNewHttpClient();
+       	String respString = null;
+       	protected void onPreExecute() {
+       		dialog = new ProgressDialog(ctx);
+    			dialog.setIndeterminate(true);
+    			dialog.setCancelable(true);
+    			dialog.setMessage(ctx.getResources().getString(R.string.process_check_booking_id_allowed_pay));
+    			dialog.show();
+    		}
+    		@Override
+           protected Boolean doInBackground(String... params) {
+           	boolean result = false;
+           	try {
+           		LoginData loginData = SharedPreferencesUtils.getLoginData(ctx);
+           		BookingVO bookingVO = new BookingVO();
+           		bookingVO.setEmail(loginData.getEmail());           		
+           		bookingVO.setSessionKey(loginData.getSessionKey());
+           		bookingVO.setBookingId(bookingId);
+				String s = HttpClientUtil.getObjectMapper(ctx).writeValueAsString(bookingVO);
+				s = CipherUtil.encryptTripleDES(s, CipherUtil.PASSWORD);
+           		Log.d(TAG,"Request: " + s);
+                StringEntity entity = new StringEntity(s);    			
+    			HttpPost post = new HttpPost(HttpClientUtil.URL_BASE+HttpClientUtil.URL_CHECK_ORDER_ALLOW_PAY);
+    			post.setHeader(HttpClientUtil.CONTENT_TYPE, HttpClientUtil.JSON);
+    			post.setEntity(entity);
+    			// Execute HTTP request
+    			Log.d(TAG,"Executing request: " + post.getURI());
+                HttpResponse response = client.execute(post);
+                HttpEntity respEntity = response.getEntity();
+                respString = EntityUtils.toString(respEntity);
+    			result = true;
+    			} catch (ClientProtocolException e) {
+    				Log.e(TAG, "ClientProtocolException : "+e);
+    				if (dialog.isShowing()) {
+    					try
+    	                {
+    	            		dialog.dismiss();
+    	                }catch(Exception e1) {
+    	                	// nothing
+    	                }
+    	            }
+    			} catch (IOException e) {
+    				Log.e(TAG, "IOException : "+e);
+    				if (dialog.isShowing()) {
+    					try
+    	                {
+    	            		dialog.dismiss();
+    	                }catch(Exception e1) {
+    	                	// nothing
+    	                }
+    	            }		
+    			} catch (Exception e) {
+    				Log.e(TAG, "Exception : "+e);
+    				if (dialog.isShowing()) {
+    					try
+    	                {
+    	            		dialog.dismiss();
+    	                }catch(Exception e1) {
+    	                	// nothing
+    	                }
+    	            }				
+    			}
+           	return result;
+           }
+
+           @Override
+           protected void onPostExecute(final Boolean success) {
+        	   checkOrderAllowPayTask = null;          
+               if (success) {
+	               	if(!respString.isEmpty()){
+	               		try {
+	               			String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
+	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
+		               		if(messageVO.getRc()==0){
+//		               			MessageUtils messageUtils = new MessageUtils(ctx);
+//				             	messageUtils.messageLong(messageVO.getOtherMessage());		
+		               			pay();
+		               		}else{
+		               			MessageUtils messageUtils = new MessageUtils(ctx);
+				             	messageUtils.messageLong(messageVO.getMessageRc());
+		               		}
+						} catch (Exception e) {
+							MessageUtils messageUtils = new MessageUtils(ctx);
+			             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_message_server));
+						}	            
+	               	}else{
+	               	   MessageUtils messageUtils = new MessageUtils(ctx);
+	             	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+	               	}
+               }else{
+            	   MessageUtils messageUtils = new MessageUtils(ctx);
+            	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+               }
+               if (dialog.isShowing()) {
+               	try
+                   {
+               		dialog.dismiss();
+                   }catch(Exception e1) {
+                   	// nothing
+                   }
+               }
+           }
+
+       }
 	
 
 }
