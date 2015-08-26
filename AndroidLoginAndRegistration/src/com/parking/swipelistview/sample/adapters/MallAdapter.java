@@ -67,6 +67,7 @@ public class MallAdapter extends BaseAdapter {
     private Activity act;
     private LoginData login;
     private ReqSlotByMallTask reqSlotByMallTask = null;
+    private ReqReleaseSlotByMallTask reqReleaseSlotByMallTask = null;
 
     public MallAdapter(Context context,Activity activity, List<MallItem> data) {
         this.ctx = context;
@@ -167,16 +168,12 @@ public class MallAdapter extends BaseAdapter {
         });
 
         holder.bAction2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isPlayStoreInstalled()) {
-                    ctx.startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("market://details?id=" + item.getInformation())));
-                } else {
-                    ctx.startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("http://play.google.com/store/apps/details?id=" + item.getInformation())));
-                }
-            }
+        	 @Override
+             public void onClick(View v) {
+
+        		 reqReleaseSlotByMallTask = new ReqReleaseSlotByMallTask();
+        		 reqReleaseSlotByMallTask.execute(item.getName());
+             }
         });
 
 //        holder.bAction3.setOnClickListener(new View.OnClickListener() {
@@ -304,6 +301,117 @@ public class MallAdapter extends BaseAdapter {
 //				             	messageUtils.messageLong(messageVO.getOtherMessage());
 				             	SlotsParkingVO slotsParkingVO = HttpClientUtil.getObjectMapper(ctx).readValue(messageVO.getOtherMessage(), SlotsParkingVO.class);
 				             	goToPayScreen(slotsParkingVO.getMallName(), slotsParkingVO.getSlotsPrice(),slotsParkingVO.getSlotsName(),slotsParkingVO.getBookingId());
+		               		}else{
+		               			MessageUtils messageUtils = new MessageUtils(ctx);
+				             	messageUtils.messageLong(messageVO.getMessageRc());		
+				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
+				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, act);
+				             		redirectUtils.redirectToLogin();
+				             	}
+		               		}
+						} catch (Exception e) {
+							MessageUtils messageUtils = new MessageUtils(ctx);
+			             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_message_server));
+						}	            
+	               	}else{
+	               	   MessageUtils messageUtils = new MessageUtils(ctx);
+	             	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+	               	}
+               }else{
+            	   MessageUtils messageUtils = new MessageUtils(ctx);
+            	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+               }
+               if (dialog.isShowing()) {
+               	try
+                   {
+               		dialog.dismiss();
+                   }catch(Exception e1) {
+                   	// nothing
+                   }
+               }
+           }
+
+       }
+    
+    
+    public class ReqReleaseSlotByMallTask extends AsyncTask<String, Void, Boolean> {
+       	private ProgressDialog dialog = new ProgressDialog(ctx);
+       	private final HttpClient client = HttpClientUtil.getNewHttpClient();
+       	String respString = null;
+       	protected void onPreExecute() {
+       		dialog = new ProgressDialog(ctx);
+    			dialog.setIndeterminate(true);
+    			dialog.setCancelable(true);
+    			dialog.setMessage(ctx.getResources().getString(R.string.process_find_slots));
+    			dialog.show();
+    		}
+    		@Override
+           protected Boolean doInBackground(String... params) {
+           	boolean result = false;
+           	try {
+           		LoginData loginData = SharedPreferencesUtils.getLoginData(ctx); 
+           		SlotsParkingVO slotsParkingVO = new SlotsParkingVO();        
+           		slotsParkingVO.setEmail(loginData.getEmail());  
+           		slotsParkingVO.setMallName(params[0]);
+           		slotsParkingVO.setSessionKey(loginData.getSessionKey());
+				String s = HttpClientUtil.getObjectMapper(ctx).writeValueAsString(slotsParkingVO);
+				s = CipherUtil.encryptTripleDES(s, CipherUtil.PASSWORD);
+           		Log.d(TAG,"Request: " + s);
+                StringEntity entity = new StringEntity(s);    			
+    			HttpPost post = new HttpPost(HttpClientUtil.URL_BASE+HttpClientUtil.URL_RELEASE_SLOT_PARKING);
+    			post.setHeader(HttpClientUtil.CONTENT_TYPE, HttpClientUtil.JSON);
+    			post.setEntity(entity);
+    			// Execute HTTP request
+    			Log.d(TAG,"Executing request: " + post.getURI());
+                HttpResponse response = client.execute(post);
+                HttpEntity respEntity = response.getEntity();
+                respString = EntityUtils.toString(respEntity);
+    			result = true;
+    			} catch (ClientProtocolException e) {
+    				Log.e(TAG, "ClientProtocolException : "+e);
+    				if (dialog.isShowing()) {
+    					try
+    	                {
+    	            		dialog.dismiss();
+    	                }catch(Exception e1) {
+    	                	// nothing
+    	                }
+    	            }
+    			} catch (IOException e) {
+    				Log.e(TAG, "IOException : "+e);
+    				if (dialog.isShowing()) {
+    					try
+    	                {
+    	            		dialog.dismiss();
+    	                }catch(Exception e1) {
+    	                	// nothing
+    	                }
+    	            }		
+    			} catch (Exception e) {
+    				Log.e(TAG, "Exception : "+e);
+    				if (dialog.isShowing()) {
+    					try
+    	                {
+    	            		dialog.dismiss();
+    	                }catch(Exception e1) {
+    	                	// nothing
+    	                }
+    	            }				
+    			}
+           	return result;
+           }
+
+           @Override
+           protected void onPostExecute(final Boolean success) {
+        	   reqSlotByMallTask = null;          
+               if (success) {
+	               	if(!respString.isEmpty()){
+	               		try {
+	               			String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
+	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
+		               		if(messageVO.getRc()==0){
+		               			MessageUtils messageUtils = new MessageUtils(ctx);
+				             	messageUtils.messageLong(messageVO.getOtherMessage());
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.messageLong(messageVO.getMessageRc());		
