@@ -26,6 +26,8 @@
     <string name="about">Cara Booking</string>
     <string name="aboutMessage">Pilih mal yang dituju kemudian tekan di list mall yang dituju beberapa detik, akan muncul tombol Booking. Happy Parking.</string>
     <string name="ok">Ok</string>
+    
+    <string name="info_payment">Informasi Pembayaran</string>
 
     <string name="visit47">Visit 47deg</string>
     <string name="goToGitHub">Go to GitHub</string>

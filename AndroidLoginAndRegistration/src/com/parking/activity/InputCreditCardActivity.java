@@ -49,6 +49,8 @@ import com.parking.data.MessageVO;
 import com.parking.data.Product;
 import com.parking.data.TransactionDetails;
 import com.parking.data.VeriTransVO;
+import com.parking.swipelistview.sample.dialogs.PaymentInfoDialog;
+import com.parking.swipelistview.sample.utils.PreferencesManager;
 import com.parking.utils.CipherUtil;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
@@ -289,9 +291,9 @@ public class InputCreditCardActivity extends Activity {
 	               			String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
 		               		if(messageVO.getRc()==0){
-		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getOtherMessage());	
-				             	finish();
+//		               			MessageUtils messageUtils = new MessageUtils(ctx);
+//				             	messageUtils.messageLong(messageVO.getOtherMessage());
+				             	showPaymentInfo(messageVO.getOtherMessage());				             	
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.messageLong(messageVO.getMessageRc());
@@ -320,6 +322,13 @@ public class InputCreditCardActivity extends Activity {
             
         }
     }
+	
+	private void showPaymentInfo(String message){
+		if (PreferencesManager.getInstance(ctx).getShowAbout()) {
+            PaymentInfoDialog paymentInfoDialog = new PaymentInfoDialog(message,ctx);
+            paymentInfoDialog.show(getFragmentManager(), "dialog");                               
+        }
+	}
 	
 	private class VtWebViewClient extends WebViewClient {
 
