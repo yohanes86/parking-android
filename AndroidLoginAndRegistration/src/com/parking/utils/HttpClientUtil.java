@@ -36,7 +36,7 @@ public class HttpClientUtil {
 	/**
 	 * veritrans
 	 */
-	public final static String CLIENT_KEY = "VT-client-Uz6HDzD8yYF0vhr-";
+	public final static String CLIENT_KEY = "VT-client-C-m5qVIS7rH1i6DL";
 	public final static String PAYMENT_API = "https://api.veritrans.co.id/v2/token";
 
     public final static String PAYMENT_API_SANDBOX = "https://api.sandbox.veritrans.co.id/v2/token";
@@ -52,10 +52,10 @@ public class HttpClientUtil {
 	 * URL base to engine
 	 */
 	
-//	public static final String URL_BASE = "http://ec2-52-3-21-158.compute-1.amazonaws.com:8080/parking-trx";
+//	public static final String URL_BASE = "http://54.191.189.219:8080/parking-trx";
     
-    public static final String URL_BASE = "http://192.168.1.102:8080/parking-trx";
-//    public static final String URL_BASE = "http://192.168.0.12:8080/parking-trx";
+//    public static final String URL_BASE = "http://192.168.1.102:8080/parking-trx";
+    public static final String URL_BASE = "http://192.168.0.217:8080/parking-trx";
 	/**
 	 * URL TRX
 	 */
@@ -71,6 +71,7 @@ public class HttpClientUtil {
 	public static final String URL_CHECK_BOOKING_CODE= "/trx/checkBookingCode";
 	public static final String URL_CONFIRM_BOOKING_CODE= "/trx/confirmCodeBooking";
 	public static final String URL_RELEASE_SLOT_PARKING= "/trx/releaseSlotParking";
+	public static final String URL_REFRESHING_LIST_MALL= "/trx/refreshCacheMall";
 	
 	
 	
@@ -93,7 +94,7 @@ public class HttpClientUtil {
 	
 
 	public static final String HTTP_PARAM_MSG				= "m"; // message variable
-	public static final String HTTP_PARAM_TRX_CODE				= "t"; // trx code variable
+	public static final String HTTP_PARAM_TRX_CODE			= "t"; // trx code variable
 	public static final String HTTP_PARAM_USER				= "u"; // user variable
 	
 	

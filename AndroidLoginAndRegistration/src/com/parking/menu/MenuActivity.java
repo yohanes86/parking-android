@@ -1,19 +1,15 @@
 package com.parking.menu;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
-
 import com.parking.R;
-import com.parking.activity.LoginActivity;
 import com.parking.data.Constants;
 import com.parking.data.LoginData;
-import com.parking.swipelistview.sample.activities.SwipeListViewExampleActivity;
 import com.parking.utils.SharedPreferencesUtils;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
@@ -27,6 +23,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     private ResideMenuItem itemLogout;
     private ResideMenuItem itemMall;
     private ResideMenuItem itemCheckIn;
+    private ResideMenuItem itemRefreshingMall;
 
     /**
      * Called when the activity is first created.
@@ -59,19 +56,21 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         itemLogout  = new ResideMenuItem(this, R.drawable.icon_profile,  "Logout");
         itemMall = new ResideMenuItem(this, R.drawable.icon_calendar, "Malls");
         itemCheckIn = new ResideMenuItem(this, R.drawable.icon_settings, "CheckIn");
+        itemRefreshingMall = new ResideMenuItem(this, R.drawable.icon_settings, "Refreshing List Mall");
 
         itemHome.setOnClickListener(this);
         itemChangePassword.setOnClickListener(this);
         itemLogout.setOnClickListener(this);        
         itemMall.setOnClickListener(this);
         itemCheckIn.setOnClickListener(this);
+        itemRefreshingMall.setOnClickListener(this);
 
         resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemChangePassword, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemLogout, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemMall, ResideMenu.DIRECTION_RIGHT);
         
-        LoginData loginData = SharedPreferencesUtils.getLoginData(ctx);            	 
+        LoginData loginData = SharedPreferencesUtils.getLoginData(ctx);    
     	// ambil dari session untuk email, session key
         if(loginData.getGroupUser().equalsIgnoreCase(Constants.USER)){
         	
@@ -79,6 +78,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         	 resideMenu.addMenuItem(itemCheckIn, ResideMenu.DIRECTION_RIGHT);
         }else if(loginData.getGroupUser().equalsIgnoreCase(Constants.ADMIN)){
         	 resideMenu.addMenuItem(itemCheckIn, ResideMenu.DIRECTION_RIGHT);
+        	 resideMenu.addMenuItem(itemRefreshingMall, ResideMenu.DIRECTION_RIGHT);
         }
         
        
@@ -114,13 +114,12 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
             changeFragment(new ChangePasswordFragment());
         }else if (view == itemMall){
             changeFragment(new MallFragment());
-//        	Intent intent = new Intent(ctx, SwipeListViewExampleActivity.class);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//            startActivity(intent);
         }else if (view == itemCheckIn){
             changeFragment(new CheckInFragment());
         }else if (view == itemLogout){
             changeFragment(new LogoutFragment());
+        }else if (view == itemRefreshingMall){
+            changeFragment(new RefreshingMallFragment());
         }
 
         resideMenu.closeMenu();
@@ -153,12 +152,13 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         return resideMenu;
     }
     
-    @Override
-    public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() == 0) {
-//            this.finish();
-        } else {
-            getFragmentManager().popBackStack();
-        }
+    @SuppressLint("NewApi")
+	@Override
+    public void onBackPressed() { 
+    	 if (getFragmentManager().getBackStackEntryCount() == 0) {
+//           this.finish();
+       } else {
+           getFragmentManager().popBackStack();
+       }
     }
 }
