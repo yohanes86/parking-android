@@ -154,7 +154,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
-            android:background="#ea4c88"
+            android:background="@drawable/button_register"
             android:padding="10dp"
             android:text="@string/btn_pay"
             android:textColor="@color/white" />

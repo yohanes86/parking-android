@@ -67,6 +67,7 @@ public class PaymentInfoDialog extends DialogFragment {
                     	getActivity().finish();
                     }
                 })
+                
 //                .setNegativeButton(R.string.visit47, new DialogInterface.OnClickListener() {
 //                    @Override
 //                    public void onClick(DialogInterface dialog, int which) {
