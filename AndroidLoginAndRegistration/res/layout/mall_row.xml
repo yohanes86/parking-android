@@ -13,15 +13,17 @@
 
         <Button
             android:id="@+id/example_row_b_action_1"
-            android:layout_width="180dp"
+            android:layout_width="100dp"
             android:layout_height="50dp"
             android:background="@drawable/button_register"
             android:text="@string/btn_booking" />
 
         <Button
             android:id="@+id/example_row_b_action_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/button_register"
             android:text="@string/btn_release" />
 
         <!--  <Button
