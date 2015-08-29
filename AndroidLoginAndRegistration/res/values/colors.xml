@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <color name="color_label">#2E2E1F</color>
+    
 
     <color name="bg_login">#26ae90</color>
     <color name="bg_register">#2e3237</color>
@@ -27,5 +30,7 @@
     <color name="line">#ffbcbcbc</color>
     <color name="background_new_tag">#ff0000</color>
     <color name="text_new_tag">#ffffff</color>
+    
+    <color name="floatLabelColorRed">#FF0000</color>
 
 </resources>

@@ -80,7 +80,7 @@ public class InputCreditCardActivity extends Activity {
 	private String bookingId;
 	AlertDialog dialog3ds;
     ProgressDialog sendServerProgress;
-    int totalPrice;
+    long totalPrice;
     private CheckOrderAllowPayTask checkOrderAllowPayTask = null;
 	
 	@Override
@@ -99,7 +99,7 @@ public class InputCreditCardActivity extends Activity {
 		Intent intent = getIntent();
 		mallName = intent.getStringExtra("mallName");
 		slotName = intent.getStringExtra("slotName");
-		totalPrice = intent.getIntExtra("hargaParkir", 10000);
+		totalPrice = intent.getLongExtra("hargaParkir", 10000);
 		// Progress dialog
 		pDialog = new ProgressDialog(this);
 		pDialog.setCancelable(false);
@@ -131,7 +131,7 @@ public class InputCreditCardActivity extends Activity {
 			inqCreditCardRequest.setCardExpireMonth(Integer.parseInt(cardExpireMonthInput));
 			inqCreditCardRequest.setCardExpireYear(Integer.parseInt(cardExpireYearInput));
 			inqCreditCardRequest.setCardCvv(cardCvvInput);					
-			inqCreditCardRequest.setGross_amount(Integer.toString(totalPrice));					
+			inqCreditCardRequest.setGross_amount(Long.toString(totalPrice));					
 			//set environment
             VTConfig.VT_IsProduction = false;
             //set client key
