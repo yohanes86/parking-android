@@ -31,6 +31,7 @@ import com.parking.data.Constants;
 import com.parking.data.LoginData;
 import com.parking.data.MessageVO;
 import com.parking.utils.CipherUtil;
+import com.parking.utils.CustomLabelAnimator;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
 import com.parking.utils.RedirectUtils;
@@ -76,6 +77,10 @@ public class CheckInFragment extends Fragment {
     	bookingId = (TextView) rootView.findViewById(R.id.bookingId);
     	bookingDate = (TextView) rootView.findViewById(R.id.bookingDate);
     	bookingStatus = (TextView) rootView.findViewById(R.id.bookingStatus);
+    	
+    	// This is how you add a custom animator
+    	bookingCode.setLabelAnimator(new CustomLabelAnimator());       
+    	
     	btnCheckIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
