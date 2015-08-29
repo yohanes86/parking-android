@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_login"
-    android:orientation="vertical" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -16,36 +18,11 @@
         <Button
             android:id="@+id/btnRefreshMall"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="20dip"
-            android:padding="10dip"
-            android:background="#ea4c88"
+            android:background="@drawable/button_forgot_password"
             android:text="@string/btn_refresh_mall"
-            android:textColor="@color/white" />
+            android:textColor="@color/color_label" />
     </LinearLayout>
-
-    <!--
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:background="@color/white"
-        android:hint="@string/hint_email"
-        android:inputType="textEmailAddress"
-        android:padding="10dp"
-        android:singleLine="true"
-        android:textColor="@color/input_register"
-        android:textColorHint="@color/input_register_hint" />
-
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dip"
-        android:background="#ea4c88"
-        android:text="@string/btn_register"
-        android:textColor="@color/white" />
-    -->
 
 </FrameLayout>

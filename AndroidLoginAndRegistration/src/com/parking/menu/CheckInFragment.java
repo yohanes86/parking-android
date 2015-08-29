@@ -21,10 +21,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.BookingVO;
 import com.parking.data.Constants;
@@ -47,7 +47,7 @@ public class CheckInFragment extends Fragment {
 	private Context ctx;
 	private CheckInAllowTask checkInAllowTask = null;
 	private CheckConfirmTask checkConfirmTask = null;
-	private EditText bookingCode;
+	private FloatLabel bookingCode;
 	private Button btnCheckIn;
 	private Button btnCheckInOk;
 	private ScrollView resultScrollView;
@@ -67,7 +67,7 @@ public class CheckInFragment extends Fragment {
     	ctx = container.getContext();
     	btnCheckIn = (Button) rootView.findViewById(R.id.btnCheckIn);
     	btnCheckInOk = (Button) rootView.findViewById(R.id.btnCheckInOk);
-    	bookingCode = (EditText) rootView.findViewById(R.id.bookingCode);
+    	bookingCode = (FloatLabel) rootView.findViewById(R.id.bookingCode);
     	resultScrollView = (ScrollView) rootView.findViewById(R.id.resultScrollView);
     	bookingName = (TextView) rootView.findViewById(R.id.bookingName);
     	bookingPhone = (TextView) rootView.findViewById(R.id.bookingPhone);
@@ -79,7 +79,7 @@ public class CheckInFragment extends Fragment {
     	btnCheckIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-           	 bookingCodeInput = bookingCode.getText().toString();       
+           	 bookingCodeInput = bookingCode.getEditText().getText().toString();       
            	 LoginData loginData = SharedPreferencesUtils.getLoginData(ctx);            	 
            	// ambil dari session untuk email, session key
            	 email = loginData.getEmail();
@@ -99,7 +99,7 @@ public class CheckInFragment extends Fragment {
     	btnCheckInOk.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-           	 bookingCodeInput = bookingCode.getText().toString();       
+           	 bookingCodeInput = bookingCode.getEditText().getText().toString();       
            	 LoginData loginData = SharedPreferencesUtils.getLoginData(ctx);            	 
            	// ambil dari session untuk email, session key
            	 email = loginData.getEmail();

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_login"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
     android:gravity="top|center"
     android:orientation="vertical"
     android:padding="10dp" >
@@ -15,30 +15,27 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp" >
 
-        <EditText
+        <com.iangclifton.android.floatlabel.FloatLabel
             android:id="@+id/bookingCode"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@color/white"
             android:hint="@string/hint_booking_code"
             android:inputType="textCapWords"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColor="@color/input_login"
-            android:textColorHint="@color/input_login_hint" />
+            android:layout="@layout/custom_float_label"
+            android:textColor="@color/color_label"
+            android:textStyle="normal"
+            android:typeface="sans" />
 
-        <!-- Login Button -->
+        <!-- Check In Button -->
 
         <Button
             android:id="@+id/btnCheckIn"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="5dip"
-            android:background="@drawable/button_register"
-            android:padding="5dp"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/button_forgot_password"
             android:text="@string/btn_check_booking_code"
-            android:textColor="@color/btn_login" />
+            android:textColor="@color/color_label" />
     </LinearLayout>
 
     <ScrollView
@@ -46,8 +43,8 @@
         android:id="@+id/resultScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg_login"
-        android:gravity="top|center"
+        android:layout_marginTop="20dip"
+        android:background="@color/white"
         android:orientation="vertical"
         android:padding="10dp"
         android:visibility="gone" >
@@ -56,11 +53,7 @@
             android:id="@+id/resultLinearLayout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dip"
-            android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp" >
+            android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/txtBookingName"
@@ -79,7 +72,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:background="@color/white"
+                android:background="@color/grey"
                 android:inputType="textCapWords"
                 android:padding="5dp"
                 android:singleLine="true"
@@ -104,7 +97,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:background="@color/white"
+                android:background="@color/grey"
                 android:inputType="textCapWords"
                 android:padding="5dp"
                 android:singleLine="true"
@@ -129,7 +122,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:background="@color/white"
+                android:background="@color/grey"
                 android:inputType="textCapWords"
                 android:padding="5dp"
                 android:singleLine="true"
@@ -154,7 +147,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:background="@color/white"
+                android:background="@color/grey"
                 android:inputType="textCapWords"
                 android:padding="5dp"
                 android:singleLine="true"
@@ -179,7 +172,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:background="@color/white"
+                android:background="@color/grey"
                 android:inputType="textCapWords"
                 android:padding="5dp"
                 android:singleLine="true"
@@ -204,7 +197,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:background="@color/white"
+                android:background="@color/grey"
                 android:inputType="textCapWords"
                 android:padding="5dp"
                 android:singleLine="true"
@@ -229,7 +222,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:background="@color/white"
+                android:background="@color/grey"
                 android:inputType="textCapWords"
                 android:padding="5dp"
                 android:singleLine="true"
@@ -241,11 +234,10 @@
                 android:id="@+id/btnCheckInOk"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="5dip"
-                android:background="@drawable/button_register"
-                android:padding="5dp"
+                android:layout_marginTop="20dip"
+                android:background="@drawable/button_forgot_password"
                 android:text="@string/btn_check_in"
-                android:textColor="@color/btn_login" />
+                android:textColor="@color/color_label" />
         </LinearLayout>
     </ScrollView>
 
