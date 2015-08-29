@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/bg_register"
+    android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp" >
@@ -15,8 +15,9 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp" >
 
-        <EditText
-            android:id="@+id/name"
+        <!--
+        	<EditText
+            android:id="@+id/name2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -26,10 +27,10 @@
             android:singleLine="true"
             android:inputType="textCapWords"
             android:textColor="@color/input_register"
-            android:textColorHint="@color/input_register_hint" />
-
-        <EditText
-            android:id="@+id/email"
+            android:textColorHint="@color/input_register_hint" />  
+        
+        	<EditText
+            android:id="@+id/email2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -40,9 +41,9 @@
             android:singleLine="true"
             android:textColor="@color/input_register"
             android:textColorHint="@color/input_register_hint" />
-        
-        <EditText
-            android:id="@+id/licenseNo"
+            
+            <EditText
+            android:id="@+id/licenseNo2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -53,9 +54,9 @@
             android:singleLine="true"
             android:textColor="@color/input_register"
             android:textColorHint="@color/input_register_hint" />
-        
-        <EditText
-            android:id="@+id/phoneNo"
+            
+            <EditText
+            android:id="@+id/phoneNo2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -66,9 +67,9 @@
             android:singleLine="true"
             android:textColor="@color/input_register"
             android:textColorHint="@color/input_register_hint" />
-
-        <EditText
-            android:id="@+id/password"
+            
+            <EditText
+            android:id="@+id/password2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -78,7 +79,63 @@
             android:padding="10dp"
             android:singleLine="true"
             android:textColor="@color/input_register"
-            android:textColorHint="@color/input_register_hint" />
+            android:textColorHint="@color/input_register_hint" />
+        -->
+
+        <com.iangclifton.android.floatlabel.FloatLabel
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_name"
+            android:inputType="textCapWords"
+            android:layout="@layout/custom_float_label"
+            android:textColor="@color/color_label"
+            android:textStyle="normal"
+            android:typeface="sans" />
+
+        <com.iangclifton.android.floatlabel.FloatLabel
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_name"
+            android:inputType="textEmailAddress"
+            android:layout="@layout/custom_float_label"
+            android:textColor="@color/color_label"
+            android:textStyle="normal"
+            android:typeface="sans" />
+
+        <com.iangclifton.android.floatlabel.FloatLabel
+            android:id="@+id/licenseNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_license_no"
+            android:inputType="textCapWords"
+            android:layout="@layout/custom_float_label"
+            android:textColor="@color/color_label"
+            android:textStyle="normal"
+            android:typeface="sans" />
+
+        <com.iangclifton.android.floatlabel.FloatLabel
+            android:id="@+id/phoneNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_hp"
+            android:inputType="number"
+            android:layout="@layout/custom_float_label"
+            android:textColor="@color/color_label"
+            android:textStyle="normal"
+            android:typeface="sans" />
+
+        <com.iangclifton.android.floatlabel.FloatLabel
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_password"
+            android:inputType="textPassword"
+            android:layout="@layout/custom_float_label"
+            android:textColor="@color/color_label"
+            android:textStyle="normal"
+            android:typeface="sans" />
 
         <!-- Login Button -->
 
@@ -87,9 +144,9 @@
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dip"
-            android:background="@drawable/button_register"
+            android:background="@drawable/button_forgot_password"
             android:text="@string/btn_register"
-            android:textColor="@color/white" />
+            android:textColor="@color/color_label" />
 
         <!-- Link to Login Screen -->
 
@@ -101,7 +158,7 @@
             android:background="@null"
             android:text="@string/btn_link_to_login"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/color_label"
             android:textSize="15dp" />
     </LinearLayout>
 

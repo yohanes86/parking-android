@@ -21,11 +21,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.InqForgotPasswordRequest;
 import com.parking.data.InqForgotPasswordResponse;
 import com.parking.data.MessageVO;
 import com.parking.utils.CipherUtil;
+import com.parking.utils.CustomLabelAnimator;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
 
@@ -33,7 +35,7 @@ public class ForgetPasswordActivity extends Activity {
 	private static final String TAG = ForgetPasswordActivity.class.getSimpleName();
 	private Button btnForgotPassword;
 	private Button btnLinkToLogin;
-	private EditText inputEmail;
+	private FloatLabel inputEmail;
 	private Context ctx;
 	private ReqForgotPasswordTask reqForgotPasswordTask = null;
 
@@ -43,16 +45,17 @@ public class ForgetPasswordActivity extends Activity {
 		setContentView(R.layout.activity_forget_password);
 		ctx = this.getApplicationContext();
 		
-		inputEmail = (EditText) findViewById(R.id.email);
+		inputEmail = (FloatLabel) findViewById(R.id.email);
 		btnForgotPassword = (Button) findViewById(R.id.btnForgotPassword);
 		btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
 
-		
+		// This is how you add a custom animator     
+        inputEmail.setLabelAnimator(new CustomLabelAnimator());
 
 		// Forgot Pass Button Click event
 		btnForgotPassword.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				String email = inputEmail.getText().toString();
+				String email = inputEmail.getEditText().getText().toString();
 				if (!email.isEmpty()) {	
 					reqForgotPasswordTask = new ReqForgotPasswordTask();
 					reqForgotPasswordTask.execute("");       
@@ -91,7 +94,7 @@ public class ForgetPasswordActivity extends Activity {
            	boolean result = false;
            	try {
            		InqForgotPasswordRequest inqForgotPasswordRequest = new InqForgotPasswordRequest();
-				inqForgotPasswordRequest.setEmail(inputEmail.getText().toString());
+				inqForgotPasswordRequest.setEmail(inputEmail.getEditText().getText().toString());
 				String s = HttpClientUtil.getObjectMapper(ctx).writeValueAsString(inqForgotPasswordRequest);
 				s = CipherUtil.encryptTripleDES(s, CipherUtil.PASSWORD);
            		Log.d(TAG,"Request: " + s);

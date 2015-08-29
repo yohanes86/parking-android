@@ -20,8 +20,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
+import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.InqRegistrationRequest;
 import com.parking.data.MessageVO;
@@ -33,11 +33,11 @@ public class RegisterActivity extends Activity {
 	private static final String TAG = RegisterActivity.class.getSimpleName();
 	private Button btnRegister;
 	private Button btnLinkToLogin;
-	private EditText inputFullName;
-	private EditText inputEmail;
-	private EditText inputPassword;
-	private EditText inputLicenseNo;
-	private EditText inputPhoneNo;
+	private FloatLabel inputFullName;
+	private FloatLabel inputEmail;
+	private FloatLabel inputPassword;
+	private FloatLabel inputLicenseNo;
+	private FloatLabel inputPhoneNo;
 	private ProgressDialog pDialog;
 	private Context ctx;
 	private ReqRegistrationTask reqRegistrationTask = null;
@@ -47,11 +47,11 @@ public class RegisterActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
 
-		inputFullName = (EditText) findViewById(R.id.name);
-		inputEmail = (EditText) findViewById(R.id.email);
-		inputLicenseNo = (EditText) findViewById(R.id.licenseNo);
-		inputPhoneNo = (EditText) findViewById(R.id.phoneNo);
-		inputPassword = (EditText) findViewById(R.id.password);
+		inputFullName = (FloatLabel) findViewById(R.id.name);
+		inputEmail = (FloatLabel) findViewById(R.id.email);
+		inputLicenseNo = (FloatLabel) findViewById(R.id.licenseNo);
+		inputPhoneNo = (FloatLabel) findViewById(R.id.phoneNo);
+		inputPassword = (FloatLabel) findViewById(R.id.password);
 		btnRegister = (Button) findViewById(R.id.btnRegister);
 		btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
 		
@@ -66,11 +66,11 @@ public class RegisterActivity extends Activity {
 		// Register Button Click event
 		btnRegister.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				String name = inputFullName.getText().toString();
-				String email = inputEmail.getText().toString();
-				String password = inputPassword.getText().toString();
-				String phoneNo = inputPhoneNo.getText().toString();
-				String licenseNo = inputLicenseNo.getText().toString();
+				String name = inputFullName.getEditText().getText().toString();
+				String email = inputEmail.getEditText().getText().toString();
+				String password = inputPassword.getEditText().getText().toString();
+				String phoneNo = inputPhoneNo.getEditText().getText().toString();
+				String licenseNo = inputLicenseNo.getEditText().getText().toString();
 				
 
 				if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()&& !phoneNo.isEmpty()&& !licenseNo.isEmpty()) {
@@ -115,11 +115,11 @@ public class RegisterActivity extends Activity {
 			boolean result = false;
            	try {
            		InqRegistrationRequest inqRegRequest = new InqRegistrationRequest();           		
-				inqRegRequest.setName(inputFullName.getText().toString());
-				inqRegRequest.setLicenseNo(inputLicenseNo.getText().toString());
-				inqRegRequest.setEmail(inputEmail.getText().toString());
-				inqRegRequest.setPassword(inputPassword.getText().toString());
-				inqRegRequest.setPhoneNo(inputPhoneNo.getText().toString());
+				inqRegRequest.setName(inputFullName.getEditText().getText().toString());
+				inqRegRequest.setLicenseNo(inputLicenseNo.getEditText().getText().toString());
+				inqRegRequest.setEmail(inputEmail.getEditText().getText().toString());
+				inqRegRequest.setPassword(inputPassword.getEditText().getText().toString());
+				inqRegRequest.setPhoneNo(inputPhoneNo.getEditText().getText().toString());
            		String s = HttpClientUtil.getObjectMapper(ctx).writeValueAsString(inqRegRequest);
 				s = CipherUtil.encryptTripleDES(s, CipherUtil.PASSWORD);
            		Log.d(TAG,"Request: " + s);
