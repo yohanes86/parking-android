@@ -26,6 +26,7 @@ import com.parking.R;
 import com.parking.data.InqRegistrationRequest;
 import com.parking.data.MessageVO;
 import com.parking.utils.CipherUtil;
+import com.parking.utils.CustomLabelAnimator;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
 
@@ -54,6 +55,14 @@ public class RegisterActivity extends Activity {
 		inputPassword = (FloatLabel) findViewById(R.id.password);
 		btnRegister = (Button) findViewById(R.id.btnRegister);
 		btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
+		
+		// This is how you add a custom animator
+		inputFullName.setLabelAnimator(new CustomLabelAnimator());
+        inputEmail.setLabelAnimator(new CustomLabelAnimator());
+        inputLicenseNo.setLabelAnimator(new CustomLabelAnimator());
+        inputPhoneNo.setLabelAnimator(new CustomLabelAnimator());
+        inputPassword.setLabelAnimator(new CustomLabelAnimator());
+        
 		
 		ctx = this.getApplicationContext();
 

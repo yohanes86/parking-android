@@ -36,10 +36,10 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.Address;
 import com.parking.data.BookingVO;
@@ -55,6 +55,7 @@ import com.parking.swipelistview.sample.dialogs.ExpiredPaymentInfoDialog;
 import com.parking.swipelistview.sample.dialogs.PaymentInfoDialog;
 import com.parking.swipelistview.sample.utils.PreferencesManager;
 import com.parking.utils.CipherUtil;
+import com.parking.utils.CustomLabelAnimator;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
 import com.parking.utils.RedirectUtils;
@@ -65,10 +66,10 @@ import com.parking.view.CustomWebView;
 public class InputCreditCardActivity extends Activity {
 	private static final String TAG = InputCreditCardActivity.class.getSimpleName();
 	private Button btnPay;
-	private EditText noCC;
-	private EditText cardExpireMonth;
-	private EditText cardExpireYear;
-	private EditText cardCvv;
+	private FloatLabel noCC;
+	private FloatLabel cardExpireMonth;
+	private FloatLabel cardExpireYear;
+	private FloatLabel cardCvv;
 	private TextView paymentFor;
 	private TextView total;
 	private TextView txtSlotName;
@@ -91,10 +92,10 @@ public class InputCreditCardActivity extends Activity {
 		paymentFor = (TextView) findViewById(R.id.paymentFor);
 		txtSlotName = (TextView) findViewById(R.id.txtSlotName);
 		total = (TextView) findViewById(R.id.total);
-		noCC = (EditText) findViewById(R.id.noCC);
-		cardExpireMonth = (EditText) findViewById(R.id.card_expire_month);
-		cardCvv = (EditText) findViewById(R.id.card_cvv);
-		cardExpireYear = (EditText) findViewById(R.id.card_expire_year);
+		noCC = (FloatLabel) findViewById(R.id.noCC);
+		cardExpireMonth = (FloatLabel) findViewById(R.id.card_expire_month);
+		cardCvv = (FloatLabel) findViewById(R.id.card_cvv);
+		cardExpireYear = (FloatLabel) findViewById(R.id.card_expire_year);
 		btnPay = (Button) findViewById(R.id.btnPay);
 		Intent intent = getIntent();
 		mallName = intent.getStringExtra("mallName");
@@ -109,6 +110,13 @@ public class InputCreditCardActivity extends Activity {
 		txtSlotName.setText("Area name : " + slotName);
 		bookingId = intent.getStringExtra("bookingId");
 		showExpiredPaymentInfo(ctx.getResources().getString(R.string.info_expired_payment_message));
+		
+		// This is how you add a custom animator
+		noCC.setLabelAnimator(new CustomLabelAnimator());
+		cardExpireMonth.setLabelAnimator(new CustomLabelAnimator());
+		cardCvv.setLabelAnimator(new CustomLabelAnimator());
+		cardExpireYear.setLabelAnimator(new CustomLabelAnimator());        
+		
 		btnPay.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				checkOrderAllowPayTask = new CheckOrderAllowPayTask();
@@ -119,10 +127,10 @@ public class InputCreditCardActivity extends Activity {
 	}
 	
 	private void pay(){
-		String noCCInput = noCC.getText().toString();
-		String cardExpireMonthInput = cardExpireMonth.getText().toString();
-		String cardExpireYearInput = cardExpireYear.getText().toString();				
-		String cardCvvInput = cardCvv.getText().toString();
+		String noCCInput = noCC.getEditText().getText().toString();
+		String cardExpireMonthInput = cardExpireMonth.getEditText().getText().toString();
+		String cardExpireYearInput = cardExpireYear.getEditText().getText().toString();				
+		String cardCvvInput = cardCvv.getEditText().getText().toString();
 						
 
 		if (!noCCInput.isEmpty() && !cardExpireMonthInput.isEmpty() && !cardExpireYearInput.isEmpty()&& !cardCvvInput.isEmpty()) {

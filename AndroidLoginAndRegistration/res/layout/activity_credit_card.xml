@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/bg_main"
-    android:gravity="top|center"
+    android:background="@color/white"
+    android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp" >
 
@@ -16,37 +16,38 @@
         android:paddingRight="20dp" >
 
         <TextView
-           android:id="@+id/paymentFor"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"           
-           android:layout_below="@+id/ship_First"
-           android:layout_marginTop="1dp"
-           android:text="V-Mobile Kota Casablanka"
-           android:textColor="@color/input_login"
-           android:padding="2dp"
-           android:textSize="20sp" />
-        
+            android:id="@+id/paymentFor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ship_First"
+            android:layout_marginTop="1dp"
+            android:padding="2dp"
+            android:text="V-Mobile Kota Casablanka"
+            android:textColor="@color/input_login"
+            android:textSize="20sp" />
+
         <TextView
-           android:id="@+id/txtSlotName"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"           
-           android:layout_below="@+id/ship_First"
-           android:layout_marginTop="1dp"
-           android:text="Area Parkir : "
-           android:textColor="@color/input_login"
-           android:padding="2dp"
-           android:textSize="18sp" />
-        
+            android:id="@+id/txtSlotName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ship_First"
+            android:layout_marginTop="1dp"
+            android:padding="2dp"
+            android:text="Area Parkir : "
+            android:textColor="@color/input_login"
+            android:textSize="18sp" />
+
         <TextView
-           android:id="@+id/total"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"                       
-           android:layout_marginTop="1dp"
-           android:text="GRAND TOTAL : Rp 15.000"
-           android:textColor="@color/input_login"
-           android:padding="2dp"
-           android:textSize="18sp" />
-        
+            android:id="@+id/total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:padding="2dp"
+            android:text="GRAND TOTAL : Rp 15.000"
+            android:textColor="@color/input_login"
+            android:textSize="18sp" />
+
+        <!--
         <TextView
            android:id="@+id/txtnoCC"
            android:layout_width="wrap_content"
@@ -58,7 +59,7 @@
            android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/noCC"
+            android:id="@+id/noCC2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
@@ -70,8 +71,8 @@
             android:text="4811111111111114"
             android:textColor="@color/input_login"
             android:textColorHint="@color/input_register_hint" />
-        
-        <TextView
+            
+            <TextView
            android:id="@+id/txtcard_expire_month"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"                       
@@ -95,17 +96,17 @@
             android:singleLine="true"
             android:textColor="@color/input_login"
             android:textColorHint="@color/input_register_hint" />
-        
-        <TextView
-           android:id="@+id/txtcard_expire_year"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"                       
-           android:layout_marginTop="1dp"
-           android:text="Card Expired Year (YYYY)"
-           android:textColor="@color/input_login"
-           android:padding="5dp"
-           android:textSize="16sp" />
-        
+            
+            <TextView
+            android:id="@+id/txtcard_expire_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:padding="5dp"
+            android:text="Card Expired Year (YYYY)"
+            android:textColor="@color/input_login"
+            android:textSize="16sp" />
+
         <EditText
             android:id="@+id/card_expire_year"
             android:layout_width="fill_parent"
@@ -114,23 +115,23 @@
             android:background="@color/white"
             android:hint="@string/hint_expire_year"
             android:inputType="number"
-            android:padding="5dp"
             android:maxLength="4"
-            android:text="2020"
+            android:padding="5dp"
             android:singleLine="true"
+            android:text="2020"
             android:textColor="@color/input_login"
             android:textColorHint="@color/input_register_hint" />
-        
-        <TextView
-           android:id="@+id/txtcard_cvv"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"                       
-           android:layout_marginTop="1dp"
-           android:text="Card CVV (XXX)"
-           android:textColor="@color/input_login"
-           android:padding="5dp"
-           android:textSize="16sp" />
-        
+            
+            <TextView
+            android:id="@+id/txtcard_cvv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:padding="5dp"
+            android:text="Card CVV (XXX)"
+            android:textColor="@color/input_login"
+            android:textSize="16sp" />
+
         <EditText
             android:id="@+id/card_cvv"
             android:layout_width="fill_parent"
@@ -139,13 +140,61 @@
             android:background="@color/white"
             android:hint="@string/hint_cvv"
             android:inputType="number"
-            android:padding="5dp"
             android:maxLength="3"
-            android:text="123"
+            android:padding="5dp"
             android:singleLine="true"
+            android:text="123"
             android:textColor="@color/input_login"
-            android:textColorHint="@color/input_register_hint" />
-        
+            android:textColorHint="@color/input_register_hint" />
+        -->
+
+        <com.iangclifton.android.floatlabel.FloatLabel
+            android:id="@+id/noCC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_cc"
+            android:inputType="number"
+            android:layout="@layout/custom_float_label"
+            android:text="4811111111111114"
+            android:textColor="@color/color_label"
+            android:textStyle="normal"
+            android:typeface="sans" />
+
+        <com.iangclifton.android.floatlabel.FloatLabel
+            android:id="@+id/card_expire_month"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_expire_month"
+            android:inputType="number"
+            android:layout="@layout/custom_float_label"
+            android:text="12"
+            android:textColor="@color/color_label"
+            android:textStyle="normal"
+            android:typeface="sans" />
+
+        <com.iangclifton.android.floatlabel.FloatLabel
+            android:id="@+id/card_expire_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_expire_year"
+            android:inputType="number"
+            android:layout="@layout/custom_float_label"
+            android:text="2020"
+            android:textColor="@color/color_label"
+            android:textStyle="normal"
+            android:typeface="sans" />
+
+        <com.iangclifton.android.floatlabel.FloatLabel
+            android:id="@+id/card_cvv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_cvv"
+            android:inputType="number"
+            android:layout="@layout/custom_float_label"
+            android:text="123"
+            android:textColor="@color/color_label"
+            android:textStyle="normal"
+            android:typeface="sans" />
 
         <!-- Login Button -->
 
@@ -157,9 +206,7 @@
             android:background="@drawable/button_register"
             android:padding="10dp"
             android:text="@string/btn_pay"
-            android:textColor="@color/white" />
-
-        
+            android:textColor="@color/color_label" />
     </LinearLayout>
 
 </LinearLayout>
