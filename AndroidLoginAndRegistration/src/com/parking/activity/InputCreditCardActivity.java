@@ -216,7 +216,7 @@ public class InputCreditCardActivity extends Activity {
 			
 		} else {
 			MessageUtils messageUtils = new MessageUtils(ctx);
-         	messageUtils.messageLong(ctx.getResources().getString(R.string.message_detail_required));
+         	messageUtils.snackBarMessage(InputCreditCardActivity.this,ctx.getResources().getString(R.string.message_detail_required));
 		}
 	}
 	
@@ -309,12 +309,10 @@ public class InputCreditCardActivity extends Activity {
 	               			String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
 		               		if(messageVO.getRc()==0){
-//		               			MessageUtils messageUtils = new MessageUtils(ctx);
-//				             	messageUtils.messageLong(messageVO.getOtherMessage());
 				             	showPaymentInfo(messageVO.getOtherMessage());				             	
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	messageUtils.snackBarMessage(InputCreditCardActivity.this,messageVO.getMessageRc());
 				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
 				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, InputCreditCardActivity.this);
 				             		redirectUtils.redirectToLogin();
@@ -322,15 +320,15 @@ public class InputCreditCardActivity extends Activity {
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
-			             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_message_server));
+			             	messageUtils.snackBarMessage(InputCreditCardActivity.this,ctx.getResources().getString(R.string.message_unexpected_error_message_server));
 						}	            
 	               	}else{
 	               	   MessageUtils messageUtils = new MessageUtils(ctx);
-	             	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+	             	   messageUtils.snackBarMessage(InputCreditCardActivity.this,ctx.getResources().getString(R.string.message_unexpected_error_server));
 	               	}
             }else{
          	   MessageUtils messageUtils = new MessageUtils(ctx);
-         	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+         	   messageUtils.snackBarMessage(InputCreditCardActivity.this,ctx.getResources().getString(R.string.message_unexpected_error_server));
             }
             if (sendServerProgress.isShowing()) {
             	try
@@ -494,12 +492,10 @@ public class InputCreditCardActivity extends Activity {
 	               			String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
 		               		if(messageVO.getRc()==0){
-//		               			MessageUtils messageUtils = new MessageUtils(ctx);
-//				             	messageUtils.messageLong(messageVO.getOtherMessage());		
 		               			pay();
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	messageUtils.snackBarMessage(InputCreditCardActivity.this,messageVO.getMessageRc());
 				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
 				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, InputCreditCardActivity.this);
 				             		redirectUtils.redirectToLogin();
@@ -507,15 +503,15 @@ public class InputCreditCardActivity extends Activity {
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
-			             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_message_server));
+			             	messageUtils.snackBarMessage(InputCreditCardActivity.this,ctx.getResources().getString(R.string.message_unexpected_error_message_server));
 						}	            
 	               	}else{
 	               	   MessageUtils messageUtils = new MessageUtils(ctx);
-	             	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+	             	   messageUtils.snackBarMessage(InputCreditCardActivity.this,ctx.getResources().getString(R.string.message_unexpected_error_server));
 	               	}
                }else{
             	   MessageUtils messageUtils = new MessageUtils(ctx);
-            	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+            	   messageUtils.snackBarMessage(InputCreditCardActivity.this,ctx.getResources().getString(R.string.message_unexpected_error_server));
                }
                if (dialog.isShowing()) {
                	try

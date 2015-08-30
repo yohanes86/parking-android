@@ -94,7 +94,7 @@ public class CheckInFragment extends Fragment {
 					checkInAllowTask.execute("");       
 				} else {
 					MessageUtils messageUtils = new MessageUtils(ctx);
-	             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_booking_code_required));
+	             	messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_booking_code_required));
 				}
 
 
@@ -114,7 +114,7 @@ public class CheckInFragment extends Fragment {
 					checkConfirmTask.execute("");
 				} else {
 					MessageUtils messageUtils = new MessageUtils(ctx);
-	             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_booking_code_required));
+	             	messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_booking_code_required));
 				}
 
 
@@ -199,8 +199,6 @@ public class CheckInFragment extends Fragment {
 	               			String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
 		               		if(messageVO.getRc()==0){
-//		               			MessageUtils messageUtils = new MessageUtils(ctx);
-//				             	messageUtils.messageLong(messageVO.getOtherMessage());
 		               			BookingVO bookingVO = HttpClientUtil.getObjectMapper(ctx).readValue(messageVO.getOtherMessage(), BookingVO.class);	
 		               			bookingName.setText(bookingVO.getName());
 		               			bookingPhone.setText(bookingVO.getPhoneNo());
@@ -212,7 +210,7 @@ public class CheckInFragment extends Fragment {
 		               			resultScrollView.setVisibility(View.VISIBLE);
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	messageUtils.snackBarMessage(getActivity(),messageVO.getMessageRc());
 				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
 				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, getActivity());
 				             		redirectUtils.redirectToLogin();
@@ -220,15 +218,15 @@ public class CheckInFragment extends Fragment {
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
-			             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_message_server));
+			             	messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_message_server));
 						}	            
 	               	}else{
 	               	   MessageUtils messageUtils = new MessageUtils(ctx);
-	             	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+	             	   messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_server));
 	               	}
                }else{
             	   MessageUtils messageUtils = new MessageUtils(ctx);
-            	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+            	   messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_server));
                }
                if (dialog.isShowing()) {
                	try
@@ -319,11 +317,11 @@ public class CheckInFragment extends Fragment {
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
 		               		if(messageVO.getRc()==0){
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getOtherMessage());	
+				             	messageUtils.snackBarMessage(getActivity(),messageVO.getOtherMessage());	
 				             	resultScrollView.setVisibility(View.GONE);
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	messageUtils.snackBarMessage(getActivity(),messageVO.getMessageRc());
 				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
 				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, getActivity());
 				             		redirectUtils.redirectToLogin();
@@ -331,15 +329,15 @@ public class CheckInFragment extends Fragment {
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
-			             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_message_server));
+			             	messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_message_server));
 						}	            
 	               	}else{
 	               	   MessageUtils messageUtils = new MessageUtils(ctx);
-	             	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+	             	   messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_server));
 	               	}
                }else{
             	   MessageUtils messageUtils = new MessageUtils(ctx);
-            	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+            	   messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_server));
                }
                if (dialog.isShowing()) {
                	try
