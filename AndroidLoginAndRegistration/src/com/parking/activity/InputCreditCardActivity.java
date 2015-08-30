@@ -209,8 +209,9 @@ public class InputCreditCardActivity extends Activity {
 
                 @Override
                 public void onError(Exception e) {
-                    loadingDialog.cancel();
-                    Toast.makeText(ctx,e.getMessage(),Toast.LENGTH_SHORT);
+                    loadingDialog.cancel();                    
+                    MessageUtils messageUtils = new MessageUtils(ctx);
+                 	messageUtils.snackBarMessage(InputCreditCardActivity.this,e.getMessage());
                 }
             });
 			

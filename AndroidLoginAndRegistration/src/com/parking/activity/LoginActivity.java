@@ -76,9 +76,9 @@ public class LoginActivity extends Activity {
 				// Check for empty data in the form
 				if (email.trim().length() > 0 && password.trim().length() > 0) {
 					// validation email
-					if (!isValidEmail(email)) {
-						Toast.makeText(getApplicationContext(),
-								"Email tidak valid!", Toast.LENGTH_LONG).show();
+					if (!isValidEmail(email)) {						
+						MessageUtils messageUtils = new MessageUtils(ctx);
+		             	messageUtils.snackBarMessage(LoginActivity.this, LoginActivity.this.getResources().getString(R.string.email_not_valid));
 					}
 					else{
 						// login user
