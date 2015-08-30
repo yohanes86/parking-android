@@ -35,14 +35,14 @@
             android:textColor="@color/color_label"
             android:textSize="18sp" />
 
-        <Button
+        <com.gc.materialdesign.views.ButtonRectangle
             android:id="@+id/btnLogout"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_marginTop="20dip"
-            android:background="@drawable/button_forgot_password"
-            android:text="@string/btn_logout"
-            android:textColor="@color/color_label" />
+            android:background="@color/blue"
+            android:text="@string/btn_logout" />
     </LinearLayout>
 
 </FrameLayout>

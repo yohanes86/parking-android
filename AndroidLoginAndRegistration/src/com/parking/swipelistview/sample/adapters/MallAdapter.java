@@ -36,18 +36,17 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
-import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fortysevendeg.swipelistview.SwipeListView;
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.parking.R;
 import com.parking.activity.InputCreditCardActivity;
 import com.parking.data.Constants;
@@ -122,8 +121,8 @@ public class MallAdapter extends BaseAdapter {
             holder.ivImage = (ImageView) convertView.findViewById(R.id.example_row_iv_image);
             holder.tvMallName = (TextView) convertView.findViewById(R.id.example_row_tv_title);
             holder.tvInformation = (TextView) convertView.findViewById(R.id.example_row_tv_description);
-            holder.bAction1 = (Button) convertView.findViewById(R.id.example_row_b_action_1);
-            holder.bAction2 = (Button) convertView.findViewById(R.id.example_row_b_action_2);
+            holder.bAction1 = (ButtonRectangle) convertView.findViewById(R.id.example_row_b_action_1);
+            holder.bAction2 = (ButtonRectangle) convertView.findViewById(R.id.example_row_b_action_2);
             
             if(login.getGroupUser().equalsIgnoreCase(Constants.USER)){
             	holder.bAction2.setVisibility(View.GONE);
@@ -135,7 +134,7 @@ public class MallAdapter extends BaseAdapter {
             	holder.bAction1.setVisibility(View.VISIBLE);
             }
             
-//            holder.bAction3 = (Button) convertView.findViewById(R.id.example_row_b_action_3);
+//            holder.bAction3 = (ButtonRectangle) convertView.findViewById(R.id.example_row_b_action_3);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -198,9 +197,9 @@ public class MallAdapter extends BaseAdapter {
         ImageView ivImage;
         TextView tvMallName;
         TextView tvInformation;
-        Button bAction1;
-        Button bAction2;
-//        Button bAction3;
+        ButtonRectangle bAction1;
+        ButtonRectangle bAction2;
+//        ButtonRectangle bAction3;
     }
 
     private boolean isPlayStoreInstalled() {

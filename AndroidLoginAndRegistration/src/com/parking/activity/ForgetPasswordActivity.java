@@ -18,9 +18,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
+import com.gc.materialdesign.views.ButtonFlat;
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.InqForgotPasswordRequest;
@@ -33,8 +33,8 @@ import com.parking.utils.MessageUtils;
 
 public class ForgetPasswordActivity extends Activity {
 	private static final String TAG = ForgetPasswordActivity.class.getSimpleName();
-	private Button btnForgotPassword;
-	private Button btnLinkToLogin;
+	private ButtonRectangle btnForgotPassword;
+	private ButtonFlat btnLinkToLogin;
 	private FloatLabel inputEmail;
 	private Context ctx;
 	private ReqForgotPasswordTask reqForgotPasswordTask = null;
@@ -46,8 +46,8 @@ public class ForgetPasswordActivity extends Activity {
 		ctx = this.getApplicationContext();
 		
 		inputEmail = (FloatLabel) findViewById(R.id.email);
-		btnForgotPassword = (Button) findViewById(R.id.btnForgotPassword);
-		btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
+		btnForgotPassword = (ButtonRectangle) findViewById(R.id.btnForgotPassword);
+		btnLinkToLogin = (ButtonFlat) findViewById(R.id.btnLinkToLoginScreen);
 
 		// This is how you add a custom animator     
         inputEmail.setLabelAnimator(new CustomLabelAnimator());

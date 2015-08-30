@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/white"
@@ -39,30 +40,16 @@
 
         <!-- Login Button -->
 
-        <Button
+        <com.gc.materialdesign.views.ButtonRectangle
             android:id="@+id/btnLogin"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_marginTop="20dip"
-            android:background="@drawable/button_forgot_password"
-            android:text="@string/btn_login"
-            android:textColor="@color/color_label" />
+            android:background="@color/blue"
+            android:text="@string/btn_login" />
 
         <!-- Link to Login Screen -->
-
-
-        <!--
-              <Button
-            android:id="@+id/btnLinkToForgetPasswordScreen"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dip"
-            android:background="@null"
-            android:text="@string/btn_link_to_forget"
-            android:textAllCaps="false"
-            android:textColor="@color/color_label"
-            android:textSize="16dp" />
-        -->
 
         <com.gc.materialdesign.views.ButtonFlat
             android:id="@+id/btnLinkToForgetPasswordScreen"
@@ -70,9 +57,9 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginTop="10dip"
+            android:background="@color/blue"
             android:gravity="center"
             android:text="@string/btn_link_to_forget"
-            android:textColor="@color/color_label"
             android:textSize="16dp" />
 
         <com.gc.materialdesign.views.ButtonFlat
@@ -81,9 +68,9 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginTop="10dip"
+            android:background="@color/blue"
             android:gravity="center"
             android:text="@string/btn_link_to_register"
-            android:textColor="@color/color_label"
             android:textSize="18dp"
             android:textStyle="bold" />
     </LinearLayout>

@@ -35,10 +35,10 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.Address;
@@ -65,7 +65,7 @@ import com.parking.view.CustomWebView;
 
 public class InputCreditCardActivity extends Activity {
 	private static final String TAG = InputCreditCardActivity.class.getSimpleName();
-	private Button btnPay;
+	private ButtonRectangle btnPay;
 	private FloatLabel noCC;
 	private FloatLabel cardExpireMonth;
 	private FloatLabel cardExpireYear;
@@ -96,7 +96,7 @@ public class InputCreditCardActivity extends Activity {
 		cardExpireMonth = (FloatLabel) findViewById(R.id.card_expire_month);
 		cardCvv = (FloatLabel) findViewById(R.id.card_cvv);
 		cardExpireYear = (FloatLabel) findViewById(R.id.card_expire_year);
-		btnPay = (Button) findViewById(R.id.btnPay);
+		btnPay = (ButtonRectangle) findViewById(R.id.btnPay);
 		Intent intent = getIntent();
 		mallName = intent.getStringExtra("mallName");
 		slotName = intent.getStringExtra("slotName");

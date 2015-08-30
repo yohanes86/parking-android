@@ -19,10 +19,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.gc.materialdesign.views.ButtonFlat;
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.InqLoginRequest;
@@ -39,7 +39,7 @@ import com.parking.utils.SharedPreferencesUtils;
 public class LoginActivity extends Activity {
 	// LogCat tag
 	private static final String TAG = RegisterActivity.class.getSimpleName();
-	private Button btnLogin;
+	private ButtonRectangle btnLogin;
 	private ButtonFlat btnLinkToRegister;
 	private ButtonFlat btnLinkToForgetPassword;
 	private FloatLabel inputEmail;
@@ -57,7 +57,7 @@ public class LoginActivity extends Activity {
 		
 		inputEmail = (FloatLabel) findViewById(R.id.email);
 		inputPassword = (FloatLabel) findViewById(R.id.password);
-		btnLogin = (Button) findViewById(R.id.btnLogin);
+		btnLogin = (ButtonRectangle) findViewById(R.id.btnLogin);
 		btnLinkToRegister = (ButtonFlat) findViewById(R.id.btnLinkToRegisterScreen);
 		btnLinkToForgetPassword = (ButtonFlat) findViewById(R.id.btnLinkToForgetPasswordScreen);
 

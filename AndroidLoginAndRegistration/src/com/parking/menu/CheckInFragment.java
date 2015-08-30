@@ -20,10 +20,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.BookingVO;
@@ -49,8 +49,8 @@ public class CheckInFragment extends Fragment {
 	private CheckInAllowTask checkInAllowTask = null;
 	private CheckConfirmTask checkConfirmTask = null;
 	private FloatLabel bookingCode;
-	private Button btnCheckIn;
-	private Button btnCheckInOk;
+	private ButtonRectangle btnCheckIn;
+	private ButtonRectangle btnCheckInOk;
 	private ScrollView resultScrollView;
 	private TextView bookingName;
 	private TextView bookingPhone;
@@ -66,8 +66,8 @@ public class CheckInFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	View rootView = inflater.inflate(R.layout.activity_check_in, container, false);
     	ctx = container.getContext();
-    	btnCheckIn = (Button) rootView.findViewById(R.id.btnCheckIn);
-    	btnCheckInOk = (Button) rootView.findViewById(R.id.btnCheckInOk);
+    	btnCheckIn = (ButtonRectangle) rootView.findViewById(R.id.btnCheckIn);
+    	btnCheckInOk = (ButtonRectangle) rootView.findViewById(R.id.btnCheckInOk);
     	bookingCode = (FloatLabel) rootView.findViewById(R.id.bookingCode);
     	resultScrollView = (ScrollView) rootView.findViewById(R.id.resultScrollView);
     	bookingName = (TextView) rootView.findViewById(R.id.bookingName);

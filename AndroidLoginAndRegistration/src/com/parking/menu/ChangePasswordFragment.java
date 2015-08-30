@@ -20,8 +20,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.Constants;
@@ -53,7 +53,7 @@ public class ChangePasswordFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	 View rootView = inflater.inflate(R.layout.activity_change_password, container, false);
     	 ctx = container.getContext();
-    	 Button btnChangePassword = (Button) rootView.findViewById(R.id.btnChangePassword);
+    	 ButtonRectangle btnChangePassword = (ButtonRectangle) rootView.findViewById(R.id.btnChangePassword);
     	 oldPassword = (FloatLabel) rootView.findViewById(R.id.oldPassword);
     	 newPassword = (FloatLabel) rootView.findViewById(R.id.newPassword); 
     	// This is how you add a custom animator

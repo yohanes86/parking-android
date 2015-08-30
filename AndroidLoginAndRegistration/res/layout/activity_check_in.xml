@@ -28,14 +28,14 @@
 
         <!-- Check In Button -->
 
-        <Button
+        <com.gc.materialdesign.views.ButtonRectangle
             android:id="@+id/btnCheckIn"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_marginTop="20dip"
-            android:background="@drawable/button_forgot_password"
-            android:text="@string/btn_check_booking_code"
-            android:textColor="@color/color_label" />
+            android:background="@color/blue"
+            android:text="@string/btn_check_booking_code" />
     </LinearLayout>
 
     <ScrollView
@@ -230,14 +230,14 @@
                 android:textColor="@color/input_login"
                 android:textColorHint="@color/input_login_hint" />
 
-            <Button
+            <com.gc.materialdesign.views.ButtonRectangle
                 android:id="@+id/btnCheckInOk"
                 android:layout_width="fill_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:layout_marginTop="20dip"
-                android:background="@drawable/button_forgot_password"
-                android:text="@string/btn_check_in"
-                android:textColor="@color/color_label" />
+                android:background="@color/blue"
+                android:text="@string/btn_check_in" />
         </LinearLayout>
     </ScrollView>
 

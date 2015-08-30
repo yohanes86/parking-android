@@ -21,8 +21,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.parking.R;
 import com.parking.activity.LoginActivity;
 import com.parking.data.Constants;
@@ -48,7 +48,7 @@ public class LogoutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	View rootView = inflater.inflate(R.layout.activity_logout, container, false);
     	ctx = container.getContext();
-   	 	Button btnLogout = (Button) rootView.findViewById(R.id.btnLogout);
+    	ButtonRectangle btnLogout = (ButtonRectangle) rootView.findViewById(R.id.btnLogout);
    	 	btnLogout.setOnClickListener(new OnClickListener() {
 	         @Override
 	         public void onClick(View arg0) {	        	 	        	         	 	   

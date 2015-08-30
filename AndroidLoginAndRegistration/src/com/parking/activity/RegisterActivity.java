@@ -19,8 +19,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
+import com.gc.materialdesign.views.ButtonFlat;
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.InqRegistrationRequest;
@@ -32,8 +33,8 @@ import com.parking.utils.MessageUtils;
 
 public class RegisterActivity extends Activity {
 	private static final String TAG = RegisterActivity.class.getSimpleName();
-	private Button btnRegister;
-	private Button btnLinkToLogin;
+	private ButtonRectangle btnRegister;
+	private ButtonFlat btnLinkToLogin;
 	private FloatLabel inputFullName;
 	private FloatLabel inputEmail;
 	private FloatLabel inputPassword;
@@ -53,8 +54,8 @@ public class RegisterActivity extends Activity {
 		inputLicenseNo = (FloatLabel) findViewById(R.id.licenseNo);
 		inputPhoneNo = (FloatLabel) findViewById(R.id.phoneNo);
 		inputPassword = (FloatLabel) findViewById(R.id.password);
-		btnRegister = (Button) findViewById(R.id.btnRegister);
-		btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
+		btnRegister = (ButtonRectangle) findViewById(R.id.btnRegister);
+		btnLinkToLogin = (ButtonFlat) findViewById(R.id.btnLinkToLoginScreen);
 		
 		// This is how you add a custom animator
 		inputFullName.setLabelAnimator(new CustomLabelAnimator());
