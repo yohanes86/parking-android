@@ -88,7 +88,7 @@ public class LoginActivity extends Activity {
 				} else {
 					// Prompt user to enter credentials
 					MessageUtils messageUtils = new MessageUtils(ctx);
-	             	messageUtils.messageLong(LoginActivity.this.getResources().getString(R.string.email_and_pass_required));
+	             	messageUtils.snackBarMessage(LoginActivity.this, LoginActivity.this.getResources().getString(R.string.email_and_pass_required));
 				}
 			}
 
@@ -200,20 +200,20 @@ public class LoginActivity extends Activity {
 		               		}
 		               		else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	messageUtils.snackBarMessage(LoginActivity.this,messageVO.getMessageRc());
 		               		}
 
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
-			             	messageUtils.messageLong(LoginActivity.this.getResources().getString(R.string.message_unexpected_error_message_server));
+			             	messageUtils.snackBarMessage(LoginActivity.this,LoginActivity.this.getResources().getString(R.string.message_unexpected_error_message_server));
 						}	            
 	               	}else{
 	               	   MessageUtils messageUtils = new MessageUtils(ctx);
-	             	   messageUtils.messageLong(LoginActivity.this.getResources().getString(R.string.message_unexpected_error_server));
+	             	   messageUtils.snackBarMessage(LoginActivity.this,LoginActivity.this.getResources().getString(R.string.message_unexpected_error_server));
 	               	}
              }else{
           	   MessageUtils messageUtils = new MessageUtils(ctx);
-          	   messageUtils.messageLong(LoginActivity.this.getResources().getString(R.string.message_unexpected_error_server));
+          	   messageUtils.snackBarMessage(LoginActivity.this,LoginActivity.this.getResources().getString(R.string.message_unexpected_error_server));
              }
              if (dialog.isShowing()) {
              	try

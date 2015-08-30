@@ -61,7 +61,7 @@ public class ForgetPasswordActivity extends Activity {
 					reqForgotPasswordTask.execute("");       
 				} else {
 					MessageUtils messageUtils = new MessageUtils(ctx);
-	             	messageUtils.messageLong(ForgetPasswordActivity.this.getResources().getString(R.string.message_email_required));
+	             	messageUtils.snackBarMessage(ForgetPasswordActivity.this,ForgetPasswordActivity.this.getResources().getString(R.string.message_email_required));
 				}
 			}
 		});
@@ -154,25 +154,25 @@ public class ForgetPasswordActivity extends Activity {
 		               		inqForgotPasswordResponse.setMessageVO(messageVO);
 		               		if(inqForgotPasswordResponse.getMessageVO().getRc()==0){
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getOtherMessage());
+				             	messageUtils.snackBarMessage(ForgetPasswordActivity.this,messageVO.getOtherMessage());
 				             	Intent i = new Intent(ctx, LoginActivity.class);
 								startActivity(i);
 								finish();
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	messageUtils.snackBarMessage(ForgetPasswordActivity.this,messageVO.getMessageRc());
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
-			             	messageUtils.messageLong(ForgetPasswordActivity.this.getResources().getString(R.string.message_unexpected_error_message_server));
+			             	messageUtils.snackBarMessage(ForgetPasswordActivity.this,ForgetPasswordActivity.this.getResources().getString(R.string.message_unexpected_error_message_server));
 						}	            
 	               	}else{
 	               	   MessageUtils messageUtils = new MessageUtils(ctx);
-	             	   messageUtils.messageLong(ForgetPasswordActivity.this.getResources().getString(R.string.message_unexpected_error_server));
+	             	   messageUtils.snackBarMessage(ForgetPasswordActivity.this,ForgetPasswordActivity.this.getResources().getString(R.string.message_unexpected_error_server));
 	               	}
                }else{
             	   MessageUtils messageUtils = new MessageUtils(ctx);
-            	   messageUtils.messageLong(ForgetPasswordActivity.this.getResources().getString(R.string.message_unexpected_error_server));
+            	   messageUtils.snackBarMessage(ForgetPasswordActivity.this,ForgetPasswordActivity.this.getResources().getString(R.string.message_unexpected_error_server));
                }
                if (dialog.isShowing()) {
                	try

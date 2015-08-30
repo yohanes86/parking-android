@@ -92,7 +92,7 @@ public class RegisterActivity extends Activity {
 					
 				} else {
 					MessageUtils messageUtils = new MessageUtils(ctx);
-	             	messageUtils.messageLong(RegisterActivity.this.getResources().getString(R.string.message_detail_required));
+	             	messageUtils.snackBarMessage(RegisterActivity.this,RegisterActivity.this.getResources().getString(R.string.message_detail_required));
 				}
 			}
 		});
@@ -187,27 +187,27 @@ public class RegisterActivity extends Activity {
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);
 		               		if(messageVO.getRc()==0){
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getOtherMessage());
+				             	messageUtils.snackBarMessage(RegisterActivity.this,messageVO.getOtherMessage());
 				             	Intent i = new Intent(ctx, LoginActivity.class);
 								startActivity(i);
 								finish();
 		               		}
 		               		else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	messageUtils.snackBarMessage(RegisterActivity.this,messageVO.getMessageRc());
 		               		}
 
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
-			             	messageUtils.messageLong(RegisterActivity.this.getResources().getString(R.string.message_unexpected_error_message_server));
+			             	messageUtils.snackBarMessage(RegisterActivity.this,RegisterActivity.this.getResources().getString(R.string.message_unexpected_error_message_server));
 						}	            
 	               	}else{
 	               	   MessageUtils messageUtils = new MessageUtils(ctx);
-	             	   messageUtils.messageLong(RegisterActivity.this.getResources().getString(R.string.message_unexpected_error_server));
+	             	   messageUtils.snackBarMessage(RegisterActivity.this,RegisterActivity.this.getResources().getString(R.string.message_unexpected_error_server));
 	               	}
              }else{
           	   MessageUtils messageUtils = new MessageUtils(ctx);
-          	   messageUtils.messageLong(RegisterActivity.this.getResources().getString(R.string.message_unexpected_error_server));
+          	   messageUtils.snackBarMessage(RegisterActivity.this,RegisterActivity.this.getResources().getString(R.string.message_unexpected_error_server));
              }
              if (dialog.isShowing()) {
              	try
