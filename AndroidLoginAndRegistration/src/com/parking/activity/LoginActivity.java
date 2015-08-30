@@ -19,8 +19,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.iangclifton.android.floatlabel.FloatLabel;
@@ -53,7 +53,7 @@ public class LoginActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		ctx = this.getApplicationContext();
+		ctx = LoginActivity.this;
 		
 		inputEmail = (FloatLabel) findViewById(R.id.email);
 		inputPassword = (FloatLabel) findViewById(R.id.password);
@@ -78,7 +78,10 @@ public class LoginActivity extends Activity {
 					// validation email
 					if (!isValidEmail(email)) {						
 						MessageUtils messageUtils = new MessageUtils(ctx);
-		             	messageUtils.snackBarMessage(LoginActivity.this, LoginActivity.this.getResources().getString(R.string.email_not_valid));
+		             	messageUtils.snackBarMessage(LoginActivity.this, LoginActivity.this.getResources().getString(R.string.email_not_valid));		             	
+//		             	new MaterialDialog.Builder(ctx).content("tes").positiveText("setuju").negativeText("tidak setuju")
+//                        .show();
+		                
 					}
 					else{
 						// login user

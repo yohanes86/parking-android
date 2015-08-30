@@ -6,6 +6,7 @@ import java.util.Date;
 import android.app.Activity;
 import android.content.Context;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.parking.R;
 
@@ -57,5 +58,6 @@ public class MessageUtils {
 		snackBar.setBackgroundSnackBar(act.getResources().getColor(R.color.blue));
 		snackBar.show();
 	}
+		
 	
 }
