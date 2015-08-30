@@ -20,9 +20,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
+import com.gc.materialdesign.views.ButtonFlat;
 import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.InqLoginRequest;
@@ -40,8 +40,8 @@ public class LoginActivity extends Activity {
 	// LogCat tag
 	private static final String TAG = RegisterActivity.class.getSimpleName();
 	private Button btnLogin;
-	private Button btnLinkToRegister;
-	private Button btnLinkToForgetPassword;
+	private ButtonFlat btnLinkToRegister;
+	private ButtonFlat btnLinkToForgetPassword;
 	private FloatLabel inputEmail;
 	private FloatLabel inputPassword;
 	private Context ctx;
@@ -58,8 +58,8 @@ public class LoginActivity extends Activity {
 		inputEmail = (FloatLabel) findViewById(R.id.email);
 		inputPassword = (FloatLabel) findViewById(R.id.password);
 		btnLogin = (Button) findViewById(R.id.btnLogin);
-		btnLinkToRegister = (Button) findViewById(R.id.btnLinkToRegisterScreen);
-		btnLinkToForgetPassword = (Button) findViewById(R.id.btnLinkToForgetPasswordScreen);
+		btnLinkToRegister = (ButtonFlat) findViewById(R.id.btnLinkToRegisterScreen);
+		btnLinkToForgetPassword = (ButtonFlat) findViewById(R.id.btnLinkToForgetPasswordScreen);
 
 		// This is how you add a custom animator
         inputPassword.setLabelAnimator(new CustomLabelAnimator());

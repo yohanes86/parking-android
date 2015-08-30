@@ -30,7 +30,7 @@
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_name"
+            android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
             android:layout="@layout/custom_float_label"
             android:textColor="@color/color_label"

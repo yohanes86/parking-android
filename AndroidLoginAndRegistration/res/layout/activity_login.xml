@@ -50,7 +50,9 @@
 
         <!-- Link to Login Screen -->
 
-        <Button
+
+        <!--
+              <Button
             android:id="@+id/btnLinkToForgetPasswordScreen"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -59,15 +61,28 @@
             android:text="@string/btn_link_to_forget"
             android:textAllCaps="false"
             android:textColor="@color/color_label"
+            android:textSize="16dp" />
+        -->
+
+        <com.gc.materialdesign.views.ButtonFlat
+            android:id="@+id/btnLinkToForgetPasswordScreen"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dip"
+            android:gravity="center"
+            android:text="@string/btn_link_to_forget"
+            android:textColor="@color/color_label"
             android:textSize="16dp" />
 
-        <Button
+        <com.gc.materialdesign.views.ButtonFlat
             android:id="@+id/btnLinkToRegisterScreen"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@null"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dip"
+            android:gravity="center"
             android:text="@string/btn_link_to_register"
-            android:textAllCaps="false"
             android:textColor="@color/color_label"
             android:textSize="18dp"
             android:textStyle="bold" />

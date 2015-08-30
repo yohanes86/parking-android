@@ -85,7 +85,7 @@
     <string name="btn_release">RELEASE</string>
     <string name="btn_refresh_mall">Refresh List mall</string>   
     <string name="btn_link_to_register">Not a member? Sign up now.</string>
-    <string name="btn_link_to_forget"><u>Forgot Password?</u></string>
+    <string name="btn_link_to_forget"><u>Forgot Password?Click Here</u></string>
     <string name="btn_link_to_login">Already registred! Login Me.</string>
     <string name="btn_link_to_login2">Back to Login</string>
 
