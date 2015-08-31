@@ -12,7 +12,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -20,6 +19,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.Builder;
 import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.iangclifton.android.floatlabel.FloatLabel;
@@ -40,7 +41,6 @@ public class RegisterActivity extends Activity {
 	private FloatLabel inputPassword;
 	private FloatLabel inputLicenseNo;
 	private FloatLabel inputPhoneNo;
-	private ProgressDialog pDialog;
 	private Context ctx;
 	private ReqRegistrationTask reqRegistrationTask = null;
 
@@ -65,11 +65,7 @@ public class RegisterActivity extends Activity {
         inputPassword.setLabelAnimator(new CustomLabelAnimator());
         
 		
-		ctx = this.getApplicationContext();
-
-		// Progress dialog
-		pDialog = new ProgressDialog(this);
-		pDialog.setCancelable(false);
+		ctx = RegisterActivity.this;		
 
 		
 
@@ -110,15 +106,15 @@ public class RegisterActivity extends Activity {
 	}
 	
 	public class ReqRegistrationTask  extends AsyncTask<String, Void, Boolean> {
-		private ProgressDialog dialog = new ProgressDialog(RegisterActivity.this);
+		private Builder materialDialog = null;
        	private final HttpClient client = HttpClientUtil.getNewHttpClient();
        	String respString = null;
-       	protected void onPreExecute() {
-       		dialog = new ProgressDialog(RegisterActivity.this);
-    			dialog.setIndeterminate(true);
-    			dialog.setCancelable(true);
-    			dialog.setMessage(RegisterActivity.this.getResources().getString(R.string.process_register));
-    			dialog.show();
+       	protected void onPreExecute() {       		
+			materialDialog = new MaterialDialog.Builder(ctx).title(ctx.getResources().getString(R.string.progress_dialog))
+                    .content(R.string.process_register)
+                    .progress(true, 0)
+                    .progressIndeterminateStyle(false);
+    			materialDialog.show();
     		}
 		@Override
 		protected Boolean doInBackground(String... arg0) {
@@ -144,35 +140,11 @@ public class RegisterActivity extends Activity {
                 respString = EntityUtils.toString(respEntity);
     			result = true;
     			} catch (ClientProtocolException e) {
-    				Log.e(TAG, "ClientProtocolException : "+e);
-    				if (dialog.isShowing()) {
-    					try
-    	                {
-    	            		dialog.dismiss();
-    	                }catch(Exception e1) {
-    	                	// nothing
-    	                }
-    	            }
+    				Log.e(TAG, "ClientProtocolException : "+e);    				
     			} catch (IOException e) {
-    				Log.e(TAG, "IOException : "+e);
-    				if (dialog.isShowing()) {
-    					try
-    	                {
-    	            		dialog.dismiss();
-    	                }catch(Exception e1) {
-    	                	// nothing
-    	                }
-    	            }		
+    				Log.e(TAG, "IOException : "+e);    					
     			} catch (Exception e) {
-    				Log.e(TAG, "Exception : "+e);
-    				if (dialog.isShowing()) {
-    					try
-    	                {
-    	            		dialog.dismiss();
-    	                }catch(Exception e1) {
-    	                	// nothing
-    	                }
-    	            }				
+    				Log.e(TAG, "Exception : "+e);    							
     			}
            	return result;
            }
@@ -208,15 +180,7 @@ public class RegisterActivity extends Activity {
              }else{
           	   MessageUtils messageUtils = new MessageUtils(ctx);
           	   messageUtils.snackBarMessage(RegisterActivity.this,RegisterActivity.this.getResources().getString(R.string.message_unexpected_error_server));
-             }
-             if (dialog.isShowing()) {
-             	try
-                 {
-             		dialog.dismiss();
-                 }catch(Exception e1) {
-                 	// nothing
-                 }
-             }
+             }             
          }
 	}
 	

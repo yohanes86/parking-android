@@ -58,6 +58,15 @@ public class MessageUtils {
 		snackBar.setBackgroundSnackBar(act.getResources().getColor(R.color.blue));
 		snackBar.show();
 	}
+	
+	public void showConfirmDialog(Context ctx,String title,String content) {
+        new MaterialDialog.Builder(ctx)
+                .title(title)
+                .content(content)
+                .positiveText(R.string.ok)
+//                .negativeText(R.string.disagree)
+                .show();
+    }
 		
 	
 }

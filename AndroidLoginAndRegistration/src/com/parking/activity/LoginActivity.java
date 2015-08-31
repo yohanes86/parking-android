@@ -11,7 +11,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.Builder;
 import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.iangclifton.android.floatlabel.FloatLabel;
@@ -81,7 +81,7 @@ public class LoginActivity extends Activity {
 		             	messageUtils.snackBarMessage(LoginActivity.this, LoginActivity.this.getResources().getString(R.string.email_not_valid));		             	
 //		             	new MaterialDialog.Builder(ctx).content("tes").positiveText("setuju").negativeText("tidak setuju")
 //                        .show();
-		                
+//		             	showBasic();
 					}
 					else{
 						// login user
@@ -121,16 +121,17 @@ public class LoginActivity extends Activity {
 	}
 	
 	
+	
 	public class ReqLoginTask  extends AsyncTask<String, Void, Boolean> {
-		private ProgressDialog dialog = new ProgressDialog(LoginActivity.this);
+		private Builder materialDialog = null;
        	private final HttpClient client = HttpClientUtil.getNewHttpClient();
        	String respString = null;
        	protected void onPreExecute() {
-       		dialog = new ProgressDialog(LoginActivity.this);
-    			dialog.setIndeterminate(true);
-    			dialog.setCancelable(true);
-    			dialog.setMessage(LoginActivity.this.getResources().getString(R.string.process_login));
-    			dialog.show();
+       		materialDialog = new MaterialDialog.Builder(ctx).title(ctx.getResources().getString(R.string.progress_dialog))
+                    .content(R.string.process_login)
+                    .progress(true, 0)
+                    .progressIndeterminateStyle(false);
+    			materialDialog.show();
     		}
 		@Override
 		protected Boolean doInBackground(String... arg0) {
@@ -153,35 +154,11 @@ public class LoginActivity extends Activity {
                 respString = EntityUtils.toString(respEntity);
     			result = true;
     			} catch (ClientProtocolException e) {
-    				Log.e(TAG, "ClientProtocolException : "+e);
-    				if (dialog.isShowing()) {
-    					try
-    	                {
-    	            		dialog.dismiss();
-    	                }catch(Exception e1) {
-    	                	// nothing
-    	                }
-    	            }
+    				Log.e(TAG, "ClientProtocolException : "+e);    				
     			} catch (IOException e) {
-    				Log.e(TAG, "IOException : "+e);
-    				if (dialog.isShowing()) {
-    					try
-    	                {
-    	            		dialog.dismiss();
-    	                }catch(Exception e1) {
-    	                	// nothing
-    	                }
-    	            }		
+    				Log.e(TAG, "IOException : "+e);    				
     			} catch (Exception e) {
-    				Log.e(TAG, "Exception : "+e);
-    				if (dialog.isShowing()) {
-    					try
-    	                {
-    	            		dialog.dismiss();
-    	                }catch(Exception e1) {
-    	                	// nothing
-    	                }
-    	            }				
+    				Log.e(TAG, "Exception : "+e);    							
     			}
            	return result;
            }
@@ -217,15 +194,7 @@ public class LoginActivity extends Activity {
              }else{
           	   MessageUtils messageUtils = new MessageUtils(ctx);
           	   messageUtils.snackBarMessage(LoginActivity.this,LoginActivity.this.getResources().getString(R.string.message_unexpected_error_server));
-             }
-             if (dialog.isShowing()) {
-             	try
-                 {
-             		dialog.dismiss();
-                 }catch(Exception e1) {
-                 	// nothing
-                 }
-             }
+             }             
          }
 	}
 	

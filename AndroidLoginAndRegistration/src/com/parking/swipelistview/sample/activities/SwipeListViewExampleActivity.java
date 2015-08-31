@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -39,6 +39,8 @@ import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.Builder;
 import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.parking.R;
@@ -55,15 +57,16 @@ public class SwipeListViewExampleActivity extends FragmentActivity {
     private List<MallItem> data;
 
     private SwipeListView swipeListView;
-
-    private ProgressDialog progressDialog;
+    private Context ctx;
+//    private ProgressDialog progressDialog;
+    private Builder materialDialog = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.swipe_list_view_activity);
-
+        ctx = SwipeListViewExampleActivity.this;
         data = new ArrayList<MallItem>();
 
         adapter = new MallAdapter(this, data);
@@ -164,10 +167,16 @@ public class SwipeListViewExampleActivity extends FragmentActivity {
 
         new ListAppTask().execute();
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage(getString(R.string.loading));
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+//        progressDialog = new ProgressDialog(this);
+//        progressDialog.setMessage(getString(R.string.loading));
+//        progressDialog.setCancelable(false);
+//        progressDialog.show();
+        
+        materialDialog = new MaterialDialog.Builder(ctx).title(ctx.getResources().getString(R.string.progress_dialog))
+                .content(R.string.loading)
+                .progress(true, 0)
+                .progressIndeterminateStyle(false);
+			materialDialog.show();
 
 
     }
@@ -253,10 +262,10 @@ public class SwipeListViewExampleActivity extends FragmentActivity {
             data.clear();
             data.addAll(result);
             adapter.notifyDataSetChanged();
-            if (progressDialog != null) {
-                progressDialog.dismiss();
-                progressDialog = null;
-            }
+//            if (progressDialog != null) {
+//                progressDialog.dismiss();
+//                progressDialog = null;
+//            }
             if (PreferencesManager.getInstance(SwipeListViewExampleActivity.this).getShowAbout()) {
                 UsageTipsDialog logOutDialog = new UsageTipsDialog();
                 logOutDialog.show(getSupportFragmentManager(), "dialog");

@@ -10,7 +10,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -22,6 +21,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.Builder;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.parking.R;
 import com.parking.activity.LoginActivity;
@@ -60,15 +61,15 @@ public class LogoutFragment extends Fragment {
     }
     
     public class ReqLogoutTask extends AsyncTask<String, Void, Boolean> {
-       	private ProgressDialog dialog = new ProgressDialog(ctx);
+       	private Builder materialDialog = null;
        	private final HttpClient client = HttpClientUtil.getNewHttpClient();
        	String respString = null;
-       	protected void onPreExecute() {
-       		dialog = new ProgressDialog(ctx);
-    			dialog.setIndeterminate(true);
-    			dialog.setCancelable(true);
-    			dialog.setMessage(ctx.getResources().getString(R.string.process_logout));
-    			dialog.show();
+       	protected void onPreExecute() {       		
+			materialDialog = new MaterialDialog.Builder(ctx).title(ctx.getResources().getString(R.string.progress_dialog))
+                    .content(R.string.process_logout)
+                    .progress(true, 0)
+                    .progressIndeterminateStyle(false);
+    			materialDialog.show();
     		}
     		@Override
            protected Boolean doInBackground(String... params) {
@@ -90,35 +91,11 @@ public class LogoutFragment extends Fragment {
                 respString = EntityUtils.toString(respEntity);
     			result = true;
     			} catch (ClientProtocolException e) {
-    				Log.e(TAG, "ClientProtocolException : "+e);
-    				if (dialog.isShowing()) {
-    					try
-    	                {
-    	            		dialog.dismiss();
-    	                }catch(Exception e1) {
-    	                	// nothing
-    	                }
-    	            }
+    				Log.e(TAG, "ClientProtocolException : "+e);    				
     			} catch (IOException e) {
-    				Log.e(TAG, "IOException : "+e);
-    				if (dialog.isShowing()) {
-    					try
-    	                {
-    	            		dialog.dismiss();
-    	                }catch(Exception e1) {
-    	                	// nothing
-    	                }
-    	            }		
+    				Log.e(TAG, "IOException : "+e);    					
     			} catch (Exception e) {
-    				Log.e(TAG, "Exception : "+e);
-    				if (dialog.isShowing()) {
-    					try
-    	                {
-    	            		dialog.dismiss();
-    	                }catch(Exception e1) {
-    	                	// nothing
-    	                }
-    	            }				
+    				Log.e(TAG, "Exception : "+e);    								
     			}
            	return result;
            }
@@ -154,15 +131,7 @@ public class LogoutFragment extends Fragment {
                }else{
             	   MessageUtils messageUtils = new MessageUtils(ctx);
             	   messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_server));
-               }
-               if (dialog.isShowing()) {
-               	try
-                   {
-               		dialog.dismiss();
-                   }catch(Exception e1) {
-                   	// nothing
-                   }
-               }
+               }               
            }
 
        }

@@ -15,7 +15,6 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.type.TypeReference;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -34,6 +33,8 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.Builder;
 import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.parking.R;
@@ -69,7 +70,6 @@ public class MallFragment extends Fragment {
     private Context ctx;
     private SwipeListView swipeListView;
     private ReqGetMallTask reqGetMallTask = null;
-    private ProgressDialog progressDialog;
     private String email;
 	private String sessionkey;
     private View parentView;
@@ -185,12 +185,7 @@ public class MallFragment extends Fragment {
         
 //        new ListAppTask().execute();
         reqGetMallTask = new ReqGetMallTask();
-        reqGetMallTask.execute("");    
-
-//        progressDialog = new ProgressDialog(ctx);
-//        progressDialog.setMessage(getString(R.string.loading));
-//        progressDialog.setCancelable(false);
-//        progressDialog.show();
+        reqGetMallTask.execute("");
         
         return parentView;
     }
@@ -253,15 +248,15 @@ public class MallFragment extends Fragment {
     }
     
     public class ReqGetMallTask extends AsyncTask<String, Void, Boolean> {
-       	private ProgressDialog dialog = new ProgressDialog(ctx);
+    	private Builder materialDialog = null;
        	private final HttpClient client = HttpClientUtil.getNewHttpClient();
        	String respString = null;
-       	protected void onPreExecute() {
-       		dialog = new ProgressDialog(ctx);
-    			dialog.setIndeterminate(true);
-    			dialog.setCancelable(true);
-    			dialog.setMessage(ctx.getResources().getString(R.string.process_get_list_mall));
-    			dialog.show();
+       	protected void onPreExecute() {       		
+    			materialDialog = new MaterialDialog.Builder(ctx).title(ctx.getResources().getString(R.string.progress_dialog))
+                        .content(R.string.process_get_list_mall)
+                        .progress(true, 0)
+                        .progressIndeterminateStyle(false);
+        			materialDialog.show();
     		}
     		@Override
            protected Boolean doInBackground(String... params) {
@@ -285,35 +280,11 @@ public class MallFragment extends Fragment {
                 respString = EntityUtils.toString(respEntity);
     			result = true;
     			} catch (ClientProtocolException e) {
-    				Log.e(TAG, "ClientProtocolException : "+e);
-    				if (dialog.isShowing()) {
-    					try
-    	                {
-    	            		dialog.dismiss();
-    	                }catch(Exception e1) {
-    	                	// nothing
-    	                }
-    	            }
+    				Log.e(TAG, "ClientProtocolException : "+e);    				
     			} catch (IOException e) {
-    				Log.e(TAG, "IOException : "+e);
-    				if (dialog.isShowing()) {
-    					try
-    	                {
-    	            		dialog.dismiss();
-    	                }catch(Exception e1) {
-    	                	// nothing
-    	                }
-    	            }		
+    				Log.e(TAG, "IOException : "+e);    					
     			} catch (Exception e) {
-    				Log.e(TAG, "Exception : "+e);
-    				if (dialog.isShowing()) {
-    					try
-    	                {
-    	            		dialog.dismiss();
-    	                }catch(Exception e1) {
-    	                	// nothing
-    	                }
-    	            }				
+    				Log.e(TAG, "Exception : "+e);    							
     			}
            	return result;
            }
@@ -346,11 +317,7 @@ public class MallFragment extends Fragment {
 								}
 		               			data.clear();
 		                        data.addAll(result);
-		                        adapter.notifyDataSetChanged();
-		                        if (progressDialog != null) {
-		                            progressDialog.dismiss();
-		                            progressDialog = null;
-		                        }
+		                        adapter.notifyDataSetChanged();		                        
 		                        setupTipsDialog();
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
@@ -371,15 +338,7 @@ public class MallFragment extends Fragment {
                }else{
             	   MessageUtils messageUtils = new MessageUtils(ctx);
             	   messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_server));
-               }
-               if (dialog.isShowing()) {
-               	try
-                   {
-               		dialog.dismiss();
-                   }catch(Exception e1) {
-                   	// nothing
-                   }
-               }
+               }               
            }
 
        }
