@@ -20,15 +20,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 
+import com.gc.materialdesign.views.ButtonRectangle;
+import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.Constants;
 import com.parking.data.InqChangePasswordRequest;
 import com.parking.data.LoginData;
 import com.parking.data.MessageVO;
 import com.parking.utils.CipherUtil;
+import com.parking.utils.CustomLabelAnimator;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
 import com.parking.utils.RedirectUtils;
@@ -44,22 +45,26 @@ public class ChangePasswordFragment extends Fragment {
 	private static final String TAG = ChangePasswordFragment.class.getSimpleName();
 	private Context ctx;
 	private ReqChangePasswordTask reqChangePasswordTask = null;
-	private EditText oldPassword;
-	private EditText newPassword;
+	private FloatLabel oldPassword;
+	private FloatLabel newPassword;
 	private String email;
 	private String sessionkey;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	 View rootView = inflater.inflate(R.layout.activity_change_password, container, false);
     	 ctx = container.getContext();
-    	 Button btnChangePassword = (Button) rootView.findViewById(R.id.btnChangePassword);
-    	 oldPassword = (EditText) rootView.findViewById(R.id.oldPassword);
-    	 newPassword = (EditText) rootView.findViewById(R.id.newPassword);    	 
+    	 ButtonRectangle btnChangePassword = (ButtonRectangle) rootView.findViewById(R.id.btnChangePassword);
+    	 oldPassword = (FloatLabel) rootView.findViewById(R.id.oldPassword);
+    	 newPassword = (FloatLabel) rootView.findViewById(R.id.newPassword); 
+    	// This is how you add a custom animator
+    	 oldPassword.setLabelAnimator(new CustomLabelAnimator());
+    	 newPassword.setLabelAnimator(new CustomLabelAnimator());
+    	 
     	 btnChangePassword.setOnClickListener(new OnClickListener() {
              @Override
              public void onClick(View arg0) {
-            	 String passLama = oldPassword.getText().toString();
-            	 String passBaru = newPassword.getText().toString();
+            	 String passLama = oldPassword.getEditText().getText().toString();
+            	 String passBaru = newPassword.getEditText().getText().toString();
             	 LoginData loginData = SharedPreferencesUtils.getLoginData(ctx);            	 
             	// ambil dari session untuk email, session key
             	 email = loginData.getEmail();
@@ -69,7 +74,7 @@ public class ChangePasswordFragment extends Fragment {
  					reqChangePasswordTask.execute("");       
  				} else {
  					MessageUtils messageUtils = new MessageUtils(ctx);
- 	             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_password_required));
+ 	             	messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_password_required));
  				}
 
 
@@ -96,8 +101,8 @@ public class ChangePasswordFragment extends Fragment {
            		
            		InqChangePasswordRequest inqChangePasswordRequest = new InqChangePasswordRequest();
            		inqChangePasswordRequest.setEmail(email);
-           		inqChangePasswordRequest.setPassword(oldPassword.getText().toString());
-           		inqChangePasswordRequest.setNewPassword(newPassword.getText().toString());
+           		inqChangePasswordRequest.setPassword(oldPassword.getEditText().getText().toString());
+           		inqChangePasswordRequest.setNewPassword(newPassword.getEditText().getText().toString());
            		inqChangePasswordRequest.setSessionKey(sessionkey);
 				String s = HttpClientUtil.getObjectMapper(ctx).writeValueAsString(inqChangePasswordRequest);
 				s = CipherUtil.encryptTripleDES(s, CipherUtil.PASSWORD);
@@ -156,11 +161,11 @@ public class ChangePasswordFragment extends Fragment {
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
 		               		if(messageVO.getRc()==0){
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getOtherMessage());
+				             	messageUtils.snackBarMessage(getActivity(),messageVO.getOtherMessage());
 				             	clearInput();
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	messageUtils.snackBarMessage(getActivity(),messageVO.getMessageRc());
 				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
 				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, getActivity());
 				             		redirectUtils.redirectToLogin();
@@ -168,15 +173,15 @@ public class ChangePasswordFragment extends Fragment {
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
-			             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_message_server));
+			             	messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_message_server));
 						}	            
 	               	}else{
 	               	   MessageUtils messageUtils = new MessageUtils(ctx);
-	             	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+	             	   messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_server));
 	               	}
                }else{
             	   MessageUtils messageUtils = new MessageUtils(ctx);
-            	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+            	   messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_server));
                }
                if (dialog.isShowing()) {
                	try

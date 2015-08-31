@@ -19,16 +19,18 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.gc.materialdesign.views.ButtonFlat;
+import com.gc.materialdesign.views.ButtonRectangle;
+import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.InqLoginRequest;
 import com.parking.data.LoginData;
 import com.parking.data.MessageVO;
 import com.parking.menu.MenuActivity;
 import com.parking.utils.CipherUtil;
+import com.parking.utils.CustomLabelAnimator;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
 import com.parking.utils.SharedPreferencesUtils;
@@ -37,11 +39,11 @@ import com.parking.utils.SharedPreferencesUtils;
 public class LoginActivity extends Activity {
 	// LogCat tag
 	private static final String TAG = RegisterActivity.class.getSimpleName();
-	private Button btnLogin;
-	private Button btnLinkToRegister;
-	private Button btnLinkToForgetPassword;
-	private EditText inputEmail;
-	private EditText inputPassword;
+	private ButtonRectangle btnLogin;
+	private ButtonFlat btnLinkToRegister;
+	private ButtonFlat btnLinkToForgetPassword;
+	private FloatLabel inputEmail;
+	private FloatLabel inputPassword;
 	private Context ctx;
 	private ReqLoginTask reqLoginTask = null;
 	SharedPreferences sharedpreferences;
@@ -51,27 +53,35 @@ public class LoginActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		ctx = this.getApplicationContext();
+		ctx = LoginActivity.this;
 		
-		inputEmail = (EditText) findViewById(R.id.email);
-		inputPassword = (EditText) findViewById(R.id.password);
-		btnLogin = (Button) findViewById(R.id.btnLogin);
-		btnLinkToRegister = (Button) findViewById(R.id.btnLinkToRegisterScreen);
-		btnLinkToForgetPassword = (Button) findViewById(R.id.btnLinkToForgetPasswordScreen);
+		inputEmail = (FloatLabel) findViewById(R.id.email);
+		inputPassword = (FloatLabel) findViewById(R.id.password);
+		btnLogin = (ButtonRectangle) findViewById(R.id.btnLogin);
+		btnLinkToRegister = (ButtonFlat) findViewById(R.id.btnLinkToRegisterScreen);
+		btnLinkToForgetPassword = (ButtonFlat) findViewById(R.id.btnLinkToForgetPasswordScreen);
 
+		// This is how you add a custom animator
+        inputPassword.setLabelAnimator(new CustomLabelAnimator());
+        inputEmail.setLabelAnimator(new CustomLabelAnimator());
+        
+		
 		// Login button Click Event
 		btnLogin.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View view) {
-				String email = inputEmail.getText().toString();
-				String password = inputPassword.getText().toString();
+				String email = inputEmail.getEditText().getText().toString();
+				String password = inputPassword.getEditText().getText().toString();
 				
 				// Check for empty data in the form
 				if (email.trim().length() > 0 && password.trim().length() > 0) {
 					// validation email
-					if (!isValidEmail(email)) {
-						Toast.makeText(getApplicationContext(),
-								"Email tidak valid!", Toast.LENGTH_LONG).show();
+					if (!isValidEmail(email)) {						
+						MessageUtils messageUtils = new MessageUtils(ctx);
+		             	messageUtils.snackBarMessage(LoginActivity.this, LoginActivity.this.getResources().getString(R.string.email_not_valid));		             	
+//		             	new MaterialDialog.Builder(ctx).content("tes").positiveText("setuju").negativeText("tidak setuju")
+//                        .show();
+		                
 					}
 					else{
 						// login user
@@ -81,7 +91,7 @@ public class LoginActivity extends Activity {
 				} else {
 					// Prompt user to enter credentials
 					MessageUtils messageUtils = new MessageUtils(ctx);
-	             	messageUtils.messageLong(LoginActivity.this.getResources().getString(R.string.email_and_pass_required));
+	             	messageUtils.snackBarMessage(LoginActivity.this, LoginActivity.this.getResources().getString(R.string.email_and_pass_required));
 				}
 			}
 
@@ -127,8 +137,8 @@ public class LoginActivity extends Activity {
 			boolean result = false;
            	try {
            		InqLoginRequest inqLoginRequest = new InqLoginRequest();
-           		inqLoginRequest.setEmail(inputEmail.getText().toString());
-           		inqLoginRequest.setPassword(inputPassword.getText().toString());
+           		inqLoginRequest.setEmail(inputEmail.getEditText().getText().toString());
+           		inqLoginRequest.setPassword(inputPassword.getEditText().getText().toString());
            		String s = HttpClientUtil.getObjectMapper(ctx).writeValueAsString(inqLoginRequest);
 				s = CipherUtil.encryptTripleDES(s, CipherUtil.PASSWORD);
            		Log.d(TAG,"Request: " + s);
@@ -193,20 +203,20 @@ public class LoginActivity extends Activity {
 		               		}
 		               		else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	messageUtils.snackBarMessage(LoginActivity.this,messageVO.getMessageRc());
 		               		}
 
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
-			             	messageUtils.messageLong(LoginActivity.this.getResources().getString(R.string.message_unexpected_error_message_server));
+			             	messageUtils.snackBarMessage(LoginActivity.this,LoginActivity.this.getResources().getString(R.string.message_unexpected_error_message_server));
 						}	            
 	               	}else{
 	               	   MessageUtils messageUtils = new MessageUtils(ctx);
-	             	   messageUtils.messageLong(LoginActivity.this.getResources().getString(R.string.message_unexpected_error_server));
+	             	   messageUtils.snackBarMessage(LoginActivity.this,LoginActivity.this.getResources().getString(R.string.message_unexpected_error_server));
 	               	}
              }else{
           	   MessageUtils messageUtils = new MessageUtils(ctx);
-          	   messageUtils.messageLong(LoginActivity.this.getResources().getString(R.string.message_unexpected_error_server));
+          	   messageUtils.snackBarMessage(LoginActivity.this,LoginActivity.this.getResources().getString(R.string.message_unexpected_error_server));
              }
              if (dialog.isShowing()) {
              	try

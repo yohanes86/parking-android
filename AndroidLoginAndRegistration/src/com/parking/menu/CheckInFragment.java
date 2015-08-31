@@ -20,17 +20,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.gc.materialdesign.views.ButtonRectangle;
+import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.BookingVO;
 import com.parking.data.Constants;
 import com.parking.data.LoginData;
 import com.parking.data.MessageVO;
 import com.parking.utils.CipherUtil;
+import com.parking.utils.CustomLabelAnimator;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
 import com.parking.utils.RedirectUtils;
@@ -47,9 +48,9 @@ public class CheckInFragment extends Fragment {
 	private Context ctx;
 	private CheckInAllowTask checkInAllowTask = null;
 	private CheckConfirmTask checkConfirmTask = null;
-	private EditText bookingCode;
-	private Button btnCheckIn;
-	private Button btnCheckInOk;
+	private FloatLabel bookingCode;
+	private ButtonRectangle btnCheckIn;
+	private ButtonRectangle btnCheckInOk;
 	private ScrollView resultScrollView;
 	private TextView bookingName;
 	private TextView bookingPhone;
@@ -65,9 +66,9 @@ public class CheckInFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	View rootView = inflater.inflate(R.layout.activity_check_in, container, false);
     	ctx = container.getContext();
-    	btnCheckIn = (Button) rootView.findViewById(R.id.btnCheckIn);
-    	btnCheckInOk = (Button) rootView.findViewById(R.id.btnCheckInOk);
-    	bookingCode = (EditText) rootView.findViewById(R.id.bookingCode);
+    	btnCheckIn = (ButtonRectangle) rootView.findViewById(R.id.btnCheckIn);
+    	btnCheckInOk = (ButtonRectangle) rootView.findViewById(R.id.btnCheckInOk);
+    	bookingCode = (FloatLabel) rootView.findViewById(R.id.bookingCode);
     	resultScrollView = (ScrollView) rootView.findViewById(R.id.resultScrollView);
     	bookingName = (TextView) rootView.findViewById(R.id.bookingName);
     	bookingPhone = (TextView) rootView.findViewById(R.id.bookingPhone);
@@ -76,10 +77,14 @@ public class CheckInFragment extends Fragment {
     	bookingId = (TextView) rootView.findViewById(R.id.bookingId);
     	bookingDate = (TextView) rootView.findViewById(R.id.bookingDate);
     	bookingStatus = (TextView) rootView.findViewById(R.id.bookingStatus);
+    	
+    	// This is how you add a custom animator
+    	bookingCode.setLabelAnimator(new CustomLabelAnimator());       
+    	
     	btnCheckIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-           	 bookingCodeInput = bookingCode.getText().toString();       
+           	 bookingCodeInput = bookingCode.getEditText().getText().toString();       
            	 LoginData loginData = SharedPreferencesUtils.getLoginData(ctx);            	 
            	// ambil dari session untuk email, session key
            	 email = loginData.getEmail();
@@ -89,7 +94,7 @@ public class CheckInFragment extends Fragment {
 					checkInAllowTask.execute("");       
 				} else {
 					MessageUtils messageUtils = new MessageUtils(ctx);
-	             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_booking_code_required));
+	             	messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_booking_code_required));
 				}
 
 
@@ -99,7 +104,7 @@ public class CheckInFragment extends Fragment {
     	btnCheckInOk.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-           	 bookingCodeInput = bookingCode.getText().toString();       
+           	 bookingCodeInput = bookingCode.getEditText().getText().toString();       
            	 LoginData loginData = SharedPreferencesUtils.getLoginData(ctx);            	 
            	// ambil dari session untuk email, session key
            	 email = loginData.getEmail();
@@ -109,7 +114,7 @@ public class CheckInFragment extends Fragment {
 					checkConfirmTask.execute("");
 				} else {
 					MessageUtils messageUtils = new MessageUtils(ctx);
-	             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_booking_code_required));
+	             	messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_booking_code_required));
 				}
 
 
@@ -194,8 +199,6 @@ public class CheckInFragment extends Fragment {
 	               			String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
 		               		if(messageVO.getRc()==0){
-//		               			MessageUtils messageUtils = new MessageUtils(ctx);
-//				             	messageUtils.messageLong(messageVO.getOtherMessage());
 		               			BookingVO bookingVO = HttpClientUtil.getObjectMapper(ctx).readValue(messageVO.getOtherMessage(), BookingVO.class);	
 		               			bookingName.setText(bookingVO.getName());
 		               			bookingPhone.setText(bookingVO.getPhoneNo());
@@ -207,7 +210,7 @@ public class CheckInFragment extends Fragment {
 		               			resultScrollView.setVisibility(View.VISIBLE);
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	messageUtils.snackBarMessage(getActivity(),messageVO.getMessageRc());
 				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
 				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, getActivity());
 				             		redirectUtils.redirectToLogin();
@@ -215,15 +218,15 @@ public class CheckInFragment extends Fragment {
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
-			             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_message_server));
+			             	messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_message_server));
 						}	            
 	               	}else{
 	               	   MessageUtils messageUtils = new MessageUtils(ctx);
-	             	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+	             	   messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_server));
 	               	}
                }else{
             	   MessageUtils messageUtils = new MessageUtils(ctx);
-            	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+            	   messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_server));
                }
                if (dialog.isShowing()) {
                	try
@@ -314,11 +317,11 @@ public class CheckInFragment extends Fragment {
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
 		               		if(messageVO.getRc()==0){
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getOtherMessage());	
+				             	messageUtils.snackBarMessage(getActivity(),messageVO.getOtherMessage());	
 				             	resultScrollView.setVisibility(View.GONE);
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	messageUtils.snackBarMessage(getActivity(),messageVO.getMessageRc());
 				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
 				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, getActivity());
 				             		redirectUtils.redirectToLogin();
@@ -326,15 +329,15 @@ public class CheckInFragment extends Fragment {
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
-			             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_message_server));
+			             	messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_message_server));
 						}	            
 	               	}else{
 	               	   MessageUtils messageUtils = new MessageUtils(ctx);
-	             	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+	             	   messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_server));
 	               	}
                }else{
             	   MessageUtils messageUtils = new MessageUtils(ctx);
-            	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+            	   messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_server));
                }
                if (dialog.isShowing()) {
                	try

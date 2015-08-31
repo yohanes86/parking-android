@@ -35,5 +35,7 @@
 
     <dimen name="font_size_new_tag">11sp</dimen>
     <dimen name="padding_new_tag">3dp</dimen>
+    <dimen name="heading_space_bottom">8dp</dimen>
+    <dimen name="heading_space_top">16dp</dimen>
 
 </resources>

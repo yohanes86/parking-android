@@ -21,8 +21,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.parking.R;
 import com.parking.activity.LoginActivity;
 import com.parking.data.Constants;
@@ -48,7 +48,7 @@ public class LogoutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	View rootView = inflater.inflate(R.layout.activity_logout, container, false);
     	ctx = container.getContext();
-   	 	Button btnLogout = (Button) rootView.findViewById(R.id.btnLogout);
+    	ButtonRectangle btnLogout = (ButtonRectangle) rootView.findViewById(R.id.btnLogout);
    	 	btnLogout.setOnClickListener(new OnClickListener() {
 	         @Override
 	         public void onClick(View arg0) {	        	 	        	         	 	   
@@ -133,11 +133,11 @@ public class LogoutFragment extends Fragment {
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
 		               		if(messageVO.getRc()==0){
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getOtherMessage());	
+				             	messageUtils.snackBarMessage(getActivity(),messageVO.getOtherMessage());	
 				             	goToLoginActivity(ctx);
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	messageUtils.snackBarMessage(getActivity(),messageVO.getMessageRc());
 				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
 				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, getActivity());
 				             		redirectUtils.redirectToLogin();
@@ -145,15 +145,15 @@ public class LogoutFragment extends Fragment {
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
-			             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_message_server));
+			             	messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_message_server));
 						}	            
 	               	}else{
 	               	   MessageUtils messageUtils = new MessageUtils(ctx);
-	             	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+	             	   messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_server));
 	               	}
                }else{
             	   MessageUtils messageUtils = new MessageUtils(ctx);
-            	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+            	   messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_server));
                }
                if (dialog.isShowing()) {
                	try

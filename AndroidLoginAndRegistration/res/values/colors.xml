@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <color name="color_label">#2E2E1F</color>
+    <color name="grey">#999999</color>
+    <color name="blue">#1e88e5</color>
+    
 
     <color name="bg_login">#26ae90</color>
     <color name="bg_register">#2e3237</color>
@@ -7,6 +12,7 @@
     <color name="bg_main">#428bca</color>
     <color name="white">#ffffff</color>
     <color name="pink">#ea4c88</color>
+    <color name="grey">#999999</color>
     <color name="input_login">#222222</color>
     <color name="input_login_hint">#999999</color>
     <color name="input_register">#888888</color>
@@ -27,5 +33,7 @@
     <color name="line">#ffbcbcbc</color>
     <color name="background_new_tag">#ff0000</color>
     <color name="text_new_tag">#ffffff</color>
+    
+    <color name="floatLabelColorRed">#FF0000</color>
 
 </resources>

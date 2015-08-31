@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/bg_login"
+    android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp" >
@@ -15,65 +16,63 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp" >
 
-        <EditText
+        <com.iangclifton.android.floatlabel.FloatLabel
             android:id="@+id/email"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@color/white"
             android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColor="@color/input_login"
-            android:textColorHint="@color/input_login_hint" />
+            android:layout="@layout/custom_float_label"
+            android:textColor="@color/color_label"
+            android:textStyle="normal"
+            android:typeface="sans" />
 
-        <EditText
+        <com.iangclifton.android.floatlabel.FloatLabel
             android:id="@+id/password"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@color/white"
             android:hint="@string/hint_password"
             android:inputType="textPassword"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColor="@color/input_login"
-            android:textColorHint="@color/input_login_hint" />
+            android:layout="@layout/custom_float_label"
+            android:textColor="@color/color_label"
+            android:textStyle="normal"
+            android:typeface="sans" />
 
         <!-- Login Button -->
 
-        <Button
+        <com.gc.materialdesign.views.ButtonRectangle
             android:id="@+id/btnLogin"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_marginTop="20dip"
-            android:background="@drawable/button_login"
-            android:text="@string/btn_login"
-            android:textColor="@color/btn_login" />
+            android:background="@color/blue"
+            android:text="@string/btn_login" />
 
         <!-- Link to Login Screen -->
-		<Button
+
+        <com.gc.materialdesign.views.ButtonFlat
             android:id="@+id/btnLinkToForgetPasswordScreen"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dip"
-            android:background="@null"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dip"
+            android:background="@color/blue"
+            android:gravity="center"
             android:text="@string/btn_link_to_forget"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
             android:textSize="16dp" />
-		
-        <Button
+
+        <com.gc.materialdesign.views.ButtonFlat
             android:id="@+id/btnLinkToRegisterScreen"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"            
-            android:background="@null"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dip"
+            android:background="@color/blue"
+            android:gravity="center"
             android:text="@string/btn_link_to_register"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

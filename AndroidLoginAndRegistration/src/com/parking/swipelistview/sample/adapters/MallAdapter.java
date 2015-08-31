@@ -36,18 +36,17 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
-import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fortysevendeg.swipelistview.SwipeListView;
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.parking.R;
 import com.parking.activity.InputCreditCardActivity;
 import com.parking.data.Constants;
@@ -122,8 +121,8 @@ public class MallAdapter extends BaseAdapter {
             holder.ivImage = (ImageView) convertView.findViewById(R.id.example_row_iv_image);
             holder.tvMallName = (TextView) convertView.findViewById(R.id.example_row_tv_title);
             holder.tvInformation = (TextView) convertView.findViewById(R.id.example_row_tv_description);
-            holder.bAction1 = (Button) convertView.findViewById(R.id.example_row_b_action_1);
-            holder.bAction2 = (Button) convertView.findViewById(R.id.example_row_b_action_2);
+            holder.bAction1 = (ButtonRectangle) convertView.findViewById(R.id.example_row_b_action_1);
+            holder.bAction2 = (ButtonRectangle) convertView.findViewById(R.id.example_row_b_action_2);
             
             if(login.getGroupUser().equalsIgnoreCase(Constants.USER)){
             	holder.bAction2.setVisibility(View.GONE);
@@ -135,7 +134,7 @@ public class MallAdapter extends BaseAdapter {
             	holder.bAction1.setVisibility(View.VISIBLE);
             }
             
-//            holder.bAction3 = (Button) convertView.findViewById(R.id.example_row_b_action_3);
+//            holder.bAction3 = (ButtonRectangle) convertView.findViewById(R.id.example_row_b_action_3);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -198,9 +197,9 @@ public class MallAdapter extends BaseAdapter {
         ImageView ivImage;
         TextView tvMallName;
         TextView tvInformation;
-        Button bAction1;
-        Button bAction2;
-//        Button bAction3;
+        ButtonRectangle bAction1;
+        ButtonRectangle bAction2;
+//        ButtonRectangle bAction3;
     }
 
     private boolean isPlayStoreInstalled() {
@@ -297,13 +296,11 @@ public class MallAdapter extends BaseAdapter {
 	               			String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
 		               		if(messageVO.getRc()==0){
-//		               			MessageUtils messageUtils = new MessageUtils(ctx);
-//				             	messageUtils.messageLong(messageVO.getOtherMessage());
 				             	SlotsParkingVO slotsParkingVO = HttpClientUtil.getObjectMapper(ctx).readValue(messageVO.getOtherMessage(), SlotsParkingVO.class);
 				             	goToPayScreen(slotsParkingVO.getMallName(), slotsParkingVO.getSlotsPrice(),slotsParkingVO.getSlotsName(),slotsParkingVO.getBookingId());
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());		
+				             	messageUtils.snackBarMessage(act,messageVO.getMessageRc());		
 				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
 				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, act);
 				             		redirectUtils.redirectToLogin();
@@ -311,15 +308,15 @@ public class MallAdapter extends BaseAdapter {
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
-			             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_message_server));
+			             	messageUtils.snackBarMessage(act,ctx.getResources().getString(R.string.message_unexpected_error_message_server));
 						}	            
 	               	}else{
 	               	   MessageUtils messageUtils = new MessageUtils(ctx);
-	             	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+	             	   messageUtils.snackBarMessage(act,ctx.getResources().getString(R.string.message_unexpected_error_server));
 	               	}
                }else{
             	   MessageUtils messageUtils = new MessageUtils(ctx);
-            	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+            	   messageUtils.snackBarMessage(act,ctx.getResources().getString(R.string.message_unexpected_error_server));
                }
                if (dialog.isShowing()) {
                	try
@@ -411,10 +408,10 @@ public class MallAdapter extends BaseAdapter {
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
 		               		if(messageVO.getRc()==0){
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getOtherMessage());
+				             	messageUtils.snackBarMessage(act,messageVO.getOtherMessage());
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());		
+				             	messageUtils.snackBarMessage(act,messageVO.getMessageRc());		
 				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
 				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, act);
 				             		redirectUtils.redirectToLogin();
@@ -422,15 +419,15 @@ public class MallAdapter extends BaseAdapter {
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
-			             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_message_server));
+			             	messageUtils.snackBarMessage(act,ctx.getResources().getString(R.string.message_unexpected_error_message_server));
 						}	            
 	               	}else{
 	               	   MessageUtils messageUtils = new MessageUtils(ctx);
-	             	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+	             	   messageUtils.snackBarMessage(act,ctx.getResources().getString(R.string.message_unexpected_error_server));
 	               	}
                }else{
             	   MessageUtils messageUtils = new MessageUtils(ctx);
-            	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+            	   messageUtils.snackBarMessage(act,ctx.getResources().getString(R.string.message_unexpected_error_server));
                }
                if (dialog.isShowing()) {
                	try

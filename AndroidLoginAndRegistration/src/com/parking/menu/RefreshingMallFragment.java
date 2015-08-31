@@ -10,18 +10,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
-import com.parking.R;
-import com.parking.data.Constants;
-import com.parking.data.InqChangePasswordRequest;
-import com.parking.data.LoginData;
-import com.parking.data.MessageVO;
-import com.parking.menu.ChangePasswordFragment.ReqChangePasswordTask;
-import com.parking.utils.CipherUtil;
-import com.parking.utils.HttpClientUtil;
-import com.parking.utils.MessageUtils;
-import com.parking.utils.RedirectUtils;
-import com.parking.utils.SharedPreferencesUtils;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -30,10 +18,18 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.ViewGroup;
+
+import com.gc.materialdesign.views.ButtonRectangle;
+import com.parking.R;
+import com.parking.data.Constants;
+import com.parking.data.InqChangePasswordRequest;
+import com.parking.data.MessageVO;
+import com.parking.utils.CipherUtil;
+import com.parking.utils.HttpClientUtil;
+import com.parking.utils.MessageUtils;
+import com.parking.utils.RedirectUtils;
 
 public class RefreshingMallFragment extends Fragment{
 	private static final String TAG = RefreshingMallFragment.class.getSimpleName();
@@ -44,7 +40,7 @@ public class RefreshingMallFragment extends Fragment{
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	    	 View rootView = inflater.inflate(R.layout.activity_refreshing_list_mall, container, false);
 	    	 ctx = container.getContext();
-	    	 Button btnChangePassword = (Button) rootView.findViewById(R.id.btnRefreshMall);
+	    	 ButtonRectangle btnChangePassword = (ButtonRectangle) rootView.findViewById(R.id.btnRefreshMall);
 	    	
 	    	 btnChangePassword.setOnClickListener(new OnClickListener() {
 	             @Override
@@ -130,10 +126,10 @@ public class RefreshingMallFragment extends Fragment{
 		               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
 			               		if(messageVO.getRc()==0){
 			               			MessageUtils messageUtils = new MessageUtils(ctx);
-					             	messageUtils.messageLong(messageVO.getOtherMessage());					             	
+					             	messageUtils.snackBarMessage(getActivity(),messageVO.getOtherMessage());					             	
 			               		}else{
 			               			MessageUtils messageUtils = new MessageUtils(ctx);
-					             	messageUtils.messageLong(messageVO.getMessageRc());
+					             	messageUtils.snackBarMessage(getActivity(),messageVO.getMessageRc());
 					             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
 					             		RedirectUtils redirectUtils = new RedirectUtils(ctx, getActivity());
 					             		redirectUtils.redirectToLogin();
@@ -141,15 +137,15 @@ public class RefreshingMallFragment extends Fragment{
 			               		}
 							} catch (Exception e) {
 								MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_message_server));
+				             	messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_message_server));
 							}	            
 		               	}else{
 		               	   MessageUtils messageUtils = new MessageUtils(ctx);
-		             	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+		             	   messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_server));
 		               	}
 	               }else{
 	            	   MessageUtils messageUtils = new MessageUtils(ctx);
-	            	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+	            	   messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_server));
 	               }
 	               if (dialog.isShowing()) {
 	               	try

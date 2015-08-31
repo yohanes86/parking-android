@@ -354,7 +354,7 @@ public class MallFragment extends Fragment {
 		                        setupTipsDialog();
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	messageUtils.snackBarMessage(getActivity(),messageVO.getMessageRc());
 				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
 				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, getActivity());
 				             		redirectUtils.redirectToLogin();
@@ -362,15 +362,15 @@ public class MallFragment extends Fragment {
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
-			             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_message_server));
+			             	messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_message_server));
 						}	            
 	               	}else{
 	               	   MessageUtils messageUtils = new MessageUtils(ctx);
-	             	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+	             	   messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_server));
 	               	}
                }else{
             	   MessageUtils messageUtils = new MessageUtils(ctx);
-            	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+            	   messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_unexpected_error_server));
                }
                if (dialog.isShowing()) {
                	try

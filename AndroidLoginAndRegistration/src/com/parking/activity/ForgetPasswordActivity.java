@@ -18,22 +18,24 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
+import com.gc.materialdesign.views.ButtonFlat;
+import com.gc.materialdesign.views.ButtonRectangle;
+import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.InqForgotPasswordRequest;
 import com.parking.data.InqForgotPasswordResponse;
 import com.parking.data.MessageVO;
 import com.parking.utils.CipherUtil;
+import com.parking.utils.CustomLabelAnimator;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
 
 public class ForgetPasswordActivity extends Activity {
 	private static final String TAG = ForgetPasswordActivity.class.getSimpleName();
-	private Button btnForgotPassword;
-	private Button btnLinkToLogin;
-	private EditText inputEmail;
+	private ButtonRectangle btnForgotPassword;
+	private ButtonFlat btnLinkToLogin;
+	private FloatLabel inputEmail;
 	private Context ctx;
 	private ReqForgotPasswordTask reqForgotPasswordTask = null;
 
@@ -43,22 +45,23 @@ public class ForgetPasswordActivity extends Activity {
 		setContentView(R.layout.activity_forget_password);
 		ctx = this.getApplicationContext();
 		
-		inputEmail = (EditText) findViewById(R.id.email);
-		btnForgotPassword = (Button) findViewById(R.id.btnForgotPassword);
-		btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
+		inputEmail = (FloatLabel) findViewById(R.id.email);
+		btnForgotPassword = (ButtonRectangle) findViewById(R.id.btnForgotPassword);
+		btnLinkToLogin = (ButtonFlat) findViewById(R.id.btnLinkToLoginScreen);
 
-		
+		// This is how you add a custom animator     
+        inputEmail.setLabelAnimator(new CustomLabelAnimator());
 
 		// Forgot Pass Button Click event
 		btnForgotPassword.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				String email = inputEmail.getText().toString();
+				String email = inputEmail.getEditText().getText().toString();
 				if (!email.isEmpty()) {	
 					reqForgotPasswordTask = new ReqForgotPasswordTask();
 					reqForgotPasswordTask.execute("");       
 				} else {
 					MessageUtils messageUtils = new MessageUtils(ctx);
-	             	messageUtils.messageLong(ForgetPasswordActivity.this.getResources().getString(R.string.message_email_required));
+	             	messageUtils.snackBarMessage(ForgetPasswordActivity.this,ForgetPasswordActivity.this.getResources().getString(R.string.message_email_required));
 				}
 			}
 		});
@@ -91,7 +94,7 @@ public class ForgetPasswordActivity extends Activity {
            	boolean result = false;
            	try {
            		InqForgotPasswordRequest inqForgotPasswordRequest = new InqForgotPasswordRequest();
-				inqForgotPasswordRequest.setEmail(inputEmail.getText().toString());
+				inqForgotPasswordRequest.setEmail(inputEmail.getEditText().getText().toString());
 				String s = HttpClientUtil.getObjectMapper(ctx).writeValueAsString(inqForgotPasswordRequest);
 				s = CipherUtil.encryptTripleDES(s, CipherUtil.PASSWORD);
            		Log.d(TAG,"Request: " + s);
@@ -151,25 +154,25 @@ public class ForgetPasswordActivity extends Activity {
 		               		inqForgotPasswordResponse.setMessageVO(messageVO);
 		               		if(inqForgotPasswordResponse.getMessageVO().getRc()==0){
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getOtherMessage());
+				             	messageUtils.snackBarMessage(ForgetPasswordActivity.this,messageVO.getOtherMessage());
 				             	Intent i = new Intent(ctx, LoginActivity.class);
 								startActivity(i);
 								finish();
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	messageUtils.snackBarMessage(ForgetPasswordActivity.this,messageVO.getMessageRc());
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
-			             	messageUtils.messageLong(ForgetPasswordActivity.this.getResources().getString(R.string.message_unexpected_error_message_server));
+			             	messageUtils.snackBarMessage(ForgetPasswordActivity.this,ForgetPasswordActivity.this.getResources().getString(R.string.message_unexpected_error_message_server));
 						}	            
 	               	}else{
 	               	   MessageUtils messageUtils = new MessageUtils(ctx);
-	             	   messageUtils.messageLong(ForgetPasswordActivity.this.getResources().getString(R.string.message_unexpected_error_server));
+	             	   messageUtils.snackBarMessage(ForgetPasswordActivity.this,ForgetPasswordActivity.this.getResources().getString(R.string.message_unexpected_error_server));
 	               	}
                }else{
             	   MessageUtils messageUtils = new MessageUtils(ctx);
-            	   messageUtils.messageLong(ForgetPasswordActivity.this.getResources().getString(R.string.message_unexpected_error_server));
+            	   messageUtils.snackBarMessage(ForgetPasswordActivity.this,ForgetPasswordActivity.this.getResources().getString(R.string.message_unexpected_error_server));
                }
                if (dialog.isShowing()) {
                	try

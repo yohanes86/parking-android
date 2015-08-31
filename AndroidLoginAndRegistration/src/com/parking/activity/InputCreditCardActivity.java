@@ -35,11 +35,11 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gc.materialdesign.views.ButtonRectangle;
+import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.Address;
 import com.parking.data.BookingVO;
@@ -55,6 +55,7 @@ import com.parking.swipelistview.sample.dialogs.ExpiredPaymentInfoDialog;
 import com.parking.swipelistview.sample.dialogs.PaymentInfoDialog;
 import com.parking.swipelistview.sample.utils.PreferencesManager;
 import com.parking.utils.CipherUtil;
+import com.parking.utils.CustomLabelAnimator;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
 import com.parking.utils.RedirectUtils;
@@ -64,11 +65,11 @@ import com.parking.view.CustomWebView;
 
 public class InputCreditCardActivity extends Activity {
 	private static final String TAG = InputCreditCardActivity.class.getSimpleName();
-	private Button btnPay;
-	private EditText noCC;
-	private EditText cardExpireMonth;
-	private EditText cardExpireYear;
-	private EditText cardCvv;
+	private ButtonRectangle btnPay;
+	private FloatLabel noCC;
+	private FloatLabel cardExpireMonth;
+	private FloatLabel cardExpireYear;
+	private FloatLabel cardCvv;
 	private TextView paymentFor;
 	private TextView total;
 	private TextView txtSlotName;
@@ -80,7 +81,7 @@ public class InputCreditCardActivity extends Activity {
 	private String bookingId;
 	AlertDialog dialog3ds;
     ProgressDialog sendServerProgress;
-    int totalPrice;
+    long totalPrice;
     private CheckOrderAllowPayTask checkOrderAllowPayTask = null;
 	
 	@Override
@@ -91,15 +92,15 @@ public class InputCreditCardActivity extends Activity {
 		paymentFor = (TextView) findViewById(R.id.paymentFor);
 		txtSlotName = (TextView) findViewById(R.id.txtSlotName);
 		total = (TextView) findViewById(R.id.total);
-		noCC = (EditText) findViewById(R.id.noCC);
-		cardExpireMonth = (EditText) findViewById(R.id.card_expire_month);
-		cardCvv = (EditText) findViewById(R.id.card_cvv);
-		cardExpireYear = (EditText) findViewById(R.id.card_expire_year);
-		btnPay = (Button) findViewById(R.id.btnPay);
+		noCC = (FloatLabel) findViewById(R.id.noCC);
+		cardExpireMonth = (FloatLabel) findViewById(R.id.card_expire_month);
+		cardCvv = (FloatLabel) findViewById(R.id.card_cvv);
+		cardExpireYear = (FloatLabel) findViewById(R.id.card_expire_year);
+		btnPay = (ButtonRectangle) findViewById(R.id.btnPay);
 		Intent intent = getIntent();
 		mallName = intent.getStringExtra("mallName");
 		slotName = intent.getStringExtra("slotName");
-		totalPrice = intent.getIntExtra("hargaParkir", 10000);
+		totalPrice = intent.getLongExtra("hargaParkir", 10000);
 		// Progress dialog
 		pDialog = new ProgressDialog(this);
 		pDialog.setCancelable(false);
@@ -109,6 +110,13 @@ public class InputCreditCardActivity extends Activity {
 		txtSlotName.setText("Area name : " + slotName);
 		bookingId = intent.getStringExtra("bookingId");
 		showExpiredPaymentInfo(ctx.getResources().getString(R.string.info_expired_payment_message));
+		
+		// This is how you add a custom animator
+		noCC.setLabelAnimator(new CustomLabelAnimator());
+		cardExpireMonth.setLabelAnimator(new CustomLabelAnimator());
+		cardCvv.setLabelAnimator(new CustomLabelAnimator());
+		cardExpireYear.setLabelAnimator(new CustomLabelAnimator());        
+		
 		btnPay.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				checkOrderAllowPayTask = new CheckOrderAllowPayTask();
@@ -119,10 +127,10 @@ public class InputCreditCardActivity extends Activity {
 	}
 	
 	private void pay(){
-		String noCCInput = noCC.getText().toString();
-		String cardExpireMonthInput = cardExpireMonth.getText().toString();
-		String cardExpireYearInput = cardExpireYear.getText().toString();				
-		String cardCvvInput = cardCvv.getText().toString();
+		String noCCInput = noCC.getEditText().getText().toString();
+		String cardExpireMonthInput = cardExpireMonth.getEditText().getText().toString();
+		String cardExpireYearInput = cardExpireYear.getEditText().getText().toString();				
+		String cardCvvInput = cardCvv.getEditText().getText().toString();
 						
 
 		if (!noCCInput.isEmpty() && !cardExpireMonthInput.isEmpty() && !cardExpireYearInput.isEmpty()&& !cardCvvInput.isEmpty()) {
@@ -131,7 +139,7 @@ public class InputCreditCardActivity extends Activity {
 			inqCreditCardRequest.setCardExpireMonth(Integer.parseInt(cardExpireMonthInput));
 			inqCreditCardRequest.setCardExpireYear(Integer.parseInt(cardExpireYearInput));
 			inqCreditCardRequest.setCardCvv(cardCvvInput);					
-			inqCreditCardRequest.setGross_amount(Integer.toString(totalPrice));					
+			inqCreditCardRequest.setGross_amount(Long.toString(totalPrice));					
 			//set environment
             VTConfig.VT_IsProduction = false;
             //set client key
@@ -201,14 +209,15 @@ public class InputCreditCardActivity extends Activity {
 
                 @Override
                 public void onError(Exception e) {
-                    loadingDialog.cancel();
-                    Toast.makeText(ctx,e.getMessage(),Toast.LENGTH_SHORT);
+                    loadingDialog.cancel();                    
+                    MessageUtils messageUtils = new MessageUtils(ctx);
+                 	messageUtils.snackBarMessage(InputCreditCardActivity.this,e.getMessage());
                 }
             });
 			
 		} else {
 			MessageUtils messageUtils = new MessageUtils(ctx);
-         	messageUtils.messageLong(ctx.getResources().getString(R.string.message_detail_required));
+         	messageUtils.snackBarMessage(InputCreditCardActivity.this,ctx.getResources().getString(R.string.message_detail_required));
 		}
 	}
 	
@@ -301,12 +310,10 @@ public class InputCreditCardActivity extends Activity {
 	               			String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
 		               		if(messageVO.getRc()==0){
-//		               			MessageUtils messageUtils = new MessageUtils(ctx);
-//				             	messageUtils.messageLong(messageVO.getOtherMessage());
 				             	showPaymentInfo(messageVO.getOtherMessage());				             	
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	messageUtils.snackBarMessage(InputCreditCardActivity.this,messageVO.getMessageRc());
 				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
 				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, InputCreditCardActivity.this);
 				             		redirectUtils.redirectToLogin();
@@ -314,15 +321,15 @@ public class InputCreditCardActivity extends Activity {
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
-			             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_message_server));
+			             	messageUtils.snackBarMessage(InputCreditCardActivity.this,ctx.getResources().getString(R.string.message_unexpected_error_message_server));
 						}	            
 	               	}else{
 	               	   MessageUtils messageUtils = new MessageUtils(ctx);
-	             	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+	             	   messageUtils.snackBarMessage(InputCreditCardActivity.this,ctx.getResources().getString(R.string.message_unexpected_error_server));
 	               	}
             }else{
          	   MessageUtils messageUtils = new MessageUtils(ctx);
-         	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+         	   messageUtils.snackBarMessage(InputCreditCardActivity.this,ctx.getResources().getString(R.string.message_unexpected_error_server));
             }
             if (sendServerProgress.isShowing()) {
             	try
@@ -486,12 +493,10 @@ public class InputCreditCardActivity extends Activity {
 	               			String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
 		               		if(messageVO.getRc()==0){
-//		               			MessageUtils messageUtils = new MessageUtils(ctx);
-//				             	messageUtils.messageLong(messageVO.getOtherMessage());		
 		               			pay();
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.messageLong(messageVO.getMessageRc());
+				             	messageUtils.snackBarMessage(InputCreditCardActivity.this,messageVO.getMessageRc());
 				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
 				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, InputCreditCardActivity.this);
 				             		redirectUtils.redirectToLogin();
@@ -499,15 +504,15 @@ public class InputCreditCardActivity extends Activity {
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
-			             	messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_message_server));
+			             	messageUtils.snackBarMessage(InputCreditCardActivity.this,ctx.getResources().getString(R.string.message_unexpected_error_message_server));
 						}	            
 	               	}else{
 	               	   MessageUtils messageUtils = new MessageUtils(ctx);
-	             	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+	             	   messageUtils.snackBarMessage(InputCreditCardActivity.this,ctx.getResources().getString(R.string.message_unexpected_error_server));
 	               	}
                }else{
             	   MessageUtils messageUtils = new MessageUtils(ctx);
-            	   messageUtils.messageLong(ctx.getResources().getString(R.string.message_unexpected_error_server));
+            	   messageUtils.snackBarMessage(InputCreditCardActivity.this,ctx.getResources().getString(R.string.message_unexpected_error_server));
                }
                if (dialog.isShowing()) {
                	try

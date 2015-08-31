@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_login"
-    android:orientation="vertical" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp" >
 
     <TextView
         android:id="@+id/textView"
@@ -12,9 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top|center"
         android:paddingTop="5dip"
-        android:textSize="30dp"
         android:text="@string/menu_logout"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="30dp" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -28,19 +30,19 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="Anda yakin ingin keluar?"
-            style="@style/fragment_text"
-            android:layout_gravity="center"/>
+            android:textColor="@color/color_label"
+            android:textSize="18sp" />
 
-        <Button
+        <com.gc.materialdesign.views.ButtonRectangle
             android:id="@+id/btnLogout"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_marginTop="20dip"
-            android:background="@drawable/button_register"
-            android:padding="10dip"
-            android:text="@string/btn_logout"
-            android:textColor="@color/white" />
+            android:background="@color/blue"
+            android:text="@string/btn_logout" />
     </LinearLayout>
 
 </FrameLayout>
