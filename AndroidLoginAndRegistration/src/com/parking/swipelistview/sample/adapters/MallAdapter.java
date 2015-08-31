@@ -44,10 +44,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.MaterialDialog.Builder;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.widgets.ProgressDialog;
 import com.parking.R;
 import com.parking.activity.InputCreditCardActivity;
 import com.parking.data.Constants;
@@ -222,15 +221,12 @@ public class MallAdapter extends BaseAdapter {
     }
     
     public class ReqSlotByMallTask extends AsyncTask<String, Void, Boolean> {
-       	private Builder materialDialog = null;
+    	private ProgressDialog progressDialog = null;
        	private final HttpClient client = HttpClientUtil.getNewHttpClient();
        	String respString = null;
        	protected void onPreExecute() {       		
-    			materialDialog = new MaterialDialog.Builder(ctx).title(ctx.getResources().getString(R.string.progress_dialog))
-                        .content(R.string.process_find_slots)
-                        .progress(true, 0)
-                        .progressIndeterminateStyle(false);
-        			materialDialog.show();
+       		progressDialog = new ProgressDialog(ctx, ctx.getResources().getString(R.string.process_login));
+			progressDialog.show();
     		}
     		@Override
            protected Boolean doInBackground(String... params) {
@@ -255,11 +251,20 @@ public class MallAdapter extends BaseAdapter {
                 respString = EntityUtils.toString(respEntity);
     			result = true;
     			} catch (ClientProtocolException e) {
-    				Log.e(TAG, "ClientProtocolException : "+e);    				
+    				Log.e(TAG, "ClientProtocolException : "+e);
+    				if(progressDialog.isShowing()){
+    					progressDialog.dismiss();
+    				}
     			} catch (IOException e) {
-    				Log.e(TAG, "IOException : "+e);    					
+    				Log.e(TAG, "IOException : "+e);   
+    				if(progressDialog.isShowing()){
+    					progressDialog.dismiss();
+    				}
     			} catch (Exception e) {
-    				Log.e(TAG, "Exception : "+e);    							
+    				Log.e(TAG, "Exception : "+e); 
+    				if(progressDialog.isShowing()){
+    					progressDialog.dismiss();
+    				}
     			}
            	return result;
            }
@@ -294,22 +299,22 @@ public class MallAdapter extends BaseAdapter {
                }else{
             	   MessageUtils messageUtils = new MessageUtils(ctx);
             	   messageUtils.snackBarMessage(act,ctx.getResources().getString(R.string.message_unexpected_error_server));
-               }               
+               } 
+               if(progressDialog.isShowing()){
+					progressDialog.dismiss();
+				}
            }
 
        }
     
     
     public class ReqReleaseSlotByMallTask extends AsyncTask<String, Void, Boolean> {
-       	private Builder materialDialog = null;
+    	private ProgressDialog progressDialog = null;
        	private final HttpClient client = HttpClientUtil.getNewHttpClient();
        	String respString = null;
        	protected void onPreExecute() {       		
-    			materialDialog = new MaterialDialog.Builder(ctx).title(ctx.getResources().getString(R.string.progress_dialog))
-                        .content(R.string.process_find_slots)
-                        .progress(true, 0)
-                        .progressIndeterminateStyle(false);
-        			materialDialog.show();
+       		progressDialog = new ProgressDialog(ctx, ctx.getResources().getString(R.string.process_login));
+			progressDialog.show();
     		}
     		@Override
            protected Boolean doInBackground(String... params) {
@@ -334,11 +339,20 @@ public class MallAdapter extends BaseAdapter {
                 respString = EntityUtils.toString(respEntity);
     			result = true;
     			} catch (ClientProtocolException e) {
-    				Log.e(TAG, "ClientProtocolException : "+e);    				
+    				Log.e(TAG, "ClientProtocolException : "+e);  
+    				if(progressDialog.isShowing()){
+    					progressDialog.dismiss();
+    				}
     			} catch (IOException e) {
-    				Log.e(TAG, "IOException : "+e);    					
+    				Log.e(TAG, "IOException : "+e);
+    				if(progressDialog.isShowing()){
+    					progressDialog.dismiss();
+    				}
     			} catch (Exception e) {
-    				Log.e(TAG, "Exception : "+e);    								
+    				Log.e(TAG, "Exception : "+e);   
+    				if(progressDialog.isShowing()){
+    					progressDialog.dismiss();
+    				}
     			}
            	return result;
            }
@@ -373,7 +387,10 @@ public class MallAdapter extends BaseAdapter {
                }else{
             	   MessageUtils messageUtils = new MessageUtils(ctx);
             	   messageUtils.snackBarMessage(act,ctx.getResources().getString(R.string.message_unexpected_error_server));
-               }               
+               }    
+               if(progressDialog.isShowing()){
+					progressDialog.dismiss();
+				}
            }
 
        }

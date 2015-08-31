@@ -78,9 +78,6 @@ public class LoginActivity extends Activity {
 					if (!isValidEmail(email)) {						
 						MessageUtils messageUtils = new MessageUtils(ctx);
 		             	messageUtils.snackBarMessage(LoginActivity.this, LoginActivity.this.getResources().getString(R.string.email_not_valid));		             	
-//		             	new MaterialDialog.Builder(ctx).content("tes").positiveText("setuju").negativeText("tidak setuju")
-//                        .show();
-//		             	showBasic();
 					}
 					else{
 						// login user
@@ -150,11 +147,20 @@ public class LoginActivity extends Activity {
                 respString = EntityUtils.toString(respEntity);
     			result = true;
     			} catch (ClientProtocolException e) {
-    				Log.e(TAG, "ClientProtocolException : "+e);    				
+    				Log.e(TAG, "ClientProtocolException : "+e);
+    				if(progressDialog.isShowing()){
+    					progressDialog.dismiss();
+    				}
     			} catch (IOException e) {
-    				Log.e(TAG, "IOException : "+e);    				
+    				Log.e(TAG, "IOException : "+e); 
+    				if(progressDialog.isShowing()){
+    					progressDialog.dismiss();
+    				}
     			} catch (Exception e) {
-    				Log.e(TAG, "Exception : "+e);    							
+    				Log.e(TAG, "Exception : "+e);    
+    				if(progressDialog.isShowing()){
+    					progressDialog.dismiss();
+    				}
     			}
            	return result;
            }
@@ -190,7 +196,10 @@ public class LoginActivity extends Activity {
              }else{
           	   MessageUtils messageUtils = new MessageUtils(ctx);
           	   messageUtils.snackBarMessage(LoginActivity.this,LoginActivity.this.getResources().getString(R.string.message_unexpected_error_server));
-             }             
+             }        
+             if(progressDialog.isShowing()){
+					progressDialog.dismiss();
+				}
          }
 	}
 	

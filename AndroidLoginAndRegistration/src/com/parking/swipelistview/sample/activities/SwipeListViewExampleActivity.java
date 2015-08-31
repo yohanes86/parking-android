@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -39,8 +40,6 @@ import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.MaterialDialog.Builder;
 import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.parking.R;
@@ -58,8 +57,7 @@ public class SwipeListViewExampleActivity extends FragmentActivity {
 
     private SwipeListView swipeListView;
     private Context ctx;
-//    private ProgressDialog progressDialog;
-    private Builder materialDialog = null;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -167,16 +165,12 @@ public class SwipeListViewExampleActivity extends FragmentActivity {
 
         new ListAppTask().execute();
 
-//        progressDialog = new ProgressDialog(this);
-//        progressDialog.setMessage(getString(R.string.loading));
-//        progressDialog.setCancelable(false);
-//        progressDialog.show();
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.loading));
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         
-        materialDialog = new MaterialDialog.Builder(ctx).title(ctx.getResources().getString(R.string.progress_dialog))
-                .content(R.string.loading)
-                .progress(true, 0)
-                .progressIndeterminateStyle(false);
-			materialDialog.show();
+        
 
 
     }

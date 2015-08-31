@@ -23,7 +23,6 @@ import org.apache.http.util.EntityUtils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,9 +35,9 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.widgets.ProgressDialog;
 import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.Address;
@@ -74,7 +73,6 @@ public class InputCreditCardActivity extends Activity {
 	private TextView total;
 	private TextView txtSlotName;
 	
-	private ProgressDialog pDialog;
 	private Context ctx;
 	private String mallName;
 	private String slotName;
@@ -102,8 +100,8 @@ public class InputCreditCardActivity extends Activity {
 		slotName = intent.getStringExtra("slotName");
 		totalPrice = intent.getLongExtra("hargaParkir", 10000);
 		// Progress dialog
-		pDialog = new ProgressDialog(this);
-		pDialog.setCancelable(false);
+//		pDialog = new ProgressDialog(this);
+//		pDialog.setCancelable(false);
 		
 		paymentFor.setText("V-Mobile "+ mallName);
 		total.setText("GRAND TOTAL: "+ totalPrice);
@@ -154,7 +152,9 @@ public class InputCreditCardActivity extends Activity {
             vtDirect.setCard_details(cardDetails);
 
             //set loading dialog
-            final ProgressDialog loadingDialog = ProgressDialog.show(ctx,"","Authenticating credit card...",true);
+//            final ProgressDialog loadingDialog = ProgressDialog.show(ctx,"","Authenticating credit card...",true);
+            final ProgressDialog loadingDialog = new ProgressDialog(ctx, "Authenticating credit card...");
+            loadingDialog.show();
             vtDirect.getToken(new ITokenCallback() {
                 @Override
                 public void onSuccess(VTToken token) {
@@ -331,15 +331,10 @@ public class InputCreditCardActivity extends Activity {
          	   MessageUtils messageUtils = new MessageUtils(ctx);
          	   messageUtils.snackBarMessage(InputCreditCardActivity.this,ctx.getResources().getString(R.string.message_unexpected_error_server));
             }
-            if (sendServerProgress.isShowing()) {
-            	try
-                {
-            		sendServerProgress.dismiss();
-                }catch(Exception e1) {
-                	// nothing
-                }
-            }
-            
+            if(sendServerProgress.isShowing()){
+            	sendServerProgress.dismiss();
+			}
+                     
             
         }
     }
@@ -387,8 +382,9 @@ public class InputCreditCardActivity extends Activity {
                 //close web dialog
                 dialog3ds.dismiss();
                 //show loading dialog
-                sendServerProgress = ProgressDialog.show(ctx,"",ctx.getResources().getString(R.string.process_verification_to_server),true);
-
+//                sendServerProgress = ProgressDialog.show(ctx,"",ctx.getResources().getString(R.string.process_verification_to_server),true);
+                sendServerProgress = new ProgressDialog(ctx, ctx.getResources().getString(R.string.process_verification_to_server));
+                sendServerProgress.show();
             } else if (url.startsWith(HttpClientUtil.getPaymentApiUrl() + "/redirect/") || url.contains("3dsecure")) {
                 /* Do nothing */
             } else {
@@ -418,15 +414,12 @@ public class InputCreditCardActivity extends Activity {
     }
 	
 	public class CheckOrderAllowPayTask extends AsyncTask<String, Void, Boolean> {
-       	private ProgressDialog dialog = new ProgressDialog(ctx);
+		private ProgressDialog progressDialog = null;
        	private final HttpClient client = HttpClientUtil.getNewHttpClient();
        	String respString = null;
        	protected void onPreExecute() {
-       		dialog = new ProgressDialog(ctx);
-    			dialog.setIndeterminate(true);
-    			dialog.setCancelable(true);
-    			dialog.setMessage(ctx.getResources().getString(R.string.process_check_booking_id_allowed_pay));
-    			dialog.show();
+    			progressDialog = new ProgressDialog(ctx, ctx.getResources().getString(R.string.process_check_booking_id_allowed_pay));
+    			progressDialog.show();
     		}
     		@Override
            protected Boolean doInBackground(String... params) {
@@ -452,34 +445,19 @@ public class InputCreditCardActivity extends Activity {
     			result = true;
     			} catch (ClientProtocolException e) {
     				Log.e(TAG, "ClientProtocolException : "+e);
-    				if (dialog.isShowing()) {
-    					try
-    	                {
-    	            		dialog.dismiss();
-    	                }catch(Exception e1) {
-    	                	// nothing
-    	                }
-    	            }
+    				if(progressDialog.isShowing()){
+    					progressDialog.dismiss();
+    				}
     			} catch (IOException e) {
     				Log.e(TAG, "IOException : "+e);
-    				if (dialog.isShowing()) {
-    					try
-    	                {
-    	            		dialog.dismiss();
-    	                }catch(Exception e1) {
-    	                	// nothing
-    	                }
-    	            }		
+    				if(progressDialog.isShowing()){
+    					progressDialog.dismiss();
+    				}		
     			} catch (Exception e) {
     				Log.e(TAG, "Exception : "+e);
-    				if (dialog.isShowing()) {
-    					try
-    	                {
-    	            		dialog.dismiss();
-    	                }catch(Exception e1) {
-    	                	// nothing
-    	                }
-    	            }				
+    				if(progressDialog.isShowing()){
+    					progressDialog.dismiss();
+    				}				
     			}
            	return result;
            }
@@ -514,14 +492,9 @@ public class InputCreditCardActivity extends Activity {
             	   MessageUtils messageUtils = new MessageUtils(ctx);
             	   messageUtils.snackBarMessage(InputCreditCardActivity.this,ctx.getResources().getString(R.string.message_unexpected_error_server));
                }
-               if (dialog.isShowing()) {
-               	try
-                   {
-               		dialog.dismiss();
-                   }catch(Exception e1) {
-                   	// nothing
-                   }
-               }
+               if(progressDialog.isShowing()){
+					progressDialog.dismiss();
+				}
            }
 
        }
