@@ -21,7 +21,7 @@ import android.view.View;
 
 import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
-import com.gc.materialdesign.widgets.ProgressDialog;
+import com.gc.materialdesign.widgets.ProgressDialogParking;
 import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.InqRegistrationRequest;
@@ -105,11 +105,11 @@ public class RegisterActivity extends Activity {
 	}
 	
 	public class ReqRegistrationTask  extends AsyncTask<String, Void, Boolean> {
-		private ProgressDialog progressDialog = null;
+		private ProgressDialogParking progressDialog = null;
        	private final HttpClient client = HttpClientUtil.getNewHttpClient();
        	String respString = null;
        	protected void onPreExecute() {       					
-    			progressDialog = new ProgressDialog(ctx, ctx.getResources().getString(R.string.process_register));
+    			progressDialog = new ProgressDialogParking(ctx, ctx.getResources().getString(R.string.process_register),ctx.getResources().getString(R.string.progress_dialog));
     			progressDialog.show();
     		}
 		@Override

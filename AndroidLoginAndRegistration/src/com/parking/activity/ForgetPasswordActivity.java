@@ -20,7 +20,7 @@ import android.view.View;
 
 import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
-import com.gc.materialdesign.widgets.ProgressDialog;
+import com.gc.materialdesign.widgets.ProgressDialogParking;
 import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.InqForgotPasswordRequest;
@@ -79,11 +79,11 @@ public class ForgetPasswordActivity extends Activity {
 	}
 	
 	public class ReqForgotPasswordTask extends AsyncTask<String, Void, Boolean> {
-		private ProgressDialog progressDialog = null;
+		private ProgressDialogParking progressDialog = null;
        	private final HttpClient client = HttpClientUtil.getNewHttpClient();
        	String respString = null;
        	protected void onPreExecute() {
-       		progressDialog = new ProgressDialog(ctx, ctx.getResources().getString(R.string.process_forgot_password));
+       		progressDialog = new ProgressDialogParking(ctx, ctx.getResources().getString(R.string.process_forgot_password),ctx.getResources().getString(R.string.progress_dialog));
 			progressDialog.show();			
     		}
     		@Override

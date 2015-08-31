@@ -21,7 +21,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.gc.materialdesign.views.ButtonRectangle;
-import com.gc.materialdesign.widgets.ProgressDialog;
+import com.gc.materialdesign.widgets.ProgressDialogParking;
 import com.parking.R;
 import com.parking.data.Constants;
 import com.parking.data.InqChangePasswordRequest;
@@ -53,11 +53,11 @@ public class RefreshingMallFragment extends Fragment{
 	    }
 	 
 	 public class ReqRefreshListMallTask extends AsyncTask<String, Void, Boolean> {	     
-		 	private ProgressDialog progressDialog = null;
+		 	private ProgressDialogParking progressDialog = null;
 	       	private final HttpClient client = HttpClientUtil.getNewHttpClient();
 	       	String respString = null;
 	       	protected void onPreExecute() {	       			    			
-	        			progressDialog = new ProgressDialog(ctx, ctx.getResources().getString(R.string.process_refresh_mall));
+	        			progressDialog = new ProgressDialogParking(ctx, ctx.getResources().getString(R.string.process_refresh_mall),ctx.getResources().getString(R.string.progress_dialog));
 	        			progressDialog.show();
 	    		}
 	    		@Override

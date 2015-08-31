@@ -46,7 +46,7 @@ import android.widget.TextView;
 
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.gc.materialdesign.views.ButtonRectangle;
-import com.gc.materialdesign.widgets.ProgressDialog;
+import com.gc.materialdesign.widgets.ProgressDialogParking;
 import com.parking.R;
 import com.parking.activity.InputCreditCardActivity;
 import com.parking.data.Constants;
@@ -221,11 +221,11 @@ public class MallAdapter extends BaseAdapter {
     }
     
     public class ReqSlotByMallTask extends AsyncTask<String, Void, Boolean> {
-    	private ProgressDialog progressDialog = null;
+    	private ProgressDialogParking progressDialog = null;
        	private final HttpClient client = HttpClientUtil.getNewHttpClient();
        	String respString = null;
        	protected void onPreExecute() {       		
-       		progressDialog = new ProgressDialog(ctx, ctx.getResources().getString(R.string.process_login));
+       		progressDialog = new ProgressDialogParking(ctx, ctx.getResources().getString(R.string.process_login),ctx.getResources().getString(R.string.progress_dialog));
 			progressDialog.show();
     		}
     		@Override
@@ -309,11 +309,11 @@ public class MallAdapter extends BaseAdapter {
     
     
     public class ReqReleaseSlotByMallTask extends AsyncTask<String, Void, Boolean> {
-    	private ProgressDialog progressDialog = null;
+    	private ProgressDialogParking progressDialog = null;
        	private final HttpClient client = HttpClientUtil.getNewHttpClient();
        	String respString = null;
        	protected void onPreExecute() {       		
-       		progressDialog = new ProgressDialog(ctx, ctx.getResources().getString(R.string.process_login));
+       		progressDialog = new ProgressDialogParking(ctx, ctx.getResources().getString(R.string.process_login),ctx.getResources().getString(R.string.progress_dialog));
 			progressDialog.show();
     		}
     		@Override

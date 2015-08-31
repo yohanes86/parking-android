@@ -36,7 +36,7 @@ import android.widget.ListView;
 
 import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
-import com.gc.materialdesign.widgets.ProgressDialog;
+import com.gc.materialdesign.widgets.ProgressDialogParking;
 import com.parking.R;
 import com.parking.data.Constants;
 import com.parking.data.InqGetMallRequest;
@@ -253,11 +253,11 @@ public class MallFragment extends Fragment {
     }
     
     public class ReqGetMallTask extends AsyncTask<String, Void, Boolean> {
-    	private ProgressDialog progressDialog = null;
+    	private ProgressDialogParking progressDialog = null;
        	private final HttpClient client = HttpClientUtil.getNewHttpClient();
        	String respString = null;
        	protected void onPreExecute() {       		    			
-        			progressDialog = new ProgressDialog(ctx, ctx.getResources().getString(R.string.process_get_list_mall));
+        			progressDialog = new ProgressDialogParking(ctx, ctx.getResources().getString(R.string.process_get_list_mall),ctx.getResources().getString(R.string.progress_dialog));
         			progressDialog.show();
     		}
     		@Override

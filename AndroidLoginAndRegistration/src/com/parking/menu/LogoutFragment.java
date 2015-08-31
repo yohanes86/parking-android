@@ -22,7 +22,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.gc.materialdesign.views.ButtonRectangle;
-import com.gc.materialdesign.widgets.ProgressDialog;
+import com.gc.materialdesign.widgets.ProgressDialogParking;
 import com.parking.R;
 import com.parking.activity.LoginActivity;
 import com.parking.data.Constants;
@@ -60,11 +60,11 @@ public class LogoutFragment extends Fragment {
     }
     
     public class ReqLogoutTask extends AsyncTask<String, Void, Boolean> {
-    	private ProgressDialog progressDialog = null;
+    	private ProgressDialogParking progressDialog = null;
        	private final HttpClient client = HttpClientUtil.getNewHttpClient();
        	String respString = null;
        	protected void onPreExecute() {       					
-    			progressDialog = new ProgressDialog(ctx, ctx.getResources().getString(R.string.process_logout));
+    			progressDialog = new ProgressDialogParking(ctx, ctx.getResources().getString(R.string.process_logout),ctx.getResources().getString(R.string.progress_dialog));
     			progressDialog.show();
     		}
     		@Override
