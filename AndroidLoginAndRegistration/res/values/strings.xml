@@ -105,7 +105,8 @@
     <string name="process_confirm">Confirm process, please wait</string>
     <string name="process_check_booking_id_allowed_pay">Check booking id in process, please wait</string>
     <string name="process_find_slots">Checking slots in process, please wait</string>
-    <string name="process_verification_to_server">Verification payment please wait...</string>
+    <string name="process_verification_to_server">Verification payment</string>
+    <string name="process_authenticating_credit_card">Authenticating credit card</string>
     <string name="process_logout">Logout in process, please wait</string>
     <string name="process_register">Sending data registration</string>
     <string name="process_get_list_mall">Get list mall, please wait</string>

@@ -37,7 +37,6 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.gc.materialdesign.views.ButtonRectangle;
-import com.gc.materialdesign.widgets.ProgressDialog;
 import com.gc.materialdesign.widgets.ProgressDialogParking;
 import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
@@ -79,7 +78,7 @@ public class InputCreditCardActivity extends Activity {
 	private String slotName;
 	private String bookingId;
 	AlertDialog dialog3ds;
-    ProgressDialog sendServerProgress;
+    ProgressDialogParking sendServerProgress;
     long totalPrice;
     private CheckOrderAllowPayTask checkOrderAllowPayTask = null;
 	
@@ -153,8 +152,7 @@ public class InputCreditCardActivity extends Activity {
             vtDirect.setCard_details(cardDetails);
 
             //set loading dialog
-//            final ProgressDialog loadingDialog = ProgressDialog.show(ctx,"","Authenticating credit card...",true);
-            final ProgressDialog loadingDialog = new ProgressDialog(ctx, "Authenticating credit card...");
+            final ProgressDialogParking loadingDialog = new ProgressDialogParking(ctx, ctx.getResources().getString(R.string.process_authenticating_credit_card),ctx.getResources().getString(R.string.progress_dialog));
             loadingDialog.show();
             vtDirect.getToken(new ITokenCallback() {
                 @Override
@@ -383,8 +381,7 @@ public class InputCreditCardActivity extends Activity {
                 //close web dialog
                 dialog3ds.dismiss();
                 //show loading dialog
-//                sendServerProgress = ProgressDialog.show(ctx,"",ctx.getResources().getString(R.string.process_verification_to_server),true);
-                sendServerProgress = new ProgressDialog(ctx, ctx.getResources().getString(R.string.process_verification_to_server));
+                sendServerProgress = new ProgressDialogParking(ctx, ctx.getResources().getString(R.string.process_verification_to_server),ctx.getResources().getString(R.string.progress_dialog));
                 sendServerProgress.show();
             } else if (url.startsWith(HttpClientUtil.getPaymentApiUrl() + "/redirect/") || url.contains("3dsecure")) {
                 /* Do nothing */
