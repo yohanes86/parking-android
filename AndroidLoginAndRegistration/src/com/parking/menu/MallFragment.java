@@ -16,6 +16,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.type.TypeReference;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -247,6 +248,11 @@ public class MallFragment extends Fragment {
         }
     }
     
+    public interface OnDismissListener{
+        public void onDismiss(DialogInterface dialog);
+                // pass view as argument or whatever you want.
+    }
+    
     public class ReqGetMallTask extends AsyncTask<String, Void, Boolean> {
     	private Builder materialDialog = null;
        	private final HttpClient client = HttpClientUtil.getNewHttpClient();
@@ -254,7 +260,7 @@ public class MallFragment extends Fragment {
        	protected void onPreExecute() {       		
     			materialDialog = new MaterialDialog.Builder(ctx).title(ctx.getResources().getString(R.string.progress_dialog))
                         .content(R.string.process_get_list_mall)
-                        .progress(true, 0)
+                        .progress(true, 0)                                              
                         .progressIndeterminateStyle(false);
         			materialDialog.show();
     		}
@@ -318,7 +324,9 @@ public class MallFragment extends Fragment {
 		               			data.clear();
 		                        data.addAll(result);
 		                        adapter.notifyDataSetChanged();		                        
-		                        setupTipsDialog();
+		                        setupTipsDialog();		                        
+		                        
+		                        
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.snackBarMessage(getActivity(),messageVO.getMessageRc());

@@ -19,10 +19,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.MaterialDialog.Builder;
 import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
+import com.gc.materialdesign.widgets.ProgressDialog;
 import com.iangclifton.android.floatlabel.FloatLabel;
 import com.parking.R;
 import com.parking.data.InqLoginRequest;
@@ -123,15 +122,12 @@ public class LoginActivity extends Activity {
 	
 	
 	public class ReqLoginTask  extends AsyncTask<String, Void, Boolean> {
-		private Builder materialDialog = null;
+		private ProgressDialog progressDialog = null;
        	private final HttpClient client = HttpClientUtil.getNewHttpClient();
        	String respString = null;
        	protected void onPreExecute() {
-       		materialDialog = new MaterialDialog.Builder(ctx).title(ctx.getResources().getString(R.string.progress_dialog))
-                    .content(R.string.process_login)
-                    .progress(true, 0)
-                    .progressIndeterminateStyle(false);
-    			materialDialog.show();
+    			progressDialog = new ProgressDialog(ctx, ctx.getResources().getString(R.string.process_login));
+    			progressDialog.show();
     		}
 		@Override
 		protected Boolean doInBackground(String... arg0) {
