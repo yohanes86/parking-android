@@ -225,7 +225,7 @@ public class MallAdapter extends BaseAdapter {
        	private final HttpClient client = HttpClientUtil.getNewHttpClient();
        	String respString = null;
        	protected void onPreExecute() {       		
-       		progressDialog = new ProgressDialogParking(ctx, ctx.getResources().getString(R.string.process_login),ctx.getResources().getString(R.string.progress_dialog));
+       		progressDialog = new ProgressDialogParking(ctx, ctx.getResources().getString(R.string.process_find_slots),ctx.getResources().getString(R.string.progress_dialog));
 			progressDialog.show();
     		}
     		@Override

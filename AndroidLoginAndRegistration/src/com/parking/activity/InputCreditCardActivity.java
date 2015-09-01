@@ -36,6 +36,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.ButtonCallback;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.ProgressDialogParking;
 import com.iangclifton.android.floatlabel.FloatLabel;
@@ -264,7 +266,7 @@ public class InputCreditCardActivity extends Activity {
     			
     			Product product = new Product();
     			product.setId(new Long(1));
-    			product.setLongName("Parking Online "+ mallName + "- Area Parkir : " + slotName);
+    			product.setLongName(slotName);
     			product.setPriceIdr(new Long(totalPrice));
     			product.setShortName("V-Mobile "+ mallName);
     			product.setThumbnailFilePath("");
@@ -308,7 +310,7 @@ public class InputCreditCardActivity extends Activity {
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
 		               		if(messageVO.getRc()==0){				             	
 				             	MessageUtils messageUtils = new MessageUtils(ctx);
-				                messageUtils.showDialogInfo(ctx.getResources().getString(R.string.info_payment), messageVO.getOtherMessage());
+				                messageUtils.showDialogInfoCallback(ctx.getResources().getString(R.string.info_payment), messageVO.getOtherMessage(),buttonCallback);
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.snackBarMessage(InputCreditCardActivity.this,messageVO.getMessageRc());
@@ -336,6 +338,13 @@ public class InputCreditCardActivity extends Activity {
             
         }
     }
+	
+	ButtonCallback buttonCallback = new ButtonCallback() {
+
+		public void onPositive(MaterialDialog dialog) {
+			finish();
+        }
+    };
 	
 	private class VtWebViewClient extends WebViewClient {
 

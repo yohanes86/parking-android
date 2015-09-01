@@ -96,18 +96,18 @@
     
     <!-- LOADING -->
     <string name="process_forgot_password">Requesting new password</string>
-    <string name="process_login">Authenticating account</string>
-    <string name="process_change_password">Change password in process, please wait</string>
-    <string name="process_check_in">Check Kode Booking, please wait</string>
-    <string name="process_confirm">Confirm process, please wait</string>
-    <string name="process_check_booking_id_allowed_pay">Check booking id in process, please wait</string>
-    <string name="process_find_slots">Checking slots in process, please wait</string>
-    <string name="process_verification_to_server">Verification payment</string>
-    <string name="process_authenticating_credit_card">Authenticating credit card</string>
-    <string name="process_logout">Logout in process, please wait</string>
-    <string name="process_register">Sending data registration</string>
-    <string name="process_get_list_mall">Get list mall, please wait</string>
-    <string name="process_refresh_mall">Refreshing malls</string>
+    <string name="process_login">Autentifikasi akun</string>
+    <string name="process_change_password">Ganti password</string>
+    <string name="process_check_in">Cari Kode Booking</string>
+    <string name="process_confirm">Confirm process</string>
+    <string name="process_check_booking_id_allowed_pay">Cari booking id</string>
+    <string name="process_find_slots">Cari slot parkir</string>
+    <string name="process_verification_to_server">Verifikasi pembayaran</string>
+    <string name="process_authenticating_credit_card">Autentifikasi kartu kredit</string>
+    <string name="process_logout">Proses logout</string>
+    <string name="process_register">Kirim data registrasi</string>
+    <string name="process_get_list_mall">Cari data mall</string>
+    <string name="process_refresh_mall">Perbaharui data malls</string>
     
     <!-- MESSAGE -->
     <string name="message_unexpected_error_server">Server sedang mengalami gangguan, silahkan coba beberapa jam kemudian.</string>
