@@ -166,7 +166,7 @@ public class RegisterActivity extends Activity {
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);
 		               		if(messageVO.getRc()==0){
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-					            messageUtils.showDialogInfo(ctx.getResources().getString(R.string.message_register_title), ctx.getResources().getString(R.string.message_register_success), buttonCallback); 					             	
+					            messageUtils.showDialogInfoCallback(ctx.getResources().getString(R.string.message_register_title), ctx.getResources().getString(R.string.message_register_success), buttonCallback); 					             	
 		               		}
 		               		else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);

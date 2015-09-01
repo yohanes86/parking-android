@@ -117,7 +117,6 @@ public class LoginActivity extends Activity {
 	}
 	
 	
-	
 	public class ReqLoginTask  extends AsyncTask<String, Void, Boolean> {
 		private ProgressDialogParking progressDialog = null;
        	private final HttpClient client = HttpClientUtil.getNewHttpClient();

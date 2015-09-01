@@ -138,7 +138,7 @@ public class ForgetPasswordActivity extends Activity {
 		               		inqForgotPasswordResponse.setMessageVO(messageVO);
 		               		if(inqForgotPasswordResponse.getMessageVO().getRc()==0){
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-		               			messageUtils.showDialogInfo(ctx.getResources().getString(R.string.message_forgetPass_title), ctx.getResources().getString(R.string.message_forgetPass_success), buttonCallback);		             	
+		               			messageUtils.showDialogInfoCallback(ctx.getResources().getString(R.string.message_forgetPass_title), ctx.getResources().getString(R.string.message_forgetPass_success), buttonCallback);		             	
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.snackBarMessage(ForgetPasswordActivity.this,messageVO.getMessageRc());

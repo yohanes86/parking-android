@@ -31,10 +31,7 @@
     <string name="aboutMessage">Pilih mal yang dituju kemudian tekan di list mall yang dituju beberapa detik, akan muncul tombol Booking. Happy Parking.</string>
     <string name="ok">Ok</string>
     
-    <string name="info_payment">Informasi Pembayaran</string>
-    <string name="info_expired_payment">Informasi Expired Pembayaran</string>
-    <string name="info_expired_payment_message">Harap segera lakukan pembayaran, pesanan ini hanya berlaku untuk 15 menit</string>
-
+    
     <string name="visit47">Visit 47deg</string>
     <string name="goToGitHub">Go to GitHub</string>
 
@@ -118,6 +115,12 @@
     <!--  <string name="message_forget_password_success">Password anda berhasil di reset, silahkan cek di email anda untuk mendapatkan password baru.</string> 
     	  <string name="message_forget_password_failed">Password anda gagal di reset, silahkan coba kembali beberapa saat kemudian.</string>
     -->
+    
+    <string name="info_payment">INFO PESANAN</string>
+    
+    <string name="info_expired_payment">BATAS WAKTU BAYAR</string>
+    <string name="info_expired_payment_message">Harap segera lakukan pembayaran, pesanan ini hanya berlaku untuk 15 menit</string>
+    
     
     <string name="message_register_title">Register berhasil</string>
     <string name="message_register_success">Account anda telah berhasil dibuat, Silahkan cek email anda untuk aktifasi account anda.</string>

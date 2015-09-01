@@ -50,9 +50,6 @@ import com.parking.data.MessageVO;
 import com.parking.data.Product;
 import com.parking.data.TransactionDetails;
 import com.parking.data.VeriTransVO;
-import com.parking.swipelistview.sample.dialogs.ExpiredPaymentInfoDialog;
-import com.parking.swipelistview.sample.dialogs.PaymentInfoDialog;
-import com.parking.swipelistview.sample.utils.PreferencesManager;
 import com.parking.utils.CipherUtil;
 import com.parking.utils.CustomLabelAnimator;
 import com.parking.utils.HttpClientUtil;
@@ -107,7 +104,8 @@ public class InputCreditCardActivity extends Activity {
 		total.setText("GRAND TOTAL: "+ totalPrice);
 		txtSlotName.setText("Area name : " + slotName);
 		bookingId = intent.getStringExtra("bookingId");
-		showExpiredPaymentInfo(ctx.getResources().getString(R.string.info_expired_payment_message));
+		MessageUtils messageUtils = new MessageUtils(ctx);
+        messageUtils.showDialogInfo(ctx.getResources().getString(R.string.info_expired_payment), ctx.getResources().getString(R.string.info_expired_payment_message));
 		
 		// This is how you add a custom animator
 		noCC.setLabelAnimator(new CustomLabelAnimator());
@@ -266,7 +264,7 @@ public class InputCreditCardActivity extends Activity {
     			
     			Product product = new Product();
     			product.setId(new Long(1));
-    			product.setLongName("Parking Online "+ mallName);
+    			product.setLongName("Parking Online "+ mallName + "- Area Parkir : " + slotName);
     			product.setPriceIdr(new Long(totalPrice));
     			product.setShortName("V-Mobile "+ mallName);
     			product.setThumbnailFilePath("");
@@ -308,8 +306,9 @@ public class InputCreditCardActivity extends Activity {
 	               		try {
 	               			String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
 	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
-		               		if(messageVO.getRc()==0){
-				             	showPaymentInfo(messageVO.getOtherMessage());				             	
+		               		if(messageVO.getRc()==0){				             	
+				             	MessageUtils messageUtils = new MessageUtils(ctx);
+				                messageUtils.showDialogInfo(ctx.getResources().getString(R.string.info_payment), messageVO.getOtherMessage());
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.snackBarMessage(InputCreditCardActivity.this,messageVO.getMessageRc());
@@ -337,20 +336,6 @@ public class InputCreditCardActivity extends Activity {
             
         }
     }
-	
-	private void showPaymentInfo(String message){
-		if (PreferencesManager.getInstance(ctx).getShowAbout()) {
-            PaymentInfoDialog paymentInfoDialog = new PaymentInfoDialog(message,ctx);
-            paymentInfoDialog.show(getFragmentManager(), "dialog");                               
-        }
-	}
-	
-	private void showExpiredPaymentInfo(String message){
-		if (PreferencesManager.getInstance(ctx).getShowAbout()) {
-            ExpiredPaymentInfoDialog expiredPaymentInfoDialog = new ExpiredPaymentInfoDialog(message,ctx);
-            expiredPaymentInfoDialog.show(getFragmentManager(), "dialog");                               
-        }
-	}
 	
 	private class VtWebViewClient extends WebViewClient {
 

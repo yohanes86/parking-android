@@ -60,12 +60,20 @@ public class MessageUtils {
 		snackBar.show();
 	}
 	
-	public void showDialogInfo(String title,String content,ButtonCallback callback) {
+	public void showDialogInfoCallback(String title,String content,ButtonCallback callback) {
         new MaterialDialog.Builder(ctx)
                 .title(title)
                 .content(content)
                 .positiveText(R.string.ok)
                 .callback(callback)
+                .show();
+    }
+	
+	public void showDialogInfo(String title,String content) {
+        new MaterialDialog.Builder(ctx)
+                .title(title)
+                .content(content)
+                .positiveText(R.string.ok)                
                 .show();
     }
 		
