@@ -118,6 +118,13 @@
     <!--  <string name="message_forget_password_success">Password anda berhasil di reset, silahkan cek di email anda untuk mendapatkan password baru.</string> 
     	  <string name="message_forget_password_failed">Password anda gagal di reset, silahkan coba kembali beberapa saat kemudian.</string>
     -->
+    
+    <string name="message_register_title">Register berhasil</string>
+    <string name="message_register_success">Account anda telah berhasil dibuat, Silahkan cek email anda untuk aktifasi account anda.</string>
+    
+    <string name="message_forgetPass_title">Reset Password berhasil</string>
+    <string name="message_forgetPass_success">Password baru anda telah dikirim lewat email, segera ganti password anda untuk kepentingan keamanan.</string>
+    
     <string name="message_email_required">Email harus diisi!</string>
     <string name="email_and_pass_required">Email dan password harus diisi!</string>
     <string name="email_not_valid">Email tidak valid!</string>

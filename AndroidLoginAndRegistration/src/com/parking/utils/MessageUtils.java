@@ -7,18 +7,19 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.ButtonCallback;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.parking.R;
 
 public class MessageUtils {
 	private static final String TAG = "MessageUtils";
-	private Context context;
+	private Context ctx;
 	private static SimpleDateFormat sdfDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	/* STANDART MESSAGE */
 
 	public MessageUtils(Context context) {
 		super();
-		this.context = context;
+		this.ctx = context;
 	}
 	
 	public static String displayDateTime(Date dateTime) {
@@ -59,12 +60,12 @@ public class MessageUtils {
 		snackBar.show();
 	}
 	
-	public void showConfirmDialog(Context ctx,String title,String content) {
+	public void showDialogInfo(String title,String content,ButtonCallback callback) {
         new MaterialDialog.Builder(ctx)
                 .title(title)
                 .content(content)
                 .positiveText(R.string.ok)
-//                .negativeText(R.string.disagree)
+                .callback(callback)
                 .show();
     }
 		

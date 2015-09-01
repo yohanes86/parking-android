@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.ButtonCallback;
 import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.ProgressDialogParking;
@@ -136,10 +138,7 @@ public class ForgetPasswordActivity extends Activity {
 		               		inqForgotPasswordResponse.setMessageVO(messageVO);
 		               		if(inqForgotPasswordResponse.getMessageVO().getRc()==0){
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
-				             	messageUtils.snackBarMessage(ForgetPasswordActivity.this,messageVO.getOtherMessage());
-				             	Intent i = new Intent(ctx, LoginActivity.class);
-								startActivity(i);
-								finish();
+		               			messageUtils.showDialogInfo(ctx.getResources().getString(R.string.message_forgetPass_title), ctx.getResources().getString(R.string.message_forgetPass_success), buttonCallback);		             	
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.snackBarMessage(ForgetPasswordActivity.this,messageVO.getMessageRc());
@@ -162,5 +161,14 @@ public class ForgetPasswordActivity extends Activity {
            }
 
        }
+	
+	ButtonCallback buttonCallback = new ButtonCallback() {
+
+		public void onPositive(MaterialDialog dialog) {
+			Intent i = new Intent(ctx, LoginActivity.class);
+			startActivity(i);
+			finish();
+        }
+    };
 
 }
