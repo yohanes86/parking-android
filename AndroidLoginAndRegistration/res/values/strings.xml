@@ -108,6 +108,7 @@
     <string name="process_logout">Proses logout</string>
     <string name="process_register">Kirim data registrasi</string>
     <string name="process_get_list_mall">Cari data mall</string>
+    <string name="process_get_history_booking">Cari data booking</string>
     <string name="process_refresh_mall">Perbaharui data malls</string>
     
     <!-- MESSAGE -->

@@ -31,7 +31,7 @@
             android:id="@+id/example_row_b_action_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/uninstall" />
+            android:text="@string/uninstall" />
         -->
     </LinearLayout>
 
@@ -110,7 +110,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="BCODEkkkkk"
+                android:maxLines="2"
+                android:text="BCODEkkkkkssssssssssssssssssssssssssssss"
                 android:textColor="@color/grey"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -165,9 +166,18 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Complete"
-                android:textColor="@color/grey"
-                android:textSize="16sp" />
+                android:textColor="@color/red"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
+
+        <View
+            android:id="@+id/viewFooter"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/layoutLin_StatusBooking"
+            android:layout_marginTop="5dp"
+            android:background="#1E88E5" />
     </RelativeLayout>
 
 </FrameLayout>

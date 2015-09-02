@@ -73,7 +73,7 @@ public class HttpClientUtil {
 	public static final String URL_CONFIRM_BOOKING_CODE= "/trx/confirmCodeBooking";
 	public static final String URL_RELEASE_SLOT_PARKING= "/trx/releaseSlotParking";
 	public static final String URL_REFRESHING_LIST_MALL= "/trx/refreshCacheMall";
-	
+	public static final String URL_GET_HISTORY = "/trx/historyBooking";
 	
 	
 	// list trx code engine

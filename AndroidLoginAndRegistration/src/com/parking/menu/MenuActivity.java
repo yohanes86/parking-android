@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MotionEvent;
 import android.view.View;
+
 import com.parking.R;
 import com.parking.data.Constants;
 import com.parking.data.LoginData;
@@ -22,6 +23,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     private ResideMenuItem itemChangePassword;
     private ResideMenuItem itemLogout;
     private ResideMenuItem itemMall;
+    private ResideMenuItem itemHistoryBooking;
     private ResideMenuItem itemCheckIn;
     private ResideMenuItem itemRefreshingMall;
 
@@ -55,6 +57,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         itemChangePassword  = new ResideMenuItem(this, R.drawable.icon_profile,  "Password");
         itemLogout  = new ResideMenuItem(this, R.drawable.icon_profile,  "Logout");
         itemMall = new ResideMenuItem(this, R.drawable.icon_calendar, "Malls");
+        itemHistoryBooking = new ResideMenuItem(this, R.drawable.icon_calendar, "History");
         itemCheckIn = new ResideMenuItem(this, R.drawable.icon_settings, "CheckIn");
         itemRefreshingMall = new ResideMenuItem(this, R.drawable.icon_settings, "Refreshing List Mall");
 
@@ -62,6 +65,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         itemChangePassword.setOnClickListener(this);
         itemLogout.setOnClickListener(this);        
         itemMall.setOnClickListener(this);
+        itemHistoryBooking.setOnClickListener(this);
         itemCheckIn.setOnClickListener(this);
         itemRefreshingMall.setOnClickListener(this);
 
@@ -80,7 +84,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         	 resideMenu.addMenuItem(itemCheckIn, ResideMenu.DIRECTION_RIGHT);
         	 resideMenu.addMenuItem(itemRefreshingMall, ResideMenu.DIRECTION_RIGHT);
         }
-        
+        resideMenu.addMenuItem(itemHistoryBooking, ResideMenu.DIRECTION_RIGHT);
        
 
         // You can disable a direction by setting ->
@@ -120,6 +124,8 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
             changeFragment(new LogoutFragment());
         }else if (view == itemRefreshingMall){
             changeFragment(new RefreshingMallFragment());
+        }else if (view == itemHistoryBooking){
+            changeFragment(new HistoryBookingFragment());
         }
 
         resideMenu.closeMenu();
