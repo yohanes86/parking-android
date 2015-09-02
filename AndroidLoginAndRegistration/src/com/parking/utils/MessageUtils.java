@@ -26,34 +26,6 @@ public class MessageUtils {
 		return sdfDateTime.format(dateTime);
 	}
 	
-//	public void messageShort(String msg,int rc) {
-//		Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
-//		toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);
-//		toast.show();
-//		Log.i(TAG, "messageShort " + msg + " rc : " + rc);
-//	}
-//	
-//	public void messageShort(String msg) {
-//		Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
-//		toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);
-//		toast.show();
-//		Log.i(TAG, "messageShort " + msg);
-//	}
-//	
-//	public void messageLong(String msg) {
-//		Toast toast = Toast.makeText(context, msg, Toast.LENGTH_LONG);
-//		toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);
-//		toast.show();
-//		Log.i(TAG, "messageLong " + msg);
-//	}
-//	
-//	public void messageLong(String msg,int rc) {
-//		Toast toast = Toast.makeText(context, msg, Toast.LENGTH_LONG);
-//		toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);
-//		toast.show();
-//		Log.i(TAG, "messageLong " + msg + " rc: " + rc);
-//	}
-	
 	public void snackBarMessage(Activity act,String msg){
 		SnackBar snackBar = new SnackBar(act, msg);
 		snackBar.setBackgroundSnackBar(act.getResources().getColor(R.color.blue));
@@ -64,6 +36,7 @@ public class MessageUtils {
         new MaterialDialog.Builder(ctx)
                 .title(title)
                 .content(content)
+                .positiveColorRes(R.color.blue)
                 .positiveText(R.string.ok)
                 .callback(callback)
                 .show();
@@ -73,7 +46,20 @@ public class MessageUtils {
         new MaterialDialog.Builder(ctx)
                 .title(title)
                 .content(content)
+                .positiveColorRes(R.color.blue)
                 .positiveText(R.string.ok)                
+                .show();
+    }
+	
+	public void showDialogConfirmationCallback(String title,String content,ButtonCallback callback) {
+        new MaterialDialog.Builder(ctx)
+                .title(title)
+                .content(content)
+                .positiveColorRes(R.color.blue)
+                .positiveText(R.string.ok)
+                .negativeColorRes(R.color.red)
+                .negativeText(R.string.cancel)
+                .callback(callback)
                 .show();
     }
 		

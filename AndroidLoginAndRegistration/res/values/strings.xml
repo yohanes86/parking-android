@@ -2,6 +2,7 @@
 <resources>
     <!-- Progress Dialog -->
     <string name="progress_dialog">Please wait a moment..</string>
+    <string name="confirmation_dialog">Konfirmasi action</string>
     <string name="please_wait">Please wait…</string>
     
     
@@ -30,7 +31,7 @@
     <string name="about">Cara Booking</string>
     <string name="aboutMessage">Pilih mal yang dituju kemudian tekan di list mall yang dituju beberapa detik, akan muncul tombol Booking. Happy Parking.</string>
     <string name="ok">Ok</string>
-    
+    <string name="cancel">Batal</string>
     
     <string name="visit47">Visit 47deg</string>
     <string name="goToGitHub">Go to GitHub</string>
@@ -78,7 +79,7 @@
     <string name="btn_check_in">CHECK IN</string>
     <string name="btn_check_booking_code">CHECK BOOKING CODE</string>
     <string name="btn_register">REGISTER</string>
-    <string name="btn_pay">PAY</string>
+    <string name="btn_pay">BAYAR</string>
     <string name="btn_change_password">CHANGE PASSWORD</string>
     <string name="btn_logout">LOGOUT</string>
     <string name="btn_forgot_password">FORGOT PASSWORD</string>    
@@ -127,6 +128,13 @@
     
     <string name="message_forgetPass_title">Reset Password berhasil</string>
     <string name="message_forgetPass_success">Password baru anda telah dikirim lewat email, segera ganti password anda untuk kepentingan keamanan.</string>
+    
+    <string name="message_confirm_booking">Anda yakin ingin booking parkir di mall ini?</string>
+    <string name="message_confirm_release">Anda yakin ingin release parkir di mall ini?</string>
+    <string name="message_confirm_pay">Anda yakin ingin bayar?</string>
+    <string name="message_confirm_check_kode_booking">Anda yakin check kode booking?</string>
+    <string name="message_confirm_check_in">Anda yakin check in?</string>
+    <string name="message_confirm_refresh_mall">Anda yakin refresh mall?</string>
     
     <string name="message_email_required">Email harus diisi!</string>
     <string name="email_and_pass_required">Email dan password harus diisi!</string>

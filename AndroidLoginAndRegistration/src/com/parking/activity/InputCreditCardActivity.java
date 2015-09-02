@@ -52,6 +52,7 @@ import com.parking.data.MessageVO;
 import com.parking.data.Product;
 import com.parking.data.TransactionDetails;
 import com.parking.data.VeriTransVO;
+import com.parking.swipelistview.sample.adapters.MallAdapter.ReqSlotByMallTask;
 import com.parking.utils.CipherUtil;
 import com.parking.utils.CustomLabelAnimator;
 import com.parking.utils.HttpClientUtil;
@@ -117,12 +118,20 @@ public class InputCreditCardActivity extends Activity {
 		
 		btnPay.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				checkOrderAllowPayTask = new CheckOrderAllowPayTask();
-				checkOrderAllowPayTask.execute("");
+				MessageUtils messageUtils = new MessageUtils(ctx);
+       			messageUtils.showDialogConfirmationCallback(ctx.getResources().getString(R.string.confirmation_dialog), ctx.getResources().getString(R.string.message_confirm_pay), buttonCallbackPay);		             	       		            	            	            				
 			}
 		});
 
 	}
+	
+	ButtonCallback buttonCallbackPay = new ButtonCallback() {
+
+		public void onPositive(MaterialDialog dialog) {
+			checkOrderAllowPayTask = new CheckOrderAllowPayTask();
+			checkOrderAllowPayTask.execute("");
+        }
+    };
 	
 	private void pay(){
 		String noCCInput = noCC.getEditText().getText().toString();

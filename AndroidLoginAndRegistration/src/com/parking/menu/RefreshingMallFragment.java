@@ -20,6 +20,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.ButtonCallback;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.ProgressDialogParking;
 import com.parking.R;
@@ -40,17 +42,25 @@ public class RefreshingMallFragment extends Fragment{
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	    	 View rootView = inflater.inflate(R.layout.activity_refreshing_list_mall, container, false);
 	    	 ctx = container.getContext();
-	    	 ButtonRectangle btnChangePassword = (ButtonRectangle) rootView.findViewById(R.id.btnRefreshMall);
+	    	 ButtonRectangle btnRefreshMall = (ButtonRectangle) rootView.findViewById(R.id.btnRefreshMall);
 	    	
-	    	 btnChangePassword.setOnClickListener(new OnClickListener() {
+	    	 btnRefreshMall.setOnClickListener(new OnClickListener() {
 	             @Override
-	             public void onClick(View arg0) {	        	
-	            	 reqRefreshListMallTask = new ReqRefreshListMallTask();
-	            	 reqRefreshListMallTask.execute("");       
+	             public void onClick(View arg0) {	
+	            	 MessageUtils messageUtils = new MessageUtils(ctx);
+		        	 messageUtils.showDialogConfirmationCallback(ctx.getResources().getString(R.string.confirmation_dialog), ctx.getResources().getString(R.string.message_confirm_refresh_mall), buttonCallbackRefreshMall);		             	       		            	            	        	             							            	       
 	             }
 	         });
 	        return rootView;
 	    }
+	 
+	 ButtonCallback buttonCallbackRefreshMall = new ButtonCallback() {
+
+			public void onPositive(MaterialDialog dialog) {
+				reqRefreshListMallTask = new ReqRefreshListMallTask();
+           	 	reqRefreshListMallTask.execute(""); 
+	        }
+	    };
 	 
 	 public class ReqRefreshListMallTask extends AsyncTask<String, Void, Boolean> {	     
 		 	private ProgressDialogParking progressDialog = null;

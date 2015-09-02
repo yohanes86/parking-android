@@ -32,9 +32,6 @@ import org.apache.http.util.EntityUtils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +41,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.ButtonCallback;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.ProgressDialogParking;
@@ -65,6 +64,7 @@ public class MallAdapter extends BaseAdapter {
     private Context ctx;
     private Activity act;
     private LoginData login;
+    private String mallName;
     private ReqSlotByMallTask reqSlotByMallTask = null;
     private ReqReleaseSlotByMallTask reqReleaseSlotByMallTask = null;
 
@@ -149,29 +149,19 @@ public class MallAdapter extends BaseAdapter {
 
         holder.bAction1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-//                Intent intent = context.getPackageManager().getLaunchIntentForPackage(item.getInformation());
-//                if (intent != null) {
-//                    context.startActivity(intent);
-//                } else {
-//                    Toast.makeText(context, R.string.cantOpen, Toast.LENGTH_SHORT).show();
-//                }
-//            	Intent i = new Intent(ctx, InputCreditCardActivity.class);            	
-//            	i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
-//            	i.putExtra("mallName", item.getName());
-//            	ctx.startActivity(i);      
-            	
-            	reqSlotByMallTask = new ReqSlotByMallTask();
-            	reqSlotByMallTask.execute(item.getName());
+            public void onClick(View v) {  
+            	mallName = item.getName();
+            	MessageUtils messageUtils = new MessageUtils(ctx);
+       			messageUtils.showDialogConfirmationCallback(ctx.getResources().getString(R.string.confirmation_dialog), ctx.getResources().getString(R.string.message_confirm_booking), buttonCallbackBooking);		             	       		            	            	
             }
         });
 
         holder.bAction2.setOnClickListener(new View.OnClickListener() {
         	 @Override
              public void onClick(View v) {
-
-        		 reqReleaseSlotByMallTask = new ReqReleaseSlotByMallTask();
-        		 reqReleaseSlotByMallTask.execute(item.getName());
+        		 mallName = item.getName();
+        		 MessageUtils messageUtils = new MessageUtils(ctx);
+        		 messageUtils.showDialogConfirmationCallback(ctx.getResources().getString(R.string.confirmation_dialog), ctx.getResources().getString(R.string.message_confirm_release), buttonCallbackRelease);		             	       		            	            	        
              }
         });
 
@@ -201,14 +191,22 @@ public class MallAdapter extends BaseAdapter {
         ButtonRectangle bAction2;
 //        ButtonRectangle bAction3;
     }
+    
+    ButtonCallback buttonCallbackBooking = new ButtonCallback() {
 
-    private boolean isPlayStoreInstalled() {
-        Intent market = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=dummy"));
-        PackageManager manager = ctx.getPackageManager();
-        List<ResolveInfo> list = manager.queryIntentActivities(market, 0);
+		public void onPositive(MaterialDialog dialog) {
+			reqSlotByMallTask = new ReqSlotByMallTask();
+        	reqSlotByMallTask.execute(mallName);
+        }
+    };
+    
+    ButtonCallback buttonCallbackRelease = new ButtonCallback() {
 
-        return list.size() > 0;
-    }
+		public void onPositive(MaterialDialog dialog) {
+			reqReleaseSlotByMallTask = new ReqReleaseSlotByMallTask();
+   		 	reqReleaseSlotByMallTask.execute(mallName);
+        }
+    };
     
     private void goToPayScreen(String mallName, long hargaParkir,String slotName,String bookingId) {
     	Intent i = new Intent(ctx, InputCreditCardActivity.class);            	
@@ -313,7 +311,7 @@ public class MallAdapter extends BaseAdapter {
        	private final HttpClient client = HttpClientUtil.getNewHttpClient();
        	String respString = null;
        	protected void onPreExecute() {       		
-       		progressDialog = new ProgressDialogParking(ctx, ctx.getResources().getString(R.string.process_login),ctx.getResources().getString(R.string.progress_dialog));
+       		progressDialog = new ProgressDialogParking(ctx, ctx.getResources().getString(R.string.process_find_slots),ctx.getResources().getString(R.string.progress_dialog));
 			progressDialog.show();
     		}
     		@Override

@@ -22,6 +22,8 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.MaterialDialog.ButtonCallback;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.widgets.ProgressDialogParking;
 import com.iangclifton.android.floatlabel.FloatLabel;
@@ -90,8 +92,9 @@ public class CheckInFragment extends Fragment {
            	 email = loginData.getEmail();
            	 sessionkey = loginData.getSessionKey();		 
 				if (!bookingCodeInput.isEmpty()) {	
-					checkInAllowTask = new CheckInAllowTask();
-					checkInAllowTask.execute("");       
+					MessageUtils messageUtils = new MessageUtils(ctx);
+	        		messageUtils.showDialogConfirmationCallback(ctx.getResources().getString(R.string.confirmation_dialog), ctx.getResources().getString(R.string.message_confirm_check_kode_booking), buttonCallbackCheckIn);		             	       		            	            	        	             
+					       
 				} else {
 					MessageUtils messageUtils = new MessageUtils(ctx);
 	             	messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_booking_code_required));
@@ -110,8 +113,8 @@ public class CheckInFragment extends Fragment {
            	 email = loginData.getEmail();
            	 sessionkey = loginData.getSessionKey();		 
 				if (!bookingCodeInput.isEmpty()) {	
-					checkConfirmTask = new CheckConfirmTask();
-					checkConfirmTask.execute("");
+					MessageUtils messageUtils = new MessageUtils(ctx);
+	        		messageUtils.showDialogConfirmationCallback(ctx.getResources().getString(R.string.confirmation_dialog), ctx.getResources().getString(R.string.message_confirm_check_in), buttonCallbackConfirm);		             	       		            	            	        	             					       									
 				} else {
 					MessageUtils messageUtils = new MessageUtils(ctx);
 	             	messageUtils.snackBarMessage(getActivity(),ctx.getResources().getString(R.string.message_booking_code_required));
@@ -122,6 +125,22 @@ public class CheckInFragment extends Fragment {
         });
         return rootView;
     }
+    
+    ButtonCallback buttonCallbackCheckIn = new ButtonCallback() {
+
+		public void onPositive(MaterialDialog dialog) {
+			checkInAllowTask = new CheckInAllowTask();
+			checkInAllowTask.execute("");
+        }
+    };
+    
+    ButtonCallback buttonCallbackConfirm = new ButtonCallback() {
+
+		public void onPositive(MaterialDialog dialog) {
+			checkConfirmTask = new CheckConfirmTask();
+			checkConfirmTask.execute("");
+        }
+    };
     
     public class CheckInAllowTask extends AsyncTask<String, Void, Boolean> {
     	private ProgressDialogParking progressDialog = null;
