@@ -139,22 +139,28 @@ public class RegisterActivity extends Activity {
     			result = true;
     			} catch (ClientProtocolException e) {
     				Log.e(TAG, "ClientProtocolException : "+e);   
-    				if(progressDialog.isShowing()){
-    					progressDialog.dismiss();
-    				}
+    				respString = ctx.getResources().getString(R.string.message_unexpected_error_message_server);
+    				cancel(true);  
     			} catch (IOException e) {
     				Log.e(TAG, "IOException : "+e);  
-    				if(progressDialog.isShowing()){
-    					progressDialog.dismiss();
-    				}
+    				respString = ctx.getResources().getString(R.string.message_no_internet_connection);
+    				cancel(true); 
     			} catch (Exception e) {
     				Log.e(TAG, "Exception : "+e);   
-    				if(progressDialog.isShowing()){
-    					progressDialog.dismiss();
-    				}
+    				respString = ctx.getResources().getString(R.string.message_unexpected_error_message_server);
+    				cancel(true);
     			}
            	return result;
            }
+		
+		@Override
+	     protected void onCancelled() {
+			 if(progressDialog.isShowing()){
+				progressDialog.dismiss();
+			 }
+			 MessageUtils messageUtils = new MessageUtils(ctx);
+         	 messageUtils.snackBarMessage(RegisterActivity.this,respString);
+	     }
 		
 		 @Override
          protected void onPostExecute(final Boolean success) {

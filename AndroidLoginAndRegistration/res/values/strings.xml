@@ -113,6 +113,7 @@
     <!-- MESSAGE -->
     <string name="message_unexpected_error_server">Server sedang mengalami gangguan, silahkan coba beberapa jam kemudian.</string>
     <string name="message_unexpected_error_message_server">Server sedang mengalami gangguan, Unmatched Format Data Transfer</string>
+    <string name="message_no_internet_connection">Terjadi gangguan jaringan, pastikan koneksi internet anda normal.</string>
     <!--  <string name="message_forget_password_success">Password anda berhasil di reset, silahkan cek di email anda untuk mendapatkan password baru.</string> 
     	  <string name="message_forget_password_failed">Password anda gagal di reset, silahkan coba kembali beberapa saat kemudian.</string>
     -->
