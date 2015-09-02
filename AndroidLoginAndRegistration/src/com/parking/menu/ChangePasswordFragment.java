@@ -148,7 +148,7 @@ public class ChangePasswordFragment extends Fragment {
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.snackBarMessage(getActivity(),messageVO.getMessageRc());
-				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
+				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED||messageVO.getRc()==Constants.SESSION_DIFFERENT||messageVO.getRc()==Constants.USER_NOT_LOGIN){
 				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, getActivity());
 				             		redirectUtils.redirectToLogin();
 				             	}

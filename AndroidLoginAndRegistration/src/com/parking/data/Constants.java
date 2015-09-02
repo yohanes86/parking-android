@@ -6,6 +6,8 @@ public class Constants {
 	public static final String SETTING_DATA_PREF 	  = "SettingDataPref";
 	public static final int SHOW_TIPS				= 3; // 3 kali
 	public static final int SESSION_EXPIRED				= 11; // SESSION EXPIRED
+	public static final int USER_NOT_LOGIN				= 17; // USER NOT LOGIN
+	public static final int SESSION_DIFFERENT			= 18; // SESSION_DIFFERENT EXPIRED
 	
 	public static final String ADMIN 	  = "admin";
 	public static final String STAFF 	  = "staff";

@@ -283,7 +283,7 @@ public class MallAdapter extends BaseAdapter {
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.snackBarMessage(act,messageVO.getMessageRc());		
-				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
+				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED||messageVO.getRc()==Constants.SESSION_DIFFERENT||messageVO.getRc()==Constants.USER_NOT_LOGIN){
 				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, act);
 				             		redirectUtils.redirectToLogin();
 				             	}
@@ -371,7 +371,7 @@ public class MallAdapter extends BaseAdapter {
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.snackBarMessage(act,messageVO.getMessageRc());		
-				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
+				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED||messageVO.getRc()==Constants.SESSION_DIFFERENT||messageVO.getRc()==Constants.USER_NOT_LOGIN){
 				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, act);
 				             		redirectUtils.redirectToLogin();
 				             	}

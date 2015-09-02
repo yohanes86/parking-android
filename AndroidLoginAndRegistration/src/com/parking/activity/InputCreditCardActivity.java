@@ -314,7 +314,7 @@ public class InputCreditCardActivity extends Activity {
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.snackBarMessage(InputCreditCardActivity.this,messageVO.getMessageRc());
-				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
+				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED||messageVO.getRc()==Constants.SESSION_DIFFERENT||messageVO.getRc()==Constants.USER_NOT_LOGIN){
 				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, InputCreditCardActivity.this);
 				             		redirectUtils.redirectToLogin();
 				             	}
@@ -467,7 +467,7 @@ public class InputCreditCardActivity extends Activity {
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.snackBarMessage(InputCreditCardActivity.this,messageVO.getMessageRc());
-				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED){
+				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED||messageVO.getRc()==Constants.SESSION_DIFFERENT||messageVO.getRc()==Constants.USER_NOT_LOGIN){
 				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, InputCreditCardActivity.this);
 				             		redirectUtils.redirectToLogin();
 				             	}
