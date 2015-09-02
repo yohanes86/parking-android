@@ -37,5 +37,7 @@
     <dimen name="padding_new_tag">3dp</dimen>
     <dimen name="heading_space_bottom">8dp</dimen>
     <dimen name="heading_space_top">16dp</dimen>
+    
+    <dimen name="height_list_history">130dp</dimen>
 
 </resources>
