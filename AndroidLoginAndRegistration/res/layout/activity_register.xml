@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_name"
-            android:inputType="textCapWords"
+            android:inputType="textCapCharacters"
             android:layout="@layout/custom_float_label"
             android:textColor="@color/color_label"
             android:textStyle="normal"
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_license_no"
-            android:inputType="textCapWords"
+            android:inputType="textCapCharacters"
             android:layout="@layout/custom_float_label"
             android:textColor="@color/color_label"
             android:textStyle="normal"
@@ -81,7 +81,7 @@
             android:layout_marginTop="20dip"
             android:background="@drawable/button_forgot_password"
             android:text="@string/btn_register"
-            android:textColor="@color/color_label" />
+            android:textColor="@color/color_label" />
         -->
 
         <com.gc.materialdesign.views.ButtonRectangle
