@@ -46,7 +46,6 @@ import com.parking.data.SettingData;
 import com.parking.entity.Mall;
 import com.parking.swipelistview.sample.adapters.MallAdapter;
 import com.parking.swipelistview.sample.adapters.MallItem;
-import com.parking.swipelistview.sample.dialogs.UsageTipsDialog;
 import com.parking.swipelistview.sample.utils.PreferencesManager;
 import com.parking.swipelistview.sample.utils.SettingsManager;
 import com.parking.utils.CipherUtil;
@@ -369,9 +368,9 @@ public class MallFragment extends Fragment {
     	SettingData settingData = SharedPreferencesUtils.getSettingData(ctx, email);
         if(settingData!=null){
         	if(Constants.SHOW_TIPS > settingData.getShowTips()){
-        		if (PreferencesManager.getInstance(ctx).getShowAbout()) {
-                    UsageTipsDialog usageTipsDialog = new UsageTipsDialog();
-                    usageTipsDialog.show(getActivity().getSupportFragmentManager(), "dialog");
+        		if (PreferencesManager.getInstance(ctx).getShowAbout()) {                   
+                    MessageUtils messageUtils = new MessageUtils(ctx);
+                    messageUtils.showDialogInfo(ctx.getResources().getString(R.string.about), ctx.getResources().getString(R.string.aboutMessage));
                     settingData.setShowTips(settingData.getShowTips()+1);
                     try {
                     	SharedPreferencesUtils.saveSettingData(HttpClientUtil.getObjectMapper(ctx).writeValueAsString(settingData), ctx, email);
@@ -387,8 +386,8 @@ public class MallFragment extends Fragment {
         }else{
         	settingData = new SettingData();
         	if (PreferencesManager.getInstance(ctx).getShowAbout()) {
-                UsageTipsDialog usageTipsDialog = new UsageTipsDialog();
-                usageTipsDialog.show(getActivity().getSupportFragmentManager(), "dialog");
+        		MessageUtils messageUtils = new MessageUtils(ctx);
+                messageUtils.showDialogInfo(ctx.getResources().getString(R.string.about), ctx.getResources().getString(R.string.aboutMessage));
                 settingData.setShowTips(settingData.getShowTips()+1);
                 try {
                 	SharedPreferencesUtils.saveSettingData(HttpClientUtil.getObjectMapper(ctx).writeValueAsString(settingData), ctx, email);

@@ -45,7 +45,6 @@ import com.fortysevendeg.swipelistview.SwipeListView;
 import com.parking.R;
 import com.parking.swipelistview.sample.adapters.MallAdapter;
 import com.parking.swipelistview.sample.adapters.MallItem;
-import com.parking.swipelistview.sample.dialogs.UsageTipsDialog;
 import com.parking.swipelistview.sample.utils.PreferencesManager;
 import com.parking.swipelistview.sample.utils.SettingsManager;
 
@@ -261,8 +260,8 @@ public class SwipeListViewExampleActivity extends FragmentActivity {
 //                progressDialog = null;
 //            }
             if (PreferencesManager.getInstance(SwipeListViewExampleActivity.this).getShowAbout()) {
-                UsageTipsDialog logOutDialog = new UsageTipsDialog();
-                logOutDialog.show(getSupportFragmentManager(), "dialog");
+//                UsageTipsDialog logOutDialog = new UsageTipsDialog();
+//                logOutDialog.show(getSupportFragmentManager(), "dialog");
             }
         }
     }
