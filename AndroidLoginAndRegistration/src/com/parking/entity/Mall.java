@@ -12,6 +12,7 @@ public class Mall implements Serializable {
 	private String mallPhone;
 	private String mallImage;
 	private int status;
+	private int slotAvailable;
 	private Date createdOn;
 	private String createdBy;
 	private Date updatedOn;
@@ -106,6 +107,14 @@ public class Mall implements Serializable {
 
 	public void setMallImage(String mallImage) {
 		this.mallImage = mallImage;
+	}
+
+	public int getSlotAvailable() {
+		return slotAvailable;
+	}
+
+	public void setSlotAvailable(int slotAvailable) {
+		this.slotAvailable = slotAvailable;
 	}
 
 }
