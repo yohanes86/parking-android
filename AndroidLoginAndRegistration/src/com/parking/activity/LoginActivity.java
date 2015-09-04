@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,6 +60,7 @@ public class LoginActivity extends Activity {
 		btnLogin = (ButtonRectangle) findViewById(R.id.btnLogin);
 		btnLinkToRegister = (ButtonFlat) findViewById(R.id.btnLinkToRegisterScreen);
 		btnLinkToForgetPassword = (ButtonFlat) findViewById(R.id.btnLinkToForgetPasswordScreen);
+		
 
 		// This is how you add a custom animator
         inputPassword.setLabelAnimator(new CustomLabelAnimator());
