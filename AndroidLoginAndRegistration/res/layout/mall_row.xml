@@ -71,6 +71,15 @@
             android:singleLine="true"
             android:textColor="@color/text_description"
             android:textSize="@dimen/font_size_description" />
+        
+         <TextView
+            android:id="@+id/slot_available"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/example_row_tv_description"
+            android:singleLine="true"
+            android:textColor="@color/text_description"
+            android:textSize="@dimen/font_size_description" />
     </RelativeLayout>
 
 </FrameLayout>
