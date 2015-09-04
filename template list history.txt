@@ -1,0 +1,6 @@
+Mall Central Park
+
+Tanggal Booking : 01-09-2015 15:13:23
+Booking ID	: BCODEkkkkk
+Booking Code	: BCODEkdkdkdkd
+Status Booking	: Expired Pay | Expired Check In | Complete	
