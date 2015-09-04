@@ -28,6 +28,8 @@ public class MallItem {
 
 	private String information;
 
+	private String slotAvailable;
+	
 	public String getName() {
 		return name;
 	}
@@ -50,5 +52,13 @@ public class MallItem {
 
 	public void setInformation(String information) {
 		this.information = information;
+	}
+
+	public String getSlotAvailable() {
+		return slotAvailable;
+	}
+
+	public void setSlotAvailable(String slotAvailable) {
+		this.slotAvailable = slotAvailable;
 	}
 }

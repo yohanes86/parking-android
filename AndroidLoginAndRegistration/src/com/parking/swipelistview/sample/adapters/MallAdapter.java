@@ -121,6 +121,7 @@ public class MallAdapter extends BaseAdapter {
             holder.ivImage = (ImageView) convertView.findViewById(R.id.example_row_iv_image);
             holder.tvMallName = (TextView) convertView.findViewById(R.id.example_row_tv_title);
             holder.tvInformation = (TextView) convertView.findViewById(R.id.example_row_tv_description);
+            holder.slotAvailable = (TextView) convertView.findViewById(R.id.slot_available);
             holder.bAction1 = (ButtonRectangle) convertView.findViewById(R.id.example_row_b_action_1);
             holder.bAction2 = (ButtonRectangle) convertView.findViewById(R.id.example_row_b_action_2);
             
@@ -145,6 +146,7 @@ public class MallAdapter extends BaseAdapter {
         holder.ivImage.setImageDrawable(item.getIcon());
         holder.tvMallName.setText(item.getName());
         holder.tvInformation.setText(item.getInformation());
+        holder.slotAvailable.setText(item.getSlotAvailable());
 
 
         holder.bAction1.setOnClickListener(new View.OnClickListener() {
@@ -187,6 +189,7 @@ public class MallAdapter extends BaseAdapter {
         ImageView ivImage;
         TextView tvMallName;
         TextView tvInformation;
+        TextView slotAvailable;
         ButtonRectangle bAction1;
         ButtonRectangle bAction2;
 //        ButtonRectangle bAction3;

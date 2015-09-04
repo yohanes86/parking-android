@@ -319,7 +319,8 @@ public class MallFragment extends Fragment {
 		               			for (Mall mall : listMall) {
 		               				MallItem item = new MallItem();
 		                            item.setName(mall.getMallName());
-		                            item.setInformation(mall.getMallAddress()+" - " + mall.getMallPhone());                            
+		                            item.setInformation(mall.getMallAddress()+" - " + mall.getMallPhone());   
+		                            item.setSlotAvailable("Parking Available: " + mall.getSlotAvailable());
 		                            item.setIcon(ctx.getResources().getDrawable(R.drawable.default_image)); // default image
 //		                            item.setIcon(ctx.getPackageManager().getDrawable(content.packageName, content.icon, content));
 		                            try {
