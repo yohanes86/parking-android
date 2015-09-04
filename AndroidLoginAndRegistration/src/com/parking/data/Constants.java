@@ -8,6 +8,7 @@ public class Constants {
 	public static final int SESSION_EXPIRED				= 11; // SESSION EXPIRED
 	public static final int USER_NOT_LOGIN				= 17; // USER NOT LOGIN
 	public static final int SESSION_DIFFERENT			= 18; // SESSION_DIFFERENT EXPIRED
+	public static final int REDIRECT_DELAY_LOGIN		= 3000; 
 	
 	
 	public static final int STATUS_AUTO_RELEASE_AFTER_BOOKING				= 1	;

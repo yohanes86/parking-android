@@ -25,14 +25,6 @@
             android:layout_marginLeft="10dp"
             android:background="@color/blue"
             android:text="@string/btn_release" />
-
-        <!--
-              <Button
-            android:id="@+id/example_row_b_action_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/uninstall" />
-        -->
     </LinearLayout>
 
     <RelativeLayout
@@ -44,42 +36,54 @@
         android:padding="@dimen/padding_default"
         android:tag="front" >
 
-        <ImageView
-            android:id="@+id/example_row_iv_image"
-            android:layout_width="@dimen/size_list_image"
-            android:layout_height="@dimen/size_list_image"
-            android:layout_marginRight="@dimen/padding_default" />
-
         <TextView
             android:id="@+id/example_row_tv_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/example_row_iv_image"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:paddingBottom="@dimen/padding_default"
-            android:textColor="@color/text_title"
-            android:textSize="@dimen/font_size_title"
+            android:layout_toRightOf="@+id/example_row_iv_image"
+            android:text="Mall Kota Casablanka"
+            android:textColor="@color/blue"
+            android:textSize="19sp"
             android:textStyle="bold" />
+
+        <View
+            android:id="@+id/viewTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/example_row_tv_title"
+            android:background="#1E88E5"
+            android:paddingBottom="@dimen/padding_default" />
+
+        <ImageView
+            android:id="@+id/example_row_iv_image"
+            android:layout_width="@dimen/size_list_image"
+            android:layout_height="@dimen/size_list_image"
+            android:layout_below="@id/viewTitle"
+            android:padding="5dp" />
 
         <TextView
             android:id="@+id/example_row_tv_description"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/example_row_tv_title"
+            android:layout_below="@id/viewTitle"
             android:layout_toRightOf="@id/example_row_iv_image"
-            android:singleLine="true"
-            android:textColor="@color/text_description"
-            android:textSize="@dimen/font_size_description" />
-        
-         <TextView
+            android:padding="5dp"
+            android:text="jalan tebet raya no 125"
+            android:textColor="@color/grey"
+            android:textSize="13sp"
+            android:textStyle="italic" />
+
+        <TextView
             android:id="@+id/slot_available"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/example_row_tv_description"
-            android:singleLine="true"
-            android:textColor="@color/text_description"
-            android:textSize="@dimen/font_size_description" />
+            android:layout_toRightOf="@id/example_row_iv_image"
+            android:padding="5dp"
+            android:text="10 parkir available"
+            android:textColor="@color/blue"
+            android:textSize="14sp"
+            android:textStyle="normal" />
     </RelativeLayout>
 
 </FrameLayout>
