@@ -3,6 +3,8 @@ package com.parking.menu;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -280,7 +282,7 @@ public class HistoryBookingFragment extends Fragment {
 	               	if(!respString.isEmpty()){
 	               		try {
 	               			String respons = CipherUtil.decryptTripleDES(respString, CipherUtil.PASSWORD);
-	               			MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
+	               			final MessageVO messageVO = HttpClientUtil.getObjectMapper(ctx).readValue(respons, MessageVO.class);		               	
 		               		if(messageVO.getRc()==0){		               					               				
 		               			List<HistoryBookingVO> listHistory = HttpClientUtil.getObjectMapper(ctx).readValue(messageVO.getOtherMessage(), new TypeReference<List<HistoryBookingVO>>(){});		               					               			
 		               			data.clear();
@@ -289,10 +291,15 @@ public class HistoryBookingFragment extends Fragment {
 		               		}else{
 		               			MessageUtils messageUtils = new MessageUtils(ctx);
 				             	messageUtils.snackBarMessage(getActivity(),messageVO.getMessageRc());
-				             	if(messageVO.getRc()==Constants.SESSION_EXPIRED||messageVO.getRc()==Constants.SESSION_DIFFERENT||messageVO.getRc()==Constants.USER_NOT_LOGIN){
-				             		RedirectUtils redirectUtils = new RedirectUtils(ctx, getActivity());
-				             		redirectUtils.redirectToLogin();
-				             	}
+				             	new Timer().schedule(new TimerTask() {          
+				             	    @Override
+				             	    public void run() {
+				             	    	if(messageVO.getRc()==Constants.SESSION_EXPIRED||messageVO.getRc()==Constants.SESSION_DIFFERENT||messageVO.getRc()==Constants.USER_NOT_LOGIN){
+						             		RedirectUtils redirectUtils = new RedirectUtils(ctx, getActivity());
+						             		redirectUtils.redirectToLogin();
+				             	    	}  
+				             	    }
+				             	}, Constants.REDIRECT_DELAY_LOGIN);
 		               		}
 						} catch (Exception e) {
 							MessageUtils messageUtils = new MessageUtils(ctx);
