@@ -117,6 +117,10 @@ public class HistoryBookingAdapter extends BaseAdapter {
         
         String status = Constants.STATUS_VAL_AVAILABLE;
         switch (item.getStatus()) {
+        case Constants.STATUS_NEED_TO_PAY:
+			status = Constants.STATUS_VAL_NEED_TO_PAY;	
+			holder.valStatusBooking.setTextColor(ctx.getResources().getColor(R.color.blue));
+			break;
 		case Constants.STATUS_AUTO_RELEASE_AFTER_BOOKING:
 			status = Constants.STATUS_VAL_EXPIRED_PAY;	
 			holder.valStatusBooking.setTextColor(ctx.getResources().getColor(R.color.red));

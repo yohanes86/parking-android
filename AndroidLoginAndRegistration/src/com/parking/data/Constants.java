@@ -11,6 +11,7 @@ public class Constants {
 	public static final int REDIRECT_DELAY_LOGIN		= 3000; 
 	
 	
+	public static final int STATUS_NEED_TO_PAY								= 0	;
 	public static final int STATUS_AUTO_RELEASE_AFTER_BOOKING				= 1	;
 	public static final int STATUS_ALREADY_PAY								= 2	;
 	public static final int STATUS_ALREADY_CHECK_IN							= 3	;
@@ -22,6 +23,7 @@ public class Constants {
 	public static final String USER 	  = "user";
 	
 	public static final String STATUS_VAL_AVAILABLE	  	  = "Tersedia";
+	public static final String STATUS_VAL_NEED_TO_PAY	  = "Need to pay";
 	public static final String STATUS_VAL_ALREADY_PAY	  = "Already Payed";
 	public static final String STATUS_VAL_ALREADY_CHECK_IN	  = "Checked In";
 	public static final String STATUS_VAL_EXPIRED_PAY	  = "Expired Pay";
