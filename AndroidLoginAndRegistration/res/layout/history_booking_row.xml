@@ -12,27 +12,11 @@
         android:tag="back" >
 
         <com.gc.materialdesign.views.ButtonRectangle
-            android:id="@+id/example_row_b_action_1"
+            android:id="@+id/button_pay"
             android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_height="50dp"            
             android:background="@color/blue"
-            android:text="@string/btn_booking" />
-
-        <com.gc.materialdesign.views.ButtonRectangle
-            android:id="@+id/example_row_b_action_2"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:background="@color/blue"
-            android:text="@string/btn_release" />
-
-        <!--
-              <Button
-            android:id="@+id/example_row_b_action_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/uninstall" />
-        -->
+            android:text="@string/btn_pay" />
     </LinearLayout>
 
     <RelativeLayout

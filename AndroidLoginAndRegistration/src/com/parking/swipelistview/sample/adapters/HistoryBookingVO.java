@@ -14,6 +14,8 @@ public class HistoryBookingVO extends LoginData implements Serializable {
 	private String bookingDateValue;
 	private String bookingId;
 	private String bookingCode;
+	private String hargaParkir;
+	private String slotName;
 	private int status;
 	
 
@@ -65,6 +67,22 @@ public class HistoryBookingVO extends LoginData implements Serializable {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public String getHargaParkir() {
+		return hargaParkir;
+	}
+
+	public void setHargaParkir(String hargaParkir) {
+		this.hargaParkir = hargaParkir;
+	}
+
+	public String getSlotName() {
+		return slotName;
+	}
+
+	public void setSlotName(String slotName) {
+		this.slotName = slotName;
 	}
 
 	
