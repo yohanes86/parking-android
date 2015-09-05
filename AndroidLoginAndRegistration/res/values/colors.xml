@@ -5,7 +5,7 @@
     <color name="grey">#999999</color>
     <color name="blue">#1e88e5</color>
     <color name="red">#FF0000</color>
-    
+    <color name="black_transparant">#D8000000</color>
 
     <color name="bg_login">#26ae90</color>
     <color name="bg_register">#2e3237</color>

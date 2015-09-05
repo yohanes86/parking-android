@@ -12,6 +12,8 @@ import com.parking.R;
 import com.parking.data.Constants;
 import com.parking.data.LoginData;
 import com.parking.utils.SharedPreferencesUtils;
+import com.romainpiel.shimmer.Shimmer;
+import com.romainpiel.shimmer.ShimmerTextView;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
 
@@ -26,7 +28,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     private ResideMenuItem itemHistoryBooking;
     private ResideMenuItem itemCheckIn;
     private ResideMenuItem itemRefreshingMall;
-
+    Shimmer shimmer;
     /**
      * Called when the activity is first created.
      */
@@ -36,7 +38,13 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.main);
         ctx = this;
         setUpMenu();
-        
+        ShimmerTextView tvFancy = (ShimmerTextView) findViewById(R.id.tvFancy);
+        if (shimmer != null && shimmer.isAnimating()) {
+			shimmer.cancel();
+        } else {
+        	shimmer = new Shimmer();
+        	shimmer.start(tvFancy);
+        }
         if( savedInstanceState == null )
             changeFragment(new HomeFragment());
     }
@@ -46,7 +54,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         // attach to current activity;
         resideMenu = new ResideMenu(this);
         resideMenu.setUse3D(true);
-        resideMenu.setBackground(R.drawable.menu_background);
+        resideMenu.setBackground(R.drawable.menu_bg);
         resideMenu.attachToActivity(this);
         resideMenu.setMenuListener(menuListener);
         //valid scale factor is between 0.0f and 1.0f. leftmenu'width is 150dip. 
