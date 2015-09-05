@@ -14,7 +14,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +33,8 @@ import com.parking.utils.CustomLabelAnimator;
 import com.parking.utils.HttpClientUtil;
 import com.parking.utils.MessageUtils;
 import com.parking.utils.SharedPreferencesUtils;
+import com.romainpiel.shimmer.Shimmer;
+import com.romainpiel.shimmer.ShimmerTextView;
 
 
 public class LoginActivity extends Activity {
@@ -48,6 +49,7 @@ public class LoginActivity extends Activity {
 	private ReqLoginTask reqLoginTask = null;
 	SharedPreferences sharedpreferences;
 	public static final String MyPREFERENCES = "MyPrefs" ;
+	Shimmer shimmer;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,12 +57,19 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		ctx = LoginActivity.this;
 		
+		ShimmerTextView tvFancy = (ShimmerTextView) findViewById(R.id.tvFancy);
 		inputEmail = (FloatLabel) findViewById(R.id.email);
 		inputPassword = (FloatLabel) findViewById(R.id.password);
 		btnLogin = (ButtonRectangle) findViewById(R.id.btnLogin);
 		btnLinkToRegister = (ButtonFlat) findViewById(R.id.btnLinkToRegisterScreen);
 		btnLinkToForgetPassword = (ButtonFlat) findViewById(R.id.btnLinkToForgetPasswordScreen);
 		
+		if (shimmer != null && shimmer.isAnimating()) {
+			shimmer.cancel();
+        } else {
+        	shimmer = new Shimmer();
+        	shimmer.start(tvFancy);
+        }
 
 		// This is how you add a custom animator
         inputPassword.setLabelAnimator(new CustomLabelAnimator());

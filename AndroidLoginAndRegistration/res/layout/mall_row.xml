@@ -30,7 +30,7 @@
     <RelativeLayout
         android:id="@+id/front"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/height_list"
+        android:layout_height="wrap_content"
         android:background="@color/background_list_front"
         android:orientation="vertical"
         android:padding="@dimen/padding_default"
