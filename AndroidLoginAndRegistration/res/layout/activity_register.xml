@@ -15,6 +15,25 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp" >
 
+        <RelativeLayout
+            android:id="@+id/RelTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/border" >
+
+            <TextView
+                android:id="@+id/Title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Registration"
+                android:padding="8dp"
+                android:textColor="@color/blue"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:typeface="monospace" />
+        </RelativeLayout>
+
         <com.iangclifton.android.floatlabel.FloatLabel
             android:id="@+id/name"
             android:layout_width="match_parent"
@@ -81,7 +100,7 @@
             android:layout_marginTop="20dip"
             android:background="@drawable/button_forgot_password"
             android:text="@string/btn_register"
-            android:textColor="@color/color_label" />
+            android:textColor="@color/color_label" />
         -->
 
         <com.gc.materialdesign.views.ButtonRectangle

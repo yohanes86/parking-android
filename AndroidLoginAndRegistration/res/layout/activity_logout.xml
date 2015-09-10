@@ -7,33 +7,48 @@
     android:orientation="vertical"
     android:padding="10dp" >
 
-    <TextView
-        android:id="@+id/textView"
-        style="@style/fragment_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|center"
-        android:paddingTop="5dip"
-        android:text="@string/menu_logout"
-        android:textColor="@color/white"
-        android:textSize="30dp" />
+    <RelativeLayout
+        android:id="@+id/RelTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/border" >
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|center_vertical"
+            android:padding="8dp"
+            android:text="@string/menu_logout"
+            android:textColor="@color/blue"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_marginTop="55dp"
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp" >
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Anda yakin ingin keluar?"
-            android:textColor="@color/color_label"
-            android:textSize="18sp" />
+        <RelativeLayout
+            android:id="@+id/RelTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="20dp" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Anda yakin ingin keluar?"
+                android:textColor="@color/blue"
+                android:textSize="18sp"
+                android:typeface="monospace" />
+        </RelativeLayout>
 
         <com.gc.materialdesign.views.ButtonRectangle
             android:id="@+id/btnLogout"
@@ -42,7 +57,8 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="20dip"
             android:background="@color/blue"
-            android:text="@string/btn_logout" />
+            android:text="@string/btn_logout"
+            android:typeface="monospace" />
     </LinearLayout>
 
 </FrameLayout>
