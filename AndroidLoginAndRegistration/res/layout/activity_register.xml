@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/white"
+    android:background="@drawable/tile_bg"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp" >
@@ -26,8 +26,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="Registration"
                 android:padding="8dp"
+                android:text="Registration"
                 android:textColor="@color/blue"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -42,6 +42,7 @@
             android:inputType="textCapCharacters"
             android:layout="@layout/custom_float_label"
             android:textColor="@color/color_label"
+            android:textColorHint="@color/blue"
             android:textStyle="normal"
             android:typeface="sans" />
 
@@ -53,6 +54,7 @@
             android:inputType="textEmailAddress"
             android:layout="@layout/custom_float_label"
             android:textColor="@color/color_label"
+            android:textColorHint="@color/blue"
             android:textStyle="normal"
             android:typeface="sans" />
 
@@ -64,6 +66,7 @@
             android:inputType="textCapCharacters"
             android:layout="@layout/custom_float_label"
             android:textColor="@color/color_label"
+            android:textColorHint="@color/blue"
             android:textStyle="normal"
             android:typeface="sans" />
 
@@ -75,6 +78,7 @@
             android:inputType="number"
             android:layout="@layout/custom_float_label"
             android:textColor="@color/color_label"
+            android:textColorHint="@color/blue"
             android:textStyle="normal"
             android:typeface="sans" />
 
@@ -86,22 +90,11 @@
             android:inputType="textPassword"
             android:layout="@layout/custom_float_label"
             android:textColor="@color/color_label"
+            android:textColorHint="@color/blue"
             android:textStyle="normal"
             android:typeface="sans" />
 
         <!-- Login Button -->
-
-
-        <!--
-              <Button
-            android:id="@+id/btnRegister"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dip"
-            android:background="@drawable/button_forgot_password"
-            android:text="@string/btn_register"
-            android:textColor="@color/color_label" />
-        -->
 
         <com.gc.materialdesign.views.ButtonRectangle
             android:id="@+id/btnRegister"

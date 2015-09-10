@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@android:color/white"
+    android:background="@drawable/tile_bg"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -34,7 +34,7 @@
             android:textColor="@color/blue"
             android:textSize="22sp"
             android:textStyle="normal"
-            android:typeface="sans" />
+            android:typeface="monospace" />
 
         <!--
               <Button

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/white"
+    android:background="@drawable/tile_bg"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp" >
@@ -15,86 +15,129 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp" >
 
-        <TextView
-            android:id="@+id/paymentFor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ship_First"
-            android:layout_marginTop="1dp"
-            android:padding="2dp"
-            android:text="V-Mobile Kota Casablanka"
-            android:textColor="@color/input_login"
-            android:textSize="20sp" />
+        <RelativeLayout
+            android:id="@+id/RelTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/border" >
 
-        <TextView
-            android:id="@+id/txtSlotName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ship_First"
-            android:layout_marginTop="1dp"
-            android:padding="2dp"
-            android:text="Area Parkir : "
-            android:textColor="@color/input_login"
-            android:textSize="18sp" />
+            <TextView
+                android:id="@+id/Title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|center_vertical"
+                android:padding="8dp"
+                android:text="Summary Order"
+                android:textColor="@color/blue"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:typeface="monospace" />
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/total"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:padding="2dp"
-            android:text="GRAND TOTAL : Rp 15.000"
-            android:textColor="@color/input_login"
-            android:textSize="18sp" />
+        <RelativeLayout
+            android:id="@+id/RelSubTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/border" >
 
-        <com.iangclifton.android.floatlabel.FloatLabel
-            android:id="@+id/noCC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_cc"
-            android:inputType="number"
-            android:layout="@layout/custom_float_label"
-            android:text="4811111111111114"
-            android:textColor="@color/color_label"
-            android:textStyle="normal"
-            android:typeface="sans" />
+            <TextView
+                android:id="@+id/paymentFor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="2dp"
+                android:text="V-Mobile Kota Casablanka"
+                android:textColor="@color/blue"
+                android:textSize="18sp"
+                android:typeface="monospace" />
 
-        <com.iangclifton.android.floatlabel.FloatLabel
-            android:id="@+id/card_expire_month"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_expire_month"
-            android:inputType="number"
-            android:layout="@layout/custom_float_label"
-            android:text="12"
-            android:textColor="@color/color_label"
-            android:textStyle="normal"
-            android:typeface="sans" />
+            <TextView
+                android:id="@+id/txtSlotName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/paymentFor"
+                android:layout_marginTop="2dp"
+                android:padding="2dp"
+                android:text="Area Parkir : "
+                android:textColor="@color/blue"
+                android:textSize="18sp"
+                android:typeface="monospace" />
 
-        <com.iangclifton.android.floatlabel.FloatLabel
-            android:id="@+id/card_expire_year"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_expire_year"
-            android:inputType="number"
-            android:layout="@layout/custom_float_label"
-            android:text="2020"
-            android:textColor="@color/color_label"
-            android:textStyle="normal"
-            android:typeface="sans" />
+            <TextView
+                android:id="@+id/total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtSlotName"
+                android:layout_marginTop="1dp"
+                android:padding="2dp"
+                android:text="GRAND TOTAL : Rp 15.000"
+                android:textColor="@color/blue"
+                android:textSize="18sp"
+                android:typeface="monospace" />
+        </RelativeLayout>
 
-        <com.iangclifton.android.floatlabel.FloatLabel
-            android:id="@+id/card_cvv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_cvv"
-            android:inputType="number"
-            android:layout="@layout/custom_float_label"
-            android:text="123"
-            android:textColor="@color/color_label"
-            android:textStyle="normal"
-            android:typeface="sans" />
+        <RelativeLayout
+            android:id="@+id/RelContent"
+            android:layout_width="fill_parent"
+            android:layout_height="290dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/border" >
 
+            <com.iangclifton.android.floatlabel.FloatLabel
+                android:id="@+id/noCC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:hint="@string/hint_cc"
+                android:inputType="number"
+                android:layout="@layout/custom_float_label"
+                android:text="4811111111111114"
+                android:textColor="@color/color_label"
+                android:textColorHint="@color/blue"
+                android:textSize="18sp"
+                android:textStyle="normal"
+                android:typeface="monospace" />
+
+            <com.iangclifton.android.floatlabel.FloatLabel
+                android:id="@+id/card_expire_month"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/noCC"
+                android:hint="@string/hint_expire_month"
+                android:inputType="number"
+                android:layout="@layout/custom_float_label"
+                android:text="12"
+                android:textColor="@color/color_label"
+                android:textStyle="normal"
+                android:typeface="sans" />
+
+            <com.iangclifton.android.floatlabel.FloatLabel
+                android:id="@+id/card_expire_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card_expire_month"
+                android:hint="@string/hint_expire_year"
+                android:inputType="number"
+                android:layout="@layout/custom_float_label"
+                android:text="2020"
+                android:textColor="@color/color_label"
+                android:textStyle="normal"
+                android:typeface="sans" />
+
+            <com.iangclifton.android.floatlabel.FloatLabel
+                android:id="@+id/card_cvv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card_expire_year"
+                android:hint="@string/hint_cvv"
+                android:inputType="number"
+                android:layout="@layout/custom_float_label"
+                android:text="123"
+                android:textColor="@color/color_label"
+                android:textStyle="normal"
+                android:typeface="sans" />
+        </RelativeLayout>
         <!-- Pay Button -->
 
         <com.gc.materialdesign.views.ButtonRectangle

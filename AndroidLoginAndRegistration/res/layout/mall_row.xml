@@ -43,8 +43,9 @@
             android:layout_toRightOf="@+id/example_row_iv_image"
             android:text="Mall Kota Casablanka"
             android:textColor="@color/blue"
-            android:textSize="19sp"
-            android:textStyle="bold" />
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:typeface="monospace" />
 
         <View
             android:id="@+id/viewTitle"
@@ -67,11 +68,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/viewTitle"
             android:layout_toRightOf="@id/example_row_iv_image"
-            android:padding="5dp"
+            android:padding="4dp"
             android:text="jalan tebet raya no 125"
             android:textColor="@color/grey"
             android:textSize="13sp"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            android:typeface="monospace" />
 
         <TextView
             android:id="@+id/slot_available"
@@ -82,8 +84,9 @@
             android:padding="5dp"
             android:text="10 parkir available"
             android:textColor="@color/blue"
-            android:textSize="14sp"
-            android:textStyle="normal" />
+            android:textSize="16sp"
+            android:textStyle="normal"
+            android:typeface="monospace" />
     </RelativeLayout>
 
 </FrameLayout>
